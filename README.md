@@ -16,7 +16,6 @@ assets/
 references/            material original (não vai para produção)
 .agents/skills/        motion-design-skill, usado como referência de movimento
 ```
-
 ---
 
 ## 1. O que você precisa preencher antes de publicar
