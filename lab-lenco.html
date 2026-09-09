@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lenço · comparador de vento — TRUEHOPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@400,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#1F221A; --terra:#7B3620; --taupe:#806453; --creme:#EBE0D1; --vinho:#4F1C0A;
+  --sans:"Satoshi",-apple-system,"Segoe UI",sans-serif;
+  --display:"Bodoni Moda",Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--tinta);color:var(--creme);font-family:var(--sans);font-size:15px;line-height:1.6}
+img{display:block;max-width:100%}
+
+header{padding:34px clamp(20px,4vw,52px) 8px;border-bottom:1px solid rgba(235,224,209,.14)}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(22px,3vw,34px);margin:0 0 8px;letter-spacing:-.01em}
+header p{margin:0;color:var(--taupe);font-size:13.5px;max-width:74ch}
+header code{color:var(--creme);background:rgba(235,224,209,.09);padding:1px 6px;border-radius:2px;font-size:12.5px}
+
+.painel{
+  display:flex;flex-wrap:wrap;gap:22px 30px;align-items:center;
+  padding:18px clamp(20px,4vw,52px);border-bottom:1px solid rgba(235,224,209,.14);
+  position:sticky;top:0;background:rgba(31,34,26,.94);backdrop-filter:blur(12px);z-index:5;
+}
+.ctrl{display:flex;align-items:center;gap:11px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--taupe)}
+.ctrl input[type=range]{width:190px;accent-color:var(--terra)}
+.ctrl b{color:var(--creme);font-variant-numeric:tabular-nums;min-width:3.4em;font-weight:500;letter-spacing:0;text-transform:none;font-size:13px}
+button{
+  font:inherit;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  background:transparent;color:var(--creme);border:1px solid rgba(235,224,209,.34);
+  padding:9px 16px;cursor:pointer;transition:background .3s,color .3s;
+}
+button:hover{background:var(--creme);color:var(--tinta)}
+button[aria-pressed="true"]{background:var(--vinho);border-color:var(--vinho)}
+
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(20px,3vw,40px);padding:clamp(24px,4vw,52px)}
+.caso{display:grid;gap:16px;justify-items:center;text-align:center}
+.caso figure{margin:0;display:grid;place-items:center;min-height:min(52vh,430px)}
+.caso .tecido{transform-origin:center;will-change:transform}
+.caso img{width:min(84%,360px);box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.caso h2{font-family:var(--display);font-weight:400;font-size:23px;margin:0;letter-spacing:.02em}
+.caso .tag{font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--terra)}
+.caso .desc{color:var(--taupe);font-size:13.5px;max-width:34ch;margin:0}
+.caso .num{font-size:11.5px;color:rgba(235,224,209,.42);font-variant-numeric:tabular-nums}
+.caso.escolhido .tag{color:var(--creme)}
+.caso.escolhido h2::after{content:" ·  no site";font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);font-family:var(--sans)}
+
+footer{padding:8px clamp(20px,4vw,52px) 54px;color:var(--taupe);font-size:13px;max-width:80ch}
+footer strong{color:var(--creme);font-weight:500}
+.filtros{position:absolute;width:0;height:0;overflow:hidden}
+
+@media(prefers-reduced-motion:reduce){.caso img{filter:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>O lenço em vento suave — três intensidades</h1>
+  <p>A ondulação vem de um filtro SVG (<code>feTurbulence</code> + <code>feDisplacementMap</code>): a turbulência empurra os pixels e as linhas desenhadas dobram como tecido. Em volta dela, três oscilações de períodos diferentes (subir, girar, inclinar) que nunca coincidem. Sem biblioteca extra — só o GSAP que a página já carrega.</p>
+</header>
+
+<div class="painel">
+  <span class="ctrl">Força <input type="range" id="forca" min="0.3" max="2" step="0.05" value="1"><b id="forcaVal">1.00×</b></span>
+  <button type="button" id="pausar" aria-pressed="false">Pausar</button>
+  <button type="button" id="lado">Comparar com o estático</button>
+</div>
+
+<div class="grade" id="grade">
+
+  <article class="caso escolhido" data-caso="brisa">
+    <figure><div class="tecido"><img src="assets/img/lenco-inteiro.webp" alt="Lenço com ondulação suave" style="filter:url(#f-brisa)"></div></figure>
+    <p class="tag">01</p>
+    <h2>Brisa</h2>
+    <p class="desc">Respiração. Você percebe que a peça está viva, mas nunca desvia do texto. É o que está no site.</p>
+    <p class="num" data-num></p>
+  </article>
+
+  <article class="caso" data-caso="vento">
+    <figure><div class="tecido"><img src="assets/img/lenco-inteiro.webp" alt="Lenço com ondulação marcada" style="filter:url(#f-vento)"></div></figure>
+    <p class="tag">02</p>
+    <h2>Vento</h2>
+    <p class="desc">Movimento evidente, quase de bandeira. Chama atenção para a peça — e distorce mais a tipografia da borda.</p>
+    <p class="num" data-num></p>
+  </article>
+
+  <article class="caso" data-caso="seda">
+    <figure><div class="tecido"><img src="assets/img/lenco-inteiro.webp" alt="Lenço com ondulação muito sutil" style="filter:url(#f-seda)"></div></figure>
+    <p class="tag">03</p>
+    <h2>Seda</h2>
+    <p class="desc">No limite do perceptível. Preserva a legibilidade da borda por completo — some se a pessoa não estiver olhando.</p>
+    <p class="num" data-num></p>
+  </article>
+
+</div>
+
+<footer>
+  <p><strong>Como escolher:</strong> olhe primeiro para a borda do lenço, onde corre o manifesto. Se o texto ficar difícil de acompanhar, o vento está forte demais para uma peça que existe para ser lida. Me diga o nome (ou o número da força) e eu aplico na página.</p>
+  <p style="margin-top:14px"><strong>Se quiser ir além:</strong> dá para trocar o filtro SVG por um plano em WebGL com deformação de tecido de verdade (dobra que se propaga, sombra que acompanha). Fica bem mais convincente, mas custa ~150 KB de biblioteca e precisa de um plano B para aparelhos sem WebGL. Este comparador não carrega nada além do que a página já usa.</p>
+</footer>
+
+<svg class="filtros" aria-hidden="true" width="0" height="0"><defs>
+  <filter id="f-brisa" x="-6%" y="-6%" width="112%" height="112%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.0062 0.0115" numOctaves="2" seed="7" stitchTiles="stitch" result="r"/>
+    <feDisplacementMap in="SourceGraphic" in2="r" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="f-vento" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.0070 0.0130" numOctaves="2" seed="3" stitchTiles="stitch" result="r"/>
+    <feDisplacementMap in="SourceGraphic" in2="r" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="f-seda" x="-4%" y="-4%" width="108%" height="108%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.0040 0.0080" numOctaves="2" seed="11" stitchTiles="stitch" result="r"/>
+    <feDisplacementMap in="SourceGraphic" in2="r" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</defs></svg>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script>
+(function () {
+  var CASOS = {
+    brisa: { escala: [7, 14],  freq: ['0.0055 0.010', '0.0080 0.0150'], sobe: 6,  gira: 1.1, incl: 2.2 },
+    vento: { escala: [12, 26], freq: ['0.0070 0.013', '0.0105 0.0200'], sobe: 11, gira: 2.0, incl: 4.0 },
+    seda:  { escala: [5, 11],  freq: ['0.0040 0.008', '0.0062 0.0120'], sobe: 4,  gira: 0.7, incl: 1.4 }
+  };
+
+  var mestre = gsap.timeline();
+  var forca = 1;
+  var linhas = [];
+
+  Object.keys(CASOS).forEach(function (nome) {
+    var v = CASOS[nome];
+    var art = document.querySelector('[data-caso="' + nome + '"]');
+    var filtro = document.getElementById('f-' + nome);
+    var ruido = filtro.querySelector('feTurbulence');
+    var desloc = filtro.querySelector('feDisplacementMap');
+    var tecido = art.querySelector('.tecido');
+    var saida = art.querySelector('[data-num]');
+
+    gsap.set(desloc, { attr: { scale: v.escala[0] } });
+    gsap.set(ruido, { attr: { baseFrequency: v.freq[0] } });
+
+    var tl = gsap.timeline({ repeat: -1 });
+    tl.to(desloc, { attr: { scale: v.escala[1] }, duration: 3.1, ease: 'sine.inOut', yoyo: true, repeat: -1 }, 0)
+      .to(ruido,  { attr: { baseFrequency: v.freq[1] }, duration: 4.3, ease: 'sine.inOut', yoyo: true, repeat: -1 }, 0)
+      .to(tecido, { y: -v.sobe, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1 }, 0)
+      .to(tecido, { rotate: v.gira, duration: 2.05, ease: 'sine.inOut', yoyo: true, repeat: -1 }, .8)
+      .to(tecido, { skewY: v.incl * .35, duration: 3.35, ease: 'sine.inOut', yoyo: true, repeat: -1 }, 1.7);
+
+    mestre.add(tl, 0);
+    linhas.push({ nome: nome, v: v, desloc: desloc, saida: saida });
+  });
+
+  function mostrarNumeros() {
+    linhas.forEach(function (l) {
+      l.saida.textContent = 'deslocamento ' + (l.v.escala[0] * forca).toFixed(1)
+        + '–' + (l.v.escala[1] * forca).toFixed(1) + ' px · sobe ' + (l.v.sobe * forca).toFixed(1) + ' px';
+    });
+  }
+  mostrarNumeros();
+
+  var slider = document.getElementById('forca'), val = document.getElementById('forcaVal');
+  slider.addEventListener('input', function () {
+    forca = parseFloat(slider.value);
+    val.textContent = forca.toFixed(2) + '×';
+    // timeScale mantém as proporções; a amplitude entra na escala do wrapper
+    document.querySelectorAll('.caso .tecido').forEach(function (t) {
+      gsap.set(t, { scale: 1 });
+    });
+    linhas.forEach(function (l) {
+      gsap.set(l.desloc, { attr: { scale: l.v.escala[0] * forca } });
+    });
+    mestre.pause(0);
+    mestre.timeScale(1).play();
+    mostrarNumeros();
+  });
+
+  var btn = document.getElementById('pausar');
+  btn.addEventListener('click', function () {
+    var parado = btn.getAttribute('aria-pressed') === 'true';
+    btn.setAttribute('aria-pressed', String(!parado));
+    btn.textContent = parado ? 'Pausar' : 'Voltar a animar';
+    parado ? mestre.play() : mestre.pause();
+  });
+
+  var lado = document.getElementById('lado'), comparando = false;
+  lado.addEventListener('click', function () {
+    comparando = !comparando;
+    lado.setAttribute('aria-pressed', String(comparando));
+    lado.textContent = comparando ? 'Voltar ao vento' : 'Comparar com o estático';
+    document.querySelectorAll('.caso img').forEach(function (im, i) {
+      im.style.filter = comparando ? 'none' : ['url(#f-brisa)', 'url(#f-vento)', 'url(#f-seda)'][i];
+    });
+    comparando ? mestre.pause() : mestre.play();
+  });
+})();
+</script>
+</body>
+</html>

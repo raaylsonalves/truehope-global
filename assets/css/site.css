@@ -1,0 +1,768 @@
+/* ==========================================================================
+   TRUEHOPE — Masterclass 08.10.2026
+   Sistema visual derivado do brandbook oficial (Apresentação - TrueHope.pdf)
+   ========================================================================== */
+
+:root{
+  /* paleta amostrada do brandbook */
+  --tinta:#1F221A;      /* CMYK  9,  0, 26, 86 */
+  --oliva:#464A33;      /* CMYK  7,  0, 32, 71 */
+  --vinho:#4F1C0A;      /* CMYK  0, 65, 86, 69 */
+  --terra:#7B3620;      /* CMYK  0, 56, 73, 51 */
+  --taupe:#806453;      /* CMYK  0, 21, 34, 50 */
+  --creme:#EBE0D1;      /* CMYK  0,  4, 11,  8 */
+
+  /* tons derivados, para respiro editorial */
+  --papel:#F4EFE6;
+  --papel-2:#EEE7DA;
+  --tinta-suave:#4A4438;
+  --linha:rgba(31,34,26,.14);
+  --linha-clara:rgba(235,224,209,.16);
+
+  --display:"Bodoni Moda",Didot,"Times New Roman",Georgia,serif;
+  /* Didot "de verdade" só existe como fonte de sistema (Mac/Adobe) — quase
+     ninguém tem instalada, então pedir ela primeiro só troca a fonte pra
+     quem abre no Mac e deixa todo o resto (a maioria) sem controle sobre
+     o resultado. Bodoni Moda direto: é a mesma família Didone (mesmo
+     contraste de traço, mesmas serifas retas) e todo mundo vê igual. */
+  --hero-serif:"Bodoni Moda","Times New Roman",Georgia,serif;
+  --voz:"Cormorant Garamond",Georgia,serif;
+  --sans:"Satoshi",-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
+  /* Mistrully (a fonte real do adesivo) é uma fonte paga — sem o arquivo
+     licenciado, usamos a Beau Rivage (Google Fonts, grátis) como a dupla
+     mais próxima: mesmo traço de pincel monolinha, mesma inclinação solta. */
+  --assinatura:"Beau Rivage",cursive;
+
+  --ease:cubic-bezier(.22,1,.36,1);
+  --gut:clamp(20px,5vw,64px);
+  --max:1480px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body,h1,h2,h3,h4,p,figure,ul,li,blockquote{margin:0;padding:0}
+ul{list-style:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+
+html,body{overscroll-behavior-y:none}
+body{
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  color:var(--tinta);
+  background:var(--papel);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+body.travado{overflow:hidden;height:100svh}
+
+::selection{background:var(--terra);color:var(--papel)}
+
+:focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:1px}
+
+/* --------------------------------------------------------- tipografia base */
+/* line-height 1.02: leading curto de revista, mas com folga para os acentos
+   das caixas altas (Í, Ç, Ã) — abaixo disso a máscara de revelação corta. */
+.display{
+  font-family:var(--display);
+  font-weight:400;
+  line-height:1.02;
+  letter-spacing:-.02em;
+  text-transform:uppercase;
+}
+.voz{font-family:var(--voz);font-style:italic;line-height:1.45}
+
+.rotulo{
+  font-size:clamp(9.5px,1.05vw,11px);
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--terra);
+}
+.rotulo--claro{color:var(--taupe)}
+
+.regra{height:1px;background:var(--linha);border:0;margin:0}
+.regra--clara{background:var(--linha-clara)}
+
+.env{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.secao{padding-block:clamp(88px,14vh,190px)}
+
+/* Reveal — estado inicial aplicado só quando o JS assume o controle */
+.js .rv{opacity:0}
+
+/* ================================================================ PRELOADER */
+#preloader{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  background:var(--papel);
+}
+#preloader[hidden]{display:none}
+.pre-marca{display:grid;justify-items:center;gap:clamp(18px,2.4vw,28px)}
+.pre-mono{width:clamp(52px,7vw,78px);height:auto;overflow:visible}
+.pre-mono rect{fill:var(--vinho)}
+.pre-nome{
+  display:flex;
+  font-family:var(--sans);
+  font-weight:500;
+  font-size:clamp(10px,1.3vw,13px);
+  letter-spacing:.42em;
+  padding-left:.42em;
+  color:var(--vinho);
+}
+.pre-nome span{display:inline-block}
+.pre-barra{
+  width:clamp(120px,16vw,200px);
+  height:1px;
+  background:rgba(79,28,10,.2);
+  overflow:hidden;
+}
+.pre-barra i{display:block;height:100%;width:100%;background:var(--vinho);transform:scaleX(0);transform-origin:left}
+/* cortinas que abrem para revelar a página */
+.pre-cortina{position:fixed;inset:0;z-index:999;pointer-events:none;display:flex}
+.pre-cortina i{flex:1;background:var(--papel)}
+.pre-cortina[hidden]{display:none}
+
+/* ====================================================================== NAV */
+/* pílula flutuante, descolada das bordas — não é mais uma barra de ponta a
+   ponta. Some ao rolar pra baixo, volta ao rolar pra cima (ver nav() no JS);
+   sem JS ela simplesmente fica fixa e visível. */
+.nav{
+  position:fixed;
+  top:clamp(14px,2.6vh,26px);
+  left:0;right:0;margin-inline:auto;
+  width:max-content;max-width:calc(100vw - var(--gut) * 2);
+  z-index:80;
+  display:flex;
+  align-items:center;
+  gap:clamp(10px,2vw,22px);
+  padding:9px 14px 9px 20px;
+  border-radius:999px;
+  background:rgba(244,239,230,.86);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--linha);
+  box-shadow:0 18px 40px rgba(31,34,26,.14);
+  /* centralizado por left:0;right:0;margin-inline:auto (não por
+     transform/translate): o GSAP escreve na `transform` pra esconder/
+     mostrar e zera qualquer `translate` independente ao fazer isso —
+     centralizar com translate:-50% aqui era apagado pelo próprio JS. */
+  will-change:transform;
+}
+.js .nav{transform:translateY(-130%)}
+.nav__marca{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex:none}
+.nav__mono{width:14px;height:auto}
+.nav__mono rect{fill:var(--vinho)}
+.nav__nome{
+  font-size:11px;font-weight:500;letter-spacing:.28em;padding-left:.28em;color:var(--vinho);
+}
+.nav__menu{display:flex;align-items:center;gap:clamp(14px,2vw,24px);padding-inline:clamp(6px,1.4vw,16px)}
+.nav__menu a{
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-suave);
+  text-decoration:none;position:relative;padding-bottom:2px;
+}
+.nav__menu a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--vinho);
+  transition:right .3s var(--ease);
+}
+.nav__menu a:hover::after,.nav__menu a:focus-visible::after{right:0}
+.nav .btn--fino{flex:none;padding-block:9px}
+
+/* sanduíche: só existe quando o menu em linha já saiu (<900px) — sempre o
+   último item da pílula, encostado na borda direita, como um botão de
+   ícone normal (mesma folga da borda esquerda da marca). */
+.nav__burger{
+  display:none;flex:none;
+  width:34px;height:34px;
+  /* margin-left:auto empurra ele pra ponta direita da pílula — sem isso,
+     nas telas em que a pílula vira uma barra cheia (`left/right:var(--gut)`
+     lá embaixo), a marca+CTA ficam agrupadas à esquerda e o sanduíche
+     sobra encostado nelas, com um vão vazio até a borda. */
+  margin-left:auto;
+  border:0;background:none;cursor:pointer;
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;
+}
+.nav__burger span{display:block;width:18px;height:1px;background:var(--tinta);transition:transform .3s var(--ease),opacity .3s var(--ease)}
+.nav__burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav__burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav__burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* painel do menu mobile: pendurado por baixo da pílula, mesmo material */
+.nav__drawer{
+  display:none;
+  /* fixed e fora do #nav (ver comentário no HTML) — top/right vêm do JS,
+     calculados a partir do retângulo real da pílula na hora de abrir. */
+  position:fixed;z-index:80;
+  width:min(240px,calc(100vw - var(--gut) * 2));
+  flex-direction:column;gap:2px;
+  padding:10px;
+  border-radius:20px;
+  background:rgba(244,239,230,.96);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--linha);
+  box-shadow:0 18px 40px rgba(31,34,26,.14);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .25s var(--ease),transform .25s var(--ease),visibility .25s;
+  pointer-events:none;
+}
+.nav__drawer.aberto{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+.nav__drawer a{
+  padding:12px 14px;border-radius:12px;
+  font-size:13px;letter-spacing:.04em;color:var(--tinta-suave);text-decoration:none;
+}
+.nav__drawer a:hover,.nav__drawer a:focus-visible{background:var(--papel-2);color:var(--vinho)}
+
+@media(max-width:900px){
+  .nav__menu{display:none}
+  .nav__burger{display:flex}
+  .nav__drawer{display:flex}
+}
+@media(max-width:760px){
+  .nav{left:var(--gut);right:var(--gut);width:auto;max-width:none;padding-left:14px}
+  .nav__nome{display:none}
+  .nav .btn--fino{padding:9px 15px;font-size:11px}
+}
+
+/* ==================================================================== BOTÃO */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.8em;
+  border:0;
+  cursor:pointer;
+  text-decoration:none;
+  font-family:var(--sans);
+  font-size:clamp(10.5px,1.1vw,12px);
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  padding:14px 22px;
+  background:var(--vinho);
+  color:var(--papel);
+  position:relative;
+  overflow:hidden;
+  transition:color .45s var(--ease);
+}
+.btn::before{
+  content:"";position:absolute;inset:0;background:var(--terra);
+  transform:scaleY(0);transform-origin:bottom;
+  transition:transform .45s var(--ease);
+}
+.btn:hover::before{transform:scaleY(1)}
+.btn>*{position:relative}
+.btn--fino{padding:11px 18px}
+.btn--vazado{background:transparent;color:var(--papel);box-shadow:inset 0 0 0 1px rgba(235,224,209,.4)}
+.btn--vazado:hover{color:var(--tinta)}
+.btn--vazado::before{background:var(--creme)}
+.btn__seta{width:.85em;height:.85em;flex:none}
+
+/* =================================================================== HERO */
+.hero{position:relative}
+/* 230svh: 130% de rolagem extra além da tela — dá espaço real para o
+   convite subir cobrindo a foto aos poucos. Com menos que isso (165svh
+   testado antes) o gesto acontece rápido demais para ser percebido. */
+.js .hero{height:230svh}
+.hero__palco{
+  position:sticky;top:0;
+  height:100svh;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:var(--papel-2);
+}
+/* fundo: o pátio de arcos, em leve paralaxe */
+.hero__fundo{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero__fundo img{
+  width:100%;height:100%;object-fit:cover;object-position:62% 50%;
+  will-change:transform;
+}
+/* véu de papel: garante contraste do título sobre as áreas mais claras da
+   foto sem lavar a arquitetura */
+.hero__veu{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(100deg, rgba(244,239,230,.30) 0%, rgba(244,239,230,.10) 42%, rgba(244,239,230,.62) 100%),
+    linear-gradient(rgba(244,239,230,.34), rgba(244,239,230,0) 34%),
+    /* pé do hero: sustenta a legibilidade da data e do endereço */
+    linear-gradient(rgba(244,239,230,0) 68%, rgba(244,239,230,.58) 100%);
+}
+/* Em tela estreita o `cover` amplia tanto que sobra só a parede lisa;
+   este enquadramento traz a passagem em arco de volta para o quadro. */
+@media(max-width:760px){
+  .hero__fundo img{object-position:78% 42%}
+  /* O texto troca de lado no mobile, então o véu também: mais papel à
+     esquerda, onde antes ficava a sombra da coluna atrás do título. */
+  .hero__veu{
+    background:
+      linear-gradient(95deg, rgba(244,239,230,.72) 0%, rgba(244,239,230,.46) 52%, rgba(244,239,230,.14) 100%),
+      linear-gradient(rgba(244,239,230,.30), rgba(244,239,230,0) 30%),
+      linear-gradient(rgba(244,239,230,0) 66%, rgba(244,239,230,.55) 100%);
+  }
+}
+.hero__conteudo{
+  position:relative;z-index:2;
+  width:100%;max-width:var(--max);
+  padding-inline:var(--gut);
+  display:grid;
+  gap:clamp(22px,3vw,36px);
+  justify-items:end;
+  text-align:right;
+}
+/* vinho no lugar do terracota: sobre a foto, o terracota cai a 3,6:1 nas
+   sombras da folhagem — abaixo do mínimo para texto pequeno */
+.hero__eyebrow{display:flex;flex-wrap:wrap;gap:.9em;align-items:center;justify-content:flex-end;color:var(--vinho)}
+.hero__eyebrow i{display:block;width:clamp(24px,4vw,54px);height:1px;background:var(--vinho);opacity:.55}
+.hero__titulo{
+  font-family:var(--hero-serif);
+  font-size:clamp(37px,7.7vw,106px);
+  max-width:13ch;
+}
+.hero__titulo .ln{display:block}
+/* a linha de fecho vira assinatura — a mesma caligrafia dos adesivos de
+   piso — puxada para cima e levemente rodada, como no adesivo: ela cruza
+   o respiro acima de "arquiteto" em vez de nascer depois dele, mas sem
+   pousar sobre as letras (o traço fino do script passa pelo vão do "o"
+   e pelo espaço entre as palavras, nunca por cima da tinta). */
+.hero__titulo .ln--assinatura{
+  display:block;
+  font-family:var(--assinatura);
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:0;
+  font-size:1.5em;
+  line-height:1;
+  color:var(--vinho);
+  margin-top:-.34em;
+  transform:rotate(-3.2deg);
+  transform-origin:right bottom;
+}
+.hero__rodape{
+  display:flex;flex-wrap:wrap;gap:.7em clamp(14px,2.4vw,26px);
+  align-items:center;justify-content:flex-end;
+  font-size:clamp(10.5px,1.15vw,12.5px);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--tinta);
+}
+.hero__rodape b{font-weight:500;color:var(--vinho)}
+.hero__rodape i{display:block;width:3px;height:3px;background:var(--taupe);border-radius:50%;opacity:.7}
+@media(max-width:760px){
+  .hero__conteudo{justify-items:start;text-align:left}
+  .hero__eyebrow,.hero__rodape{justify-content:flex-start}
+  .hero__titulo{max-width:11ch}
+  .hero__titulo .ln--assinatura{transform-origin:left bottom;transform:rotate(-3.2deg)}
+}
+
+/* ================================================================= CONVITE */
+.convite{background:var(--papel);position:relative;z-index:2}
+/* o hero reserva 130svh extras (230svh - 100svh de tela) só para dar
+   tempo de pinar a foto; sem isso o convite nasceria bem depois que a
+   foto já tinha soltado do sticky, e a "cobertura" nunca era vista.
+   Essa margem negativa puxa o convite pra cima, pra dentro dessa área
+   extra, então ele sobe por cima da foto ainda fixa. */
+.js .convite{margin-top:-130svh}
+/* o `svh` some/volta junto com a barra de endereço do Safari — em tela alta
+   e estreita isso descalibra a margem negativa (ora sobra vão vazio, ora
+   falta). Base de segurança: no celular a foto do hero não fica fixa, ela
+   sobe junto com o resto — sem pin, sem cálculo de margem, sem vão vazio
+   em navegador algum. Isso tem que vir DEPOIS das regras acima pra
+   realmente ganhar a cascata (mesma especificidade). */
+@media(max-width:760px){
+  .js .hero{height:auto}
+  .hero__palco{position:static;height:100svh}
+  .js .convite{margin-top:0}
+}
+/* Por cima dessa base, religamos o efeito onde `dvh` existe: diferente do
+   `svh` (fixo na MENOR altura possível), o `dvh` se recalcula ao vivo
+   conforme a barra do Safari abre/fecha — a margem negativa nunca fica
+   descalibrada porque ela encolhe/cresce junto com a própria altura do
+   hero. `@supports` garante que um navegador sem `dvh` nem chegue a ler
+   isto e fique na base estável acima. */
+@supports (height: 100dvh){
+  @media(max-width:760px){
+    .js .hero{height:210dvh}
+    .hero__palco{position:sticky;top:0;height:100dvh}
+    .js .convite{margin-top:-110dvh}
+  }
+}
+/* a borda que "sobe cobrindo" o hero: sem ela a costura entre a foto e o
+   papel fica seca — a sombra lê como a folha se levantando por cima */
+.convite::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:56px;
+  transform:translateY(-100%);
+  background:linear-gradient(to top, rgba(31,34,26,.14), transparent);
+  pointer-events:none;
+}
+.convite__grade{
+  display:grid;
+  grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+  gap:clamp(28px,6vw,96px);
+  align-items:start;
+}
+/* sem fundo próprio: a moldura é sticky e deixaria uma faixa visível acima */
+.convite__figura{position:relative}
+.convite__figura img{width:100%;height:100%;object-fit:cover;transform:scale(1.16);will-change:transform}
+.convite__moldura{position:sticky;top:clamp(78px,12vh,120px);aspect-ratio:3/4;overflow:hidden;background:var(--papel-2)}
+.convite__legenda{
+  margin-top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe);
+}
+.convite__texto{display:grid;gap:clamp(22px,3vw,34px);padding-top:clamp(0px,2vw,26px)}
+.convite__chamada{
+  font-family:var(--display);
+  font-weight:400;
+  font-size:clamp(21px,2.5vw,32px);
+  line-height:1.24;
+  letter-spacing:-.01em;
+  position:relative;
+  padding-left:clamp(16px,2vw,26px);
+}
+.convite__chamada::before{
+  content:"";position:absolute;left:0;top:.18em;bottom:.18em;width:1px;background:var(--terra);
+}
+.convite__corpo{
+  font-size:clamp(15px,1.5vw,17.5px);
+  line-height:1.72;
+  color:var(--tinta-suave);
+  max-width:52ch;
+}
+.convite__corpo + .convite__corpo{margin-top:-.4em}
+.convite__corpo b{font-weight:500;color:var(--tinta)}
+.convite__assinatura{
+  font-family:var(--voz);font-style:italic;
+  font-size:clamp(18px,2vw,23px);color:var(--terra);
+}
+@media(max-width:860px){
+  .convite__grade{grid-template-columns:1fr}
+  .convite__moldura{position:relative;top:0;aspect-ratio:4/5}
+}
+
+/* =============================================================== MANIFESTO */
+.manifesto{background:var(--tinta);color:var(--creme);position:relative;overflow:hidden}
+.manifesto .rotulo{color:var(--taupe)}
+.manifesto__lista{display:grid;gap:clamp(38px,6vh,86px);margin-top:clamp(38px,6vh,72px)}
+/* A medida vive na própria frase: `ch` no bloco resolveria contra a Satoshi
+   de 16px e espremeria o display em colunas estreitas demais. */
+.manifesto__bloco{width:fit-content;max-width:100%}
+.manifesto__bloco:nth-child(even){justify-self:end;text-align:right}
+.manifesto__frase{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(28px,5.2vw,70px);
+  line-height:1.06;letter-spacing:-.015em;
+  max-width:11.5em;
+}
+.manifesto__bloco:nth-child(even) .manifesto__frase{max-width:9.5em;margin-left:auto}
+.manifesto__frase em{font-family:var(--voz);font-style:italic;text-transform:none;letter-spacing:0;color:var(--terra)}
+.manifesto__nota{
+  margin-top:clamp(12px,1.6vw,18px);
+  font-size:clamp(13px,1.35vw,15px);line-height:1.65;color:rgba(235,224,209,.6);max-width:34ch;
+}
+.manifesto__bloco:nth-child(even) .manifesto__nota{margin-left:auto}
+.manifesto__selo{
+  margin-top:clamp(54px,8vh,110px);
+  padding-top:clamp(22px,3vw,34px);
+  border-top:1px solid var(--linha-clara);
+  display:flex;flex-wrap:wrap;gap:12px 28px;align-items:baseline;justify-content:space-between;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe);
+}
+.manifesto__selo b{font-family:var(--display);font-size:15px;letter-spacing:.3em;color:var(--creme);font-weight:400}
+
+/* ================================================================= SÍMBOLO */
+/* Cinco slides — cada um a própria cor de fundo, a foto inteira e sempre
+   visível (object-fit:contain: nada é cortado) e o texto ao lado. No modo
+   horizontal, os slides ficam empilhados exatamente no mesmo lugar e o
+   scroll faz o próximo cobrir o de baixo, entrando pela direita — não é
+   mais um trilho de fotos lado a lado, é uma pilha de cartas.
+   Sem JS / movimento reduzido, vira uma coluna normal, um card por vez. */
+.simbolo{position:relative;background:var(--tinta)}
+.simbolo__palco{position:relative;display:grid;align-items:center;padding-block:clamp(60px,10vh,120px)}
+.simbolo.horiz .simbolo__palco{height:100svh;overflow:hidden;padding-block:0}
+
+ /* Título da seção: serve à versão empilhada (sem JS / movimento reduzido).
+   No modo horizontal sai de cena — cada slide já carrega o próprio rótulo
+   numerado, e o fundo colorido de cada um já assina a seção. */
+.simbolo__selo{
+  padding-inline:var(--gut);margin-bottom:clamp(22px,4vh,40px);
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe);
+}
+.simbolo.horiz .simbolo__selo{display:none}
+
+.simbolo__fita{
+  display:flex;flex-direction:column;row-gap:clamp(28px,4vh,48px);
+}
+/* modo empilhado: os cinco slides ocupam o mesmo retângulo, um sobre o
+   outro — quem está por cima é quem a rolagem decidiu revelar por último */
+.simbolo.horiz .simbolo__fita{position:relative;display:block;height:100%}
+
+.quadro{
+  position:relative;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  align-items:center;gap:clamp(24px,4vw,64px);
+  padding:clamp(28px,5vw,64px);
+  border-radius:2px;
+  background:var(--tinta);color:var(--creme);
+}
+.quadro[data-cor="vinho"]{background:var(--vinho);color:var(--creme)}
+.quadro[data-cor="oliva"]{background:var(--oliva);color:var(--creme)}
+.quadro[data-cor="terra"]{background:var(--terra);color:var(--creme)}
+.quadro[data-cor="tinta"]{background:var(--tinta);color:var(--creme)}
+.quadro[data-cor="papel"]{background:var(--papel);color:var(--tinta)}
+
+.simbolo.horiz .quadro{
+  position:absolute;inset:0;width:100%;height:100%;border-radius:0;
+  will-change:transform;
+}
+/* cada slide entra por cima do anterior — a ordem no DOM já é a ordem de
+   pilha (o de baixo primeiro), então o z-index só precisa crescer */
+.simbolo.horiz .quadro:nth-child(1){z-index:1}
+.simbolo.horiz .quadro:nth-child(2){z-index:2}
+.simbolo.horiz .quadro:nth-child(3){z-index:3}
+.simbolo.horiz .quadro:nth-child(4){z-index:4}
+.simbolo.horiz .quadro:nth-child(5){z-index:5}
+
+/* a foto nunca é cortada: cabe inteira dentro da própria coluna */
+.quadro__foto{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  max-height:78svh;
+}
+.quadro__foto img{
+  max-width:100%;max-height:78svh;width:auto;height:auto;object-fit:contain;
+  box-shadow:0 30px 70px rgba(0,0,0,.28);
+}
+
+.quadro__texto{
+  position:relative;z-index:2;
+  display:grid;gap:clamp(12px,1.6vw,20px);align-content:center;
+  max-width:32em;
+}
+
+.quadro__n{
+  display:flex;align-items:center;gap:.9em;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.72;
+}
+.quadro__n i{display:block;width:clamp(20px,3vw,44px);height:1px;background:currentColor;opacity:.5}
+.quadro__titulo{
+  font-family:var(--display);font-weight:400;text-transform:uppercase;
+  font-size:clamp(26px,4vw,50px);line-height:1.04;letter-spacing:-.015em;
+}
+.quadro__corpo{font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.7;opacity:.88}
+
+.simbolo__progresso{display:none}
+.simbolo.horiz .simbolo__progresso{
+  display:block;position:absolute;left:var(--gut);right:var(--gut);
+  bottom:clamp(28px,5vh,58px);height:1px;background:rgba(235,224,209,.24);z-index:9;
+}
+.simbolo__progresso i{display:block;height:100%;background:var(--creme);transform:scaleX(0);transform-origin:left}
+
+/* No mobile a imagem e a descrição continuam lado a lado, como no
+   desktop — só encolhem: menos respiro, coluna de texto mais estreita. */
+@media(max-width:860px){
+  .quadro{gap:clamp(14px,3vw,26px)}
+  .simbolo.horiz .quadro{padding:clamp(20px,6vh,48px) clamp(16px,4vw,var(--gut))}
+  .quadro__foto{max-height:56svh}
+  .quadro__foto img{max-height:56svh}
+  .quadro__titulo{font-size:clamp(18px,5.2vw,28px)}
+  .quadro__corpo{font-size:12.5px;line-height:1.55}
+  .quadro__n{font-size:9.5px;gap:.6em}
+  .quadro__n i{width:16px}
+}
+@media(max-width:560px){
+  .quadro{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+  .quadro__foto{max-height:48svh}
+  .quadro__foto img{max-height:48svh}
+}
+
+/* ================================================================= COLEÇÃO */
+.colecao{background:var(--papel);position:relative}
+.colecao__intro{display:grid;gap:clamp(16px,2vw,26px);max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.colecao__titulo{font-size:clamp(32px,6.4vw,86px);max-width:12ch}
+.colecao__texto{font-size:clamp(15px,1.5vw,17.5px);line-height:1.7;color:var(--tinta-suave);max-width:46ch}
+
+/* Padrão (sem JS ou com movimento reduzido): as peças embrulham em grade.
+   O modo horizontal é ligado pelo JS, que fixa o palco via ScrollTrigger. */
+.trilho{position:relative}
+.trilho__palco{position:relative;display:flex;align-items:center;padding-block:clamp(20px,4vh,48px)}
+.trilho__fita{
+  display:flex;flex-wrap:wrap;justify-content:center;row-gap:clamp(26px,4vh,52px);
+  column-gap:clamp(14px,2.4vw,34px);padding-inline:var(--gut);will-change:transform;
+}
+.trilho.horiz .trilho__palco{height:100svh;overflow:hidden;padding-block:0}
+.trilho.horiz .trilho__fita{flex-wrap:nowrap;justify-content:flex-start}
+/* todas as sete peças na mesma proporção — sem alternância de altura,
+   sem numeral: a moldura fica limpa, só a foto */
+.peca{flex:none;width:clamp(240px,30vw,400px);display:grid;gap:14px;align-content:start}
+.peca__moldura{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--papel-2)}
+.peca__moldura img{width:100%;height:100%;object-fit:cover;transform:scale(1.1);will-change:transform}
+.peca__nome{font-family:var(--display);font-weight:400;font-size:clamp(17px,1.8vw,22px);line-height:1.15}
+.peca__desc{font-size:13px;line-height:1.55;color:var(--taupe);max-width:30ch}
+.trilho__progresso{display:none}
+.trilho.horiz .trilho__progresso{
+  display:block;
+  position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(28px,5vh,58px);
+  height:1px;background:var(--linha);
+}
+.trilho__progresso i{display:block;height:100%;background:var(--vinho);transform:scaleX(0);transform-origin:left}
+
+/* ==================================================================== VOZES */
+.vozes{background:var(--papel-2)}
+.vozes__topo{
+  display:flex;flex-wrap:wrap;gap:14px 28px;align-items:baseline;justify-content:space-between;
+  padding-bottom:clamp(24px,3.4vw,40px);
+}
+.vozes__titulo{font-size:clamp(32px,6.4vw,86px)}
+/* Duas colunas fixas: o índice precisa correr 01→08 na leitura,
+   e o auto-fit embaralhava a ordem sempre que cabiam três colunas. */
+.vozes__lista{display:grid;grid-template-columns:1fr;column-gap:clamp(24px,5vw,80px)}
+@media(min-width:720px){.vozes__lista{grid-template-columns:1fr 1fr}}
+.voz-item{
+  display:flex;align-items:baseline;gap:clamp(12px,2vw,22px);
+  padding-block:clamp(15px,2vw,24px);
+  border-top:1px solid var(--linha);
+}
+.voz-item__n{font-size:10px;letter-spacing:.18em;color:var(--taupe);flex:none;width:2.2em}
+.voz-item__nome{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(19px,2.4vw,30px);line-height:1.1;letter-spacing:-.01em;
+}
+.vozes__nota{
+  margin-top:clamp(24px,3.4vw,40px);
+  font-family:var(--voz);font-style:italic;font-size:clamp(17px,2vw,23px);color:var(--terra);
+}
+
+/* =============================================================== PROGRAMAÇÃO */
+.prog{background:var(--papel)}
+.prog__grade{
+  display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
+  gap:clamp(26px,5vw,80px);align-items:start;
+}
+.prog__aside{display:grid;gap:clamp(14px,2vw,22px);position:sticky;top:clamp(84px,13vh,130px)}
+.prog__titulo{font-size:clamp(32px,5.4vw,72px);max-width:9ch}
+.prog__local{font-size:14.5px;line-height:1.7;color:var(--tinta-suave)}
+.prog__local b{font-weight:500;color:var(--tinta);display:block}
+.prog__lista{display:grid}
+.prog__item{
+  display:grid;grid-template-columns:clamp(58px,7vw,86px) 1fr;
+  gap:clamp(12px,2vw,24px);align-items:baseline;
+  padding-block:clamp(15px,2.2vw,24px);
+  border-top:1px solid var(--linha);
+}
+.prog__item:last-child{border-bottom:1px solid var(--linha)}
+.prog__hora{font-family:var(--display);font-size:clamp(14px,1.5vw,17px);color:var(--terra)}
+.prog__oque{font-size:clamp(15px,1.6vw,18px);line-height:1.45}
+.prog__oque small{display:block;margin-top:5px;font-size:12.5px;letter-spacing:.02em;color:var(--taupe)}
+@media(max-width:860px){
+  .prog__grade{grid-template-columns:1fr}
+  .prog__aside{position:relative;top:0}
+}
+
+/* ================================================================= FRENTES */
+.frentes{background:var(--oliva);color:var(--creme)}
+.frentes .rotulo{color:rgba(235,224,209,.62)}
+.frentes__topo{display:grid;gap:clamp(14px,2vw,22px);padding-bottom:clamp(30px,4.6vw,56px);max-width:min(100%,34em)}
+.frentes__titulo{font-size:clamp(30px,5.4vw,72px)}
+.frentes__texto{font-size:clamp(15px,1.5vw,17px);line-height:1.7;color:rgba(235,224,209,.76)}
+.frentes__grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1px;background:var(--linha-clara)}
+.frente{
+  position:relative;
+  display:grid;gap:12px;align-content:start;
+  padding:clamp(22px,3vw,34px) clamp(20px,2.4vw,30px) clamp(60px,7vw,80px);
+  background:var(--oliva);
+  border:0;text-align:left;cursor:pointer;
+  color:inherit;
+  transition:background .5s var(--ease);
+  overflow:hidden;
+}
+.frente:hover,.frente:focus-visible{background:#3D412B}
+.frente__n{font-size:10px;letter-spacing:.24em;color:rgba(235,224,209,.5)}
+.frente__nome{
+  font-family:var(--display);font-weight:400;text-transform:uppercase;
+  font-size:clamp(20px,2.3vw,28px);line-height:1.14;letter-spacing:-.01em;
+}
+.frente__desc{font-size:13.5px;line-height:1.6;color:rgba(235,224,209,.72)}
+.frente__acao{
+  position:absolute;left:clamp(20px,2.4vw,30px);bottom:clamp(22px,3vw,32px);
+  display:flex;align-items:center;gap:.7em;
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--creme);
+}
+.frente__acao svg{width:.9em;height:.9em;transition:transform .45s var(--ease)}
+.frente:hover .frente__acao svg{transform:translateX(4px)}
+
+/* ==================================================================== MESA */
+.mesa{background:var(--tinta);color:var(--creme)}
+.mesa__grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,6vw,96px);align-items:start}
+.mesa .rotulo{color:var(--taupe)}
+.mesa__titulo{font-size:clamp(31px,5.2vw,68px);max-width:11ch;margin-top:clamp(14px,2vw,22px)}
+.mesa__citacao{
+  margin-top:clamp(20px,3vw,32px);
+  padding-left:clamp(14px,2vw,22px);
+  border-left:1px solid var(--terra);
+  font-family:var(--voz);font-style:italic;
+  font-size:clamp(17px,2vw,24px);line-height:1.45;color:rgba(235,224,209,.82);max-width:30ch;
+}
+.mesa__contato{
+  margin-top:clamp(26px,4vw,44px);font-size:13px;line-height:1.75;color:var(--taupe);
+}
+.mesa__contato a{color:var(--creme);text-decoration:none;border-bottom:1px solid rgba(235,224,209,.3)}
+.mesa__contato a:hover{border-bottom-color:var(--terra)}
+
+.campo{display:grid;gap:7px;margin-bottom:clamp(18px,2.4vw,24px)}
+.campo>label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe)}
+.campo input,.campo select{
+  width:100%;background:transparent;border:0;border-bottom:1px solid rgba(235,224,209,.28);
+  padding:10px 0;font-family:var(--sans);font-size:16px;color:var(--creme);
+  border-radius:0;appearance:none;
+}
+.campo select{background-image:none;cursor:pointer}
+.campo select option{background:var(--tinta);color:var(--creme)}
+.campo input::placeholder{color:rgba(235,224,209,.3)}
+.campo input:focus,.campo select:focus{outline:none;border-bottom-color:var(--terra)}
+.campo__erro{display:none;font-size:12.5px;color:#D98B6C}
+.campo.invalido .campo__erro{display:block}
+.campo.invalido input,.campo.invalido select{border-bottom-color:#D98B6C}
+.campo--select{position:relative}
+.campo--select::after{
+  content:"";position:absolute;right:2px;bottom:19px;width:7px;height:7px;
+  border-right:1px solid var(--taupe);border-bottom:1px solid var(--taupe);
+  transform:rotate(45deg);pointer-events:none;
+}
+.consent{display:flex;gap:11px;align-items:flex-start;margin:clamp(6px,1.4vw,14px) 0 clamp(20px,3vw,28px)}
+.consent input{
+  flex:none;width:16px;height:16px;margin-top:2px;accent-color:var(--terra);
+  background:transparent;border:1px solid var(--taupe);
+}
+.consent label{font-size:12.5px;line-height:1.6;color:rgba(235,224,209,.7)}
+.mesa__privacidade{margin-top:clamp(16px,2.4vw,22px);font-size:11.5px;line-height:1.65;color:rgba(235,224,209,.45);max-width:44ch}
+.mesa__ok{display:none;margin-top:clamp(20px,3vw,30px)}
+.mesa__ok.on{display:grid;gap:14px}
+.mesa__ok p{font-family:var(--voz);font-style:italic;font-size:clamp(19px,2.2vw,26px);line-height:1.45}
+.mesa__ok small{font-size:12.5px;letter-spacing:.02em;color:var(--taupe);font-family:var(--sans);font-style:normal}
+@media(max-width:860px){.mesa__grade{grid-template-columns:1fr}}
+
+/* =================================================================== RODAPÉ */
+.rodape{background:var(--tinta);color:var(--taupe);padding-block:clamp(40px,7vh,84px);border-top:1px solid var(--linha-clara)}
+.rodape__grade{display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,50px);align-items:flex-end;justify-content:space-between}
+.rodape__marca{display:grid;gap:14px}
+.rodape__mono{width:26px;height:auto}
+.rodape__mono rect{fill:var(--creme)}
+.rodape__nome{font-size:12px;letter-spacing:.34em;padding-left:.34em;color:var(--creme)}
+.rodape__linha{font-size:11px;letter-spacing:.18em;text-transform:uppercase;line-height:1.9}
+.rodape__tags{font-size:11px;letter-spacing:.14em;color:rgba(235,224,209,.4)}
+
+/* ========================================================= reduzir movimento */
+@media(prefers-reduced-motion:reduce){
+  /* precisa do prefixo .js para vencer as regras `.js .hero{height:...}` —
+     media query não acrescenta especificidade */
+  .js .hero,.trilho,.simbolo{height:auto}
+  .js .convite{margin-top:0}
+  .hero__palco,.simbolo__palco,.trilho__palco{position:static;height:auto;padding-block:clamp(70px,12vh,140px)}
+  .simbolo__selo{position:static;margin-bottom:clamp(24px,4vh,44px);padding-inline:var(--gut)}
+  .hero__fundo img{transform:none}
+  .trilho__fita{flex-wrap:wrap;justify-content:center}
+  .trilho__progresso{display:none}
+  .convite__figura img,.peca__moldura img{transform:none}
+  .js .rv{opacity:1}
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}

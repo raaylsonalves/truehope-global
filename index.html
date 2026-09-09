@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRUEHOPE Masterclass · 08 de outubro de 2026</title>
+<meta name="description" content="Um brunch com desfile de lançamento da collab Truehope + Marci e uma convocação para um novo tempo. 8 de outubro de 2026, 13h30 — Avenida Tamboré, 74, Alphaville, São Paulo.">
+<meta name="theme-color" content="#F4EFE6">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="TRUEHOPE Masterclass · 08 de outubro de 2026">
+<meta property="og:description" content="A família é design divino. E o arquiteto ainda edifica. Um lugar à mesa é seu.">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preload" as="image" href="assets/img/hero-arcos.webp">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Beau+Rivage&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+/* Liga o modo animado antes da primeira pintura (evita o "flash" dos blocos
+   que entram com opacidade 0) e deixa uma rede de segurança: se o site.js não
+   assumir em 5s — CDN fora do ar, script bloqueado — a página volta ao estado
+   estático, legível e utilizável. */
+(function(){
+  var h = document.documentElement;
+  h.className += ' js';
+  setTimeout(function () {
+    if (window.__truehopePronto) return;
+    h.className = h.className.replace(/\bjs\b/, '');
+    var p = document.getElementById('preloader'); if (p) p.hidden = true;
+    var c = document.querySelector('.pre-cortina'); if (c) c.hidden = true;
+    if (document.body) document.body.classList.remove('travado');
+  }, 5000);
+})();
+</script>
+<noscript><style>#preloader,.pre-cortina{display:none!important}</style></noscript>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════ PRELOADER -->
+<div id="preloader" role="status" aria-live="polite" aria-label="Carregando">
+  <div class="pre-marca">
+    <svg class="pre-mono" viewBox="0 0 211 294" aria-hidden="true">
+      <rect class="m-travessa" x="0"   y="0"   width="211" height="33"/>
+      <rect class="m-chet"     x="90"  y="0"   width="33"  height="294"/>
+      <rect class="m-he"       x="155" y="65"  width="33"  height="207"/>
+      <rect class="m-trave"    x="123" y="151" width="32"  height="33"/>
+    </svg>
+    <div class="pre-nome" aria-hidden="true"><span>T</span><span>R</span><span>U</span><span>E</span><span>H</span><span>O</span><span>P</span><span>E</span></div>
+    <div class="pre-barra"><i></i></div>
+  </div>
+</div>
+<div class="pre-cortina" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+<!-- ════════════════════════════════════════════════════════════════════ NAV -->
+<header class="nav" id="nav">
+  <a class="nav__marca" href="#topo" aria-label="TRUEHOPE — início">
+    <svg class="nav__mono" viewBox="0 0 211 294" aria-hidden="true">
+      <rect x="0" y="0" width="211" height="33"/><rect x="90" y="0" width="33" height="294"/>
+      <rect x="155" y="65" width="33" height="207"/><rect x="123" y="151" width="32" height="33"/>
+    </svg>
+    <span class="nav__nome">TRUEHOPE</span>
+  </a>
+  <nav class="nav__menu" aria-label="Seções da página">
+    <a href="#convite">Convite</a>
+    <a href="#manifesto">Manifesto</a>
+    <a href="#colecao">Coleção</a>
+    <a href="#vozes">Vozes</a>
+    <a href="#programacao">Programação</a>
+  </nav>
+  <a class="btn btn--fino" href="#mesa" data-ir-mesa data-frente="inscricao"><span>Garantir meu lugar</span></a>
+  <button class="nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="navDrawer" aria-label="Abrir menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<!-- fora do #nav de propósito: o painel é `position:fixed` e tem largura
+     própria, alinhado pela DIREITA à pílula via JS (nav.js calcula o
+     right/top na hora de abrir) — dentro do #nav ele inflava a largura
+     `max-content` da pílula inteira e o sanduíche "sumia" pro meio. -->
+<nav class="nav__drawer" id="navDrawer" aria-label="Seções da página">
+  <a href="#convite">Convite</a>
+  <a href="#manifesto">Manifesto</a>
+  <a href="#colecao">Coleção</a>
+  <a href="#vozes">Vozes</a>
+  <a href="#programacao">Programação</a>
+  <a href="#frentes">Frentes</a>
+</nav>
+</header>
+
+<main id="topo">
+
+<!-- ═══════════════════════════════════════════════════════════════════ HERO -->
+<section class="hero" id="hero">
+  <div class="hero__palco">
+    <div class="hero__fundo" aria-hidden="true">
+      <img src="assets/img/hero-arcos.webp" width="1678" height="937" alt="" fetchpriority="high" decoding="async">
+      <span class="hero__veu"></span>
+    </div>
+
+    <div class="hero__conteudo">
+      <p class="hero__eyebrow rotulo" data-hero="1"><i aria-hidden="true"></i> Truehope Masterclass · Lançamento da collab com Marci</p>
+
+      <h1 class="hero__titulo display" data-hero="2">
+        <span class="ln">A família</span>
+        <span class="ln">é design</span>
+        <span class="ln">divino e o</span>
+        <span class="ln">arquiteto</span>
+        <span class="ln ln--assinatura">ainda edifica.</span>
+      </h1>
+
+      <p class="hero__rodape" data-hero="3">
+        <b>08 de outubro de 2026</b>
+        <i aria-hidden="true"></i> 13h30
+        <i aria-hidden="true"></i> Av. Tamboré, 74 — Alphaville, São Paulo
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════ CONVITE -->
+<section class="convite secao" id="convite">
+  <div class="env convite__grade">
+
+    <figure class="convite__figura">
+      <div class="convite__moldura" data-parallax>
+        <img src="assets/img/hero-costas.webp" width="1700" height="2779" alt="Modelo de costas vestindo a camisa da coleção com o bordado à mão: família design divino." fetchpriority="high">
+      </div>
+      <figcaption class="convite__legenda">Collab Truehope + Marci · peça bordada à mão</figcaption>
+    </figure>
+
+    <div class="convite__texto">
+      <p class="rotulo rv">O convite</p>
+
+      <p class="convite__chamada rv">Um brunch com desfile de lançamento da collab Truehope&nbsp;+&nbsp;Marci e uma convocação para um novo tempo. Você está convidado.</p>
+
+      <p class="convite__corpo rv"><b>TRUEHOPE é um movimento.</b> Nascido dentro da Global Awakening, fundado por Dani Rocha, a partir de uma convicção que não se negocia: a família é design divino e o que Deus desenha, Ele pode restaurar. Famílias podem ser reconstruídas. Gerações podem ser fortalecidas. E um futuro inteiro pode mudar de direção.</p>
+
+      <p class="convite__corpo rv">Chegou o tempo de reunir pessoas que acreditam nisso. Que sabem que uma casa curada não termina nela mesma: ela transborda para os filhos, para sua comunidade, para a geração seguinte.</p>
+
+      <p class="convite__corpo rv"><b>Um lugar à mesa é seu.</b> Existem conversas que mudam o rumo do futuro. Esta é uma delas. Queremos você conosco nesta masterclass, uma tarde inteira dedicada à família, aos relacionamentos, ao propósito e ao legado. Uma conversa honesta e transformadora, sobre como aquilo que edificamos hoje atravessa gerações.</p>
+
+      <p class="convite__corpo rv">A masterclass acontece dentro do VOA 2026, em São Paulo — um encontro de sete mil e quinhentas pessoas. Entre a mesa do brunch e a passarela do desfile, uma verdade simples vai atravessar a tarde.</p>
+
+      <p class="convite__assinatura rv">Beleza, estratégia e restauração pertencem ao mesmo desenho.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ MANIFESTO -->
+<section class="manifesto secao" id="manifesto">
+  <div class="env">
+    <p class="rotulo rv">O manifesto</p>
+
+    <div class="manifesto__lista">
+      <div class="manifesto__bloco">
+        <p class="manifesto__frase display" data-linhas>Vestimos uma convicção: a família é design divino.</p>
+        <p class="manifesto__nota rv">Antes de existir nação, antes de existir templo, Deus desenhou uma união sagrada. A família foi a primeira arquitetura.</p>
+      </div>
+
+      <div class="manifesto__bloco">
+        <p class="manifesto__frase display" data-linhas>Não aceitamos a narrativa da ruína.</p>
+        <p class="manifesto__nota rv">Rejeitamos o decreto de que a família está em declínio irreversível. Onde o mundo vê escombros, nós vemos terreno de reconstrução.</p>
+      </div>
+
+      <div class="manifesto__bloco">
+        <p class="manifesto__frase display" data-linhas>Os corações dos pais se voltarão aos filhos.</p>
+        <p class="manifesto__nota rv">As portas que se fecharam se abrirão. As mesas vazias voltarão a ser cercadas de amor, conexão e alegria.</p>
+      </div>
+
+      <div class="manifesto__bloco">
+        <p class="manifesto__frase display" data-linhas>O que foi partido será inteiro. <em>Shalom shalom.</em></p>
+        <p class="manifesto__nota rv">Nada faltando, nada quebrado, tudo em seu devido lugar. Cada lar se tornará o que foi criado para ser: refúgio, morada da Presença, herança para as próximas gerações.</p>
+      </div>
+
+      <div class="manifesto__bloco">
+        <p class="manifesto__frase display" data-linhas>Famílias serão reunidas. Restauradas. Curadas.</p>
+        <p class="manifesto__nota rv">Somos vozes que se levantam, casas que se reerguem, uma geração que decide construir de novo.</p>
+      </div>
+    </div>
+
+    <p class="manifesto__selo rv">
+      <b>TRUEHOPE · תִּקְוָה אֲמִתִּית</b>
+      <span>Movimento para família · Global Awakening</span>
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════ SÍMBOLO -->
+<section class="simbolo" id="simbolo" aria-label="O símbolo da Truehope">
+  <div class="simbolo__palco">
+    <p class="simbolo__selo">O símbolo</p>
+
+    <div class="simbolo__fita" id="simFita">
+
+      <article class="quadro" data-cor="tinta">
+        <figure class="quadro__foto">
+          <img src="assets/img/sim-01.webp" width="1100" height="1375" alt="Olhe de novo para o nosso símbolo: ele é feito de duas letras hebraicas." loading="lazy">
+        </figure>
+        <div class="quadro__texto">
+          <p class="quadro__n"><i aria-hidden="true"></i>01 · O símbolo</p>
+          <h3 class="quadro__titulo">Olhe de novo</h3>
+          <p class="quadro__corpo">O símbolo nunca foi só um monograma. É uma frase escrita em arquitetura — e quem lê uma vez não desvê.</p>
+        </div>
+      </article>
+
+      <article class="quadro" data-cor="vinho">
+        <figure class="quadro__foto">
+          <img src="assets/img/sim-02.webp" width="1100" height="1375" alt="Duas letras, um propósito: ח Chet, a porta da vida, e ה He, a letra da promessa." loading="lazy">
+        </figure>
+        <div class="quadro__texto">
+          <p class="quadro__n"><i aria-hidden="true"></i>02 · Duas letras</p>
+          <h3 class="quadro__titulo">Chet e He</h3>
+          <p class="quadro__corpo">Chet desenha uma entrada: duas colunas e uma travessa, a forma mais antiga de dizer que existe um dentro. He é a letra que Deus acrescentou aos nomes de Abraão e Sara — a letra que entra num nome e muda o que aquela vida é capaz de gerar.</p>
+        </div>
+      </article>
+
+      <article class="quadro" data-cor="oliva">
+        <figure class="quadro__foto">
+          <img src="assets/img/sim-03.webp" width="1100" height="1375" alt="Juntas, as duas letras formam um portal: existe uma porta, e ela está aberta." loading="lazy">
+        </figure>
+        <div class="quadro__texto">
+          <p class="quadro__n"><i aria-hidden="true"></i>03 · O portal</p>
+          <h3 class="quadro__titulo">Juntas, uma passagem</h3>
+          <p class="quadro__corpo">Onde as duas letras se encontram nasce uma passagem. Não é ornamento: é a promessa de que existe entrada — e de que ela não está trancada.</p>
+        </div>
+      </article>
+
+      <article class="quadro" data-cor="terra">
+        <figure class="quadro__foto">
+          <img src="assets/img/sim-04.webp" width="1100" height="1375" alt="O portal da promessa: quem entende o monograma nunca mais esquece a marca." loading="lazy">
+        </figure>
+        <div class="quadro__texto">
+          <p class="quadro__n"><i aria-hidden="true"></i>04 · A marca</p>
+          <h3 class="quadro__titulo">O portal da promessa</h3>
+          <p class="quadro__corpo">Por isso o monograma se explica uma vez e não se esquece mais. Ele carrega a tese inteira do movimento em quatro traços.</p>
+        </div>
+      </article>
+
+      <article class="quadro" data-cor="papel">
+        <figure class="quadro__foto">
+          <img src="assets/img/sim-05.webp" width="1100" height="1375" alt="A sua casa é onde se estabelece a promessa." loading="lazy">
+        </figure>
+        <div class="quadro__texto">
+          <p class="quadro__n"><i aria-hidden="true"></i>05 · A sua casa</p>
+          <h3 class="quadro__titulo">Onde a promessa se estabelece</h3>
+          <p class="quadro__corpo">A promessa não se estabelece num templo nem numa nação. Ela se estabelece numa casa — e o que Deus desenhou para a sua, Ele continua sustentando.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="simbolo__progresso" aria-hidden="true"><i id="simProg"></i></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════ COLEÇÃO -->
+<section class="colecao" id="colecao">
+  <div class="secao" style="padding-bottom:0">
+    <div class="colecao__intro">
+      <p class="rotulo rv">A coleção · Marci + Truehope</p>
+      <h2 class="colecao__titulo display rv">Antes de roupa, uma proclamação</h2>
+      <p class="colecao__texto rv">A gente não queria fazer uma camiseta com um versículo. Queria fazer uma peça que fosse proclamação. Cada peça carrega, na etiqueta, o manifesto inteiro — escrito à mão, nada tipografado.</p>
+    </div>
+  </div>
+
+  <div class="trilho" id="trilho">
+    <div class="trilho__palco">
+      <div class="trilho__fita" id="fita">
+
+        <figure class="peca">
+          <div class="peca__moldura" data-parallax>
+            <img src="assets/img/pc-costas.webp" width="1300" height="1625" alt="Modelo de costas com a camisa branca da coleção." loading="lazy">
+          </div>
+          <figcaption>
+            <p class="peca__nome">A camisa manifesto</p>
+            <p class="peca__desc">Algodão branco. O manifesto inteiro impresso no forro.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="peca">
+          <div class="peca__moldura" data-parallax>
+            <img src="assets/img/pc-bordado.webp" width="1300" height="1625" alt="Detalhe do bordado à mão nas costas: família design divino." loading="lazy">
+          </div>
+          <figcaption>
+            <p class="peca__nome">família design divino</p>
+            <p class="peca__desc">Bordado à mão nas costas. Quem veste, veste uma declaração.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="peca">
+          <div class="peca__moldura" data-parallax>
+            <img src="assets/img/pc-etiqueta.webp" width="1300" height="1625" alt="Etiqueta Marci costurada na gola da camisa da coleção." loading="lazy">
+          </div>
+          <figcaption>
+            <p class="peca__nome">A etiqueta</p>
+            <p class="peca__desc">Onde a assinatura encontra a convicção.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="peca">
+          <div class="peca__moldura" data-parallax>
+            <img src="assets/img/pc-manuscrito.webp" width="1300" height="1625" alt="O manifesto escrito à mão, impresso no tecido da peça." loading="lazy">
+          </div>
+          <figcaption>
+            <p class="peca__nome">Escrito à mão</p>
+            <p class="peca__desc">Nada foi tipografado. Tudo foi escrito.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="peca">
+          <div class="peca__moldura" data-parallax>
+            <img src="assets/img/pc-camisa.webp" width="1300" height="1352" alt="A camisa dobrada, mostrando a etiqueta e o manifesto no forro." loading="lazy">
+          </div>
+          <figcaption>
+            <p class="peca__nome">O forro</p>
+            <p class="peca__desc">O manifesto fica do lado de dentro. Contra a pele.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="peca">
+          <div class="peca__moldura" data-parallax>
+            <img src="assets/img/pc-lenco-mono.webp" width="1300" height="1625" alt="Detalhe do lenço Linhas 06 com o monograma Truehope no centro." loading="lazy">
+          </div>
+          <figcaption>
+            <p class="peca__nome">O lenço · Linhas 06</p>
+            <p class="peca__desc">O portal aparece onde as linhas se encontram.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="peca">
+          <div class="peca__moldura" data-parallax>
+            <img src="assets/img/pc-lenco-borda.webp" width="1300" height="1625" alt="Detalhe da borda do lenço, onde corre a declaração do manifesto." loading="lazy">
+          </div>
+          <figcaption>
+            <p class="peca__nome">A borda declara</p>
+            <p class="peca__desc">A declaração inteira corre pela borda do lenço.</p>
+          </figcaption>
+        </figure>
+
+      </div>
+
+      <div class="trilho__progresso" aria-hidden="true"><i id="trilhoProg"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ VOZES -->
+<section class="vozes secao" id="vozes">
+  <div class="env">
+    <div class="vozes__topo">
+      <div>
+        <p class="rotulo rv">As oito vozes</p>
+        <h2 class="vozes__titulo display rv">Uma tarde.<br>Oito vozes.</h2>
+      </div>
+      <p class="rotulo rotulo--claro rv">Com tradução simultânea</p>
+    </div>
+
+    <ul class="vozes__lista">
+      <li class="voz-item rv"><span class="voz-item__n">01</span><span class="voz-item__nome">Randy Clark</span></li>
+      <li class="voz-item rv"><span class="voz-item__n">02</span><span class="voz-item__nome">Dani Rocha</span></li>
+      <li class="voz-item rv"><span class="voz-item__n">03</span><span class="voz-item__nome">Dirce Carvalho</span></li>
+      <li class="voz-item rv"><span class="voz-item__n">04</span><span class="voz-item__nome">Alinne Duarte</span></li>
+      <li class="voz-item rv"><span class="voz-item__n">05</span><span class="voz-item__nome">Katherine Ruonala</span></li>
+      <li class="voz-item rv"><span class="voz-item__n">06</span><span class="voz-item__nome">Charity Cook</span></li>
+      <li class="voz-item rv"><span class="voz-item__n">07</span><span class="voz-item__nome">Andrea Huber</span></li>
+      <li class="voz-item rv"><span class="voz-item__n">08</span><span class="voz-item__nome">Marci Vago</span></li>
+    </ul>
+
+    <p class="vozes__nota rv">Um tempo de conexão, inspiração e ativação em torno daquilo que Deus deseja edificar através das famílias.</p>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════ PROGRAMAÇÃO -->
+<section class="prog secao" id="programacao">
+  <div class="env prog__grade">
+
+    <div class="prog__aside">
+      <p class="rotulo rv">13h às 17h</p>
+      <h2 class="prog__titulo display rv">A tarde inteira</h2>
+      <p class="prog__local rv">
+        <b>Avenida Tamboré, 74</b>
+        Alphaville — São Paulo<br>
+        Auditório Anexo · dentro do VOA 2026
+      </p>
+      <p class="rv"><a class="btn" href="#mesa" data-ir-mesa data-frente="inscricao"><span>Garantir meu lugar</span></a></p>
+    </div>
+
+    <ol class="prog__lista">
+      <li class="prog__item rv"><time class="prog__hora">13h00</time><p class="prog__oque">Check-in<small>Portas abertas — você já pode ir ao seu lugar</small></p></li>
+      <li class="prog__item rv"><time class="prog__hora">13h30</time><p class="prog__oque">Início da experiência, brunch e desfile</p></li>
+      <li class="prog__item rv"><time class="prog__hora">14h00</time><p class="prog__oque">Talk família e propósito</p></li>
+      <li class="prog__item rv"><time class="prog__hora">15h00</time><p class="prog__oque">Desfile de lançamento<small>Lançamento oficial da collab Truehope + Marci</small></p></li>
+      <li class="prog__item rv"><time class="prog__hora">15h30</time><p class="prog__oque">Encerramento</p></li>
+      <li class="prog__item rv"><time class="prog__hora">15h40</time><p class="prog__oque">Momento de fotos e conexão</p></li>
+    </ol>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════ FRENTES -->
+<section class="frentes secao" id="frentes">
+  <div class="env">
+    <div class="frentes__topo">
+      <p class="rotulo rv">Quatro portas</p>
+      <h2 class="frentes__titulo display rv">Por onde você entra</h2>
+      <p class="frentes__texto rv">A Truehope transforma convicção em ação através de frentes. Escolha a sua — em qualquer uma delas, a gente continua a conversa com você.</p>
+    </div>
+
+    <div class="frentes__grade">
+
+      <button class="frente rv" type="button" data-ir-mesa data-frente="inscricao">
+        <span class="frente__n">01</span>
+        <span class="frente__nome">Garantir meu lugar</span>
+        <span class="frente__desc">A masterclass do dia 8 de outubro. Uma tarde inteira dedicada à família, ao propósito e ao legado.</span>
+        <span class="frente__acao">Fazer inscrição
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+
+      <button class="frente rv" type="button" data-ir-mesa data-frente="loja">
+        <span class="frente__n">02</span>
+        <span class="frente__nome">Vestir o manifesto</span>
+        <span class="frente__desc">A collab Truehope + Marci. Cada peça carrega, na etiqueta, o manifesto inteiro.</span>
+        <span class="frente__acao">Ver a coleção
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+
+      <button class="frente rv" type="button" data-ir-mesa data-frente="convocacao">
+        <span class="frente__n">03</span>
+        <span class="frente__nome">Assinar a convocação</span>
+        <span class="frente__desc">O resgate da família não é discurso. Assine o manifesto e entre no grupo de quem decidiu reconstruir.</span>
+        <span class="frente__acao">Entrar no grupo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+
+      <button class="frente rv" type="button" data-ir-mesa data-frente="comunidade">
+        <span class="frente__n">04</span>
+        <span class="frente__nome">Fazer parte da comunidade</span>
+        <span class="frente__desc">Antes, durante e depois do dia 8. Conteúdo, encontros e uma casa para continuar.</span>
+        <span class="frente__acao">Entrar na comunidade
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ MESA -->
+<section class="mesa secao" id="mesa">
+  <div class="env mesa__grade">
+
+    <div>
+      <p class="rotulo rv">Um lugar à mesa é seu</p>
+      <h2 class="mesa__titulo display rv">Estamos levantando um exército para restaurar a família</h2>
+      <p class="mesa__citacao rv">Você não precisa ter tudo resolvido para entrar. Precisa só decidir que a sua casa vale a reconstrução.</p>
+      <p class="mesa__contato rv">
+        Dúvidas sobre a masterclass<br>
+        <b>Angélica Munguba</b> · Production Manager<br>
+        <a href="https://wa.me/5585981252515" target="_blank" rel="noopener">+55 (85) 98125‑2515</a>
+      </p>
+    </div>
+
+    <div>
+      <form id="form" novalidate>
+        <div class="campo" data-campo="nome">
+          <label for="nome">Nome completo</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Como você quer ser chamada" required>
+          <span class="campo__erro">Escreva seu nome para continuar.</span>
+        </div>
+
+        <div class="campo" data-campo="zap">
+          <label for="zap">WhatsApp com DDD</label>
+          <input id="zap" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 90000-0000" required>
+          <span class="campo__erro">Informe um WhatsApp válido, com DDD.</span>
+        </div>
+
+        <div class="campo" data-campo="mail">
+          <label for="mail">E-mail</label>
+          <input id="mail" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required>
+          <span class="campo__erro">Confira o e-mail digitado.</span>
+        </div>
+
+        <div class="campo" data-campo="cidade">
+          <label for="cidade">Cidade</label>
+          <input id="cidade" name="cidade" type="text" autocomplete="address-level2" placeholder="Onde você mora" required>
+          <span class="campo__erro">Diga de onde você vem.</span>
+        </div>
+
+        <div class="campo campo--select" data-campo="frente">
+          <label for="frente">Por qual porta você entra?</label>
+          <select id="frente" name="frente" required>
+            <option value="" disabled selected>Escolha uma</option>
+            <option value="inscricao">01 · Garantir meu lugar na masterclass</option>
+            <option value="loja">02 · Vestir o manifesto — ver a coleção</option>
+            <option value="convocacao">03 · Assinar a convocação e entrar no grupo</option>
+            <option value="comunidade">04 · Fazer parte da comunidade</option>
+          </select>
+          <span class="campo__erro">Escolha por onde você quer entrar.</span>
+        </div>
+
+        <div class="consent">
+          <input id="aceite" name="aceite" type="checkbox">
+          <label for="aceite">Quero receber conteúdos da TRUEHOPE por e-mail e WhatsApp.</label>
+        </div>
+
+        <button class="btn" type="submit" id="enviar"><span>Quero fazer parte</span></button>
+
+        <p class="mesa__privacidade">Seus dados são usados apenas para a comunicação da TRUEHOPE e não são compartilhados com terceiros. Você pode pedir a remoção a qualquer momento.</p>
+      </form>
+
+      <div class="mesa__ok" id="ok" role="status" aria-live="polite">
+        <p id="okTexto">Recebemos sua confirmação.</p>
+        <small id="okNota">Estamos te levando para o próximo passo…</small>
+        <p><a class="btn btn--vazado" id="okLink" href="#" target="_blank" rel="noopener"><span>Continuar</span></a></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- ═════════════════════════════════════════════════════════════════ RODAPÉ -->
+<footer class="rodape">
+  <div class="env rodape__grade">
+    <div class="rodape__marca">
+      <svg class="rodape__mono" viewBox="0 0 211 294" aria-hidden="true">
+        <rect x="0" y="0" width="211" height="33"/><rect x="90" y="0" width="33" height="294"/>
+        <rect x="155" y="65" width="33" height="207"/><rect x="123" y="151" width="32" height="33"/>
+      </svg>
+      <span class="rodape__nome">TRUEHOPE</span>
+    </div>
+
+    <p class="rodape__linha">
+      Movimento para família · Global Awakening<br>
+      08 de outubro de 2026 · Av. Tamboré, 74 — Alphaville, SP
+    </p>
+
+    <p class="rodape__tags">#TRUEHOPE&nbsp;&nbsp;#VOA2026<br>@truehopefamily · @marci____oficial</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
