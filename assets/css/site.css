@@ -66,11 +66,11 @@ body.travado{overflow:hidden;height:100svh}
 /* --------------------------------------------------------- tipografia base */
 /* line-height 1.02: leading curto de revista, mas com folga para os acentos
    das caixas altas (Í, Ç, Ã) — abaixo disso a máscara de revelação corta. */
-/* peso 500, não 400: medido contra os adesivos de piso, a haste da Bodoni
-   em 400 sai mais fina que a da arte impressa e em 600 já passa do ponto. */
+/* 400: a Libre Bodoni é mais encorpada que a Bodoni Moda no mesmo número,
+   então o 500 que a antiga pedia aqui sai pesado demais. */
 .display{
   font-family:var(--display);
-  font-weight:500;
+  font-weight:400;
   line-height:1.02;
   letter-spacing:-.02em;
   text-transform:uppercase;
@@ -317,7 +317,24 @@ body.travado{overflow:hidden;height:100svh}
 }
 /* o hero agora só tem título e chamada: o rótulo do evento e os dados de
    data/hora/lugar foram para o convite, onde se lê com calma. */
-.hero__acao{margin-top:clamp(18px,3.4vh,42px)}
+/* width:max-content faz o bloco medir exatamente o título (que já se limita
+   em 13ch) — é o que permite ancorar a chamada na esquerda dele. */
+.hero__bloco{
+  display:grid;
+  width:max-content;max-width:100%;
+  justify-items:end;
+}
+.hero__acao{
+  justify-self:start;
+  display:grid;gap:clamp(12px,1.8vh,20px);justify-items:start;
+  text-align:left;
+  margin-top:clamp(18px,3.4vh,42px);
+}
+.hero__convocacao{
+  font-size:clamp(10.5px,1.15vw,12.5px);
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--vinho);
+}
 /* herda o peso 500 do .display: com a Libre Bodoni os fios do "A" aguentam
    o fundo fotográfico sozinhos, sem precisar do 600 que a Bodoni Moda pedia. */
 .hero__titulo{
@@ -365,6 +382,9 @@ body.travado{overflow:hidden;height:100svh}
 }
 @media(max-width:760px){
   .hero__conteudo{justify-items:start;text-align:left}
+  /* no celular tudo nasce na esquerda, então o título ancora ali junto com
+     a chamada e o botão — sem isso ele fica encostado na direita do bloco. */
+  .hero__bloco{justify-items:start}
   .hero__titulo{max-width:11ch}
   /* no celular a caixa do título é estreita e o script cai em cima do
      "ARQUITETO" — aqui ele encosta no respiro, sem cruzar a tinta. */
@@ -448,7 +468,7 @@ body.travado{overflow:hidden;height:100svh}
 .convite__dados li{display:grid;gap:.6em;align-content:start}
 .convite__dados .rotulo{color:var(--taupe)}
 .convite__dados b{
-  font-family:var(--display);font-weight:500;
+  font-family:var(--display);font-weight:400;
   font-size:clamp(15px,1.45vw,18px);line-height:1.35;
   letter-spacing:-.01em;color:var(--tinta);
   text-wrap:balance;

@@ -103,17 +103,22 @@
     </div>
 
     <div class="hero__conteudo">
-      <h1 class="hero__titulo display" data-hero="2">
-        <span class="ln">A família</span>
-        <span class="ln">é design</span>
-        <span class="ln">divino e o</span>
-        <span class="ln">arquiteto</span>
-        <span class="ln ln--assinatura">ainda edifica.</span>
-      </h1>
+      <!-- o bloco tem a largura do título: assim a chamada e o botão podem
+           encostar na borda ESQUERDA dele, sem se soltarem da composição. -->
+      <div class="hero__bloco">
+        <h1 class="hero__titulo display">
+          <span class="ln">A família</span>
+          <span class="ln">é design</span>
+          <span class="ln">divino e o</span>
+          <span class="ln">arquiteto</span>
+          <span class="ln ln--assinatura">ainda edifica.</span>
+        </h1>
 
-      <p class="hero__acao" data-hero="3">
-        <a class="btn" href="#mesa" data-ir-mesa data-frente="inscricao"><span>Faça parte da família</span></a>
-      </p>
+        <div class="hero__acao" data-hero="3">
+          <p class="hero__convocacao">Uma convocação do resgate da família</p>
+          <a class="btn" href="#mesa" data-ir-mesa data-frente="inscricao"><span>Quero fazer parte</span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
