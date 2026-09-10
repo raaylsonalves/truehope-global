@@ -28,10 +28,14 @@
   --voz:"Cormorant Garamond",Georgia,serif;
   --sans:"Satoshi",-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
   /* o script dos adesivos de piso ("de Casa", "Geração") é uma assinatura
-     monolinha manuscrita, provavelmente paga e sem info de fonte no PDF
-     (texto todo vetorizado). A Sacramento (Google Fonts, grátis) é a mais
-     próxima: mesmo traço de espessura única, mesma cursiva de caneta solta. */
-  --assinatura:"Sacramento",cursive;
+     manuscrita, paga e sem info de fonte no PDF (texto todo vetorizado).
+     A Ms Madi (Google Fonts) é a que mais se aproxima do desenho: mesma
+     inclinação forte, mesma haste alta e fina do "d", mesmo rabo comprido
+     que sai varrendo no fim da palavra. Ela nasce um pouco mais leve que a
+     do adesivo — o contorno em .ln--assinatura devolve esse corpo.
+     (Sacramento e Beau Rivage, testadas antes, são verticais demais: o
+     lettering não bate com o "de Casa" do adesivo.) */
+  --assinatura:"Ms Madi",cursive;
 
   --ease:cubic-bezier(.22,1,.36,1);
   --gut:clamp(20px,5vw,64px);
@@ -65,9 +69,11 @@ body.travado{overflow:hidden;height:100svh}
 /* --------------------------------------------------------- tipografia base */
 /* line-height 1.02: leading curto de revista, mas com folga para os acentos
    das caixas altas (Í, Ç, Ã) — abaixo disso a máscara de revelação corta. */
+/* peso 500, não 400: medido contra os adesivos de piso, a haste da Bodoni
+   em 400 sai mais fina que a da arte impressa e em 600 já passa do ponto. */
 .display{
   font-family:var(--display);
-  font-weight:400;
+  font-weight:500;
   line-height:1.02;
   letter-spacing:-.02em;
   text-transform:uppercase;
@@ -333,10 +339,14 @@ body.travado{overflow:hidden;height:100svh}
   font-weight:400;
   text-transform:none;
   letter-spacing:0;
-  font-size:1.5em;
+  font-size:1.62em;
   line-height:1;
   color:var(--vinho);
-  margin-top:-.34em;
+  /* a Ms Madi é mais leve que o script do adesivo; o contorno engrossa o
+     traço sem deformar a letra. .015em é o teto: acima disso as pontas
+     afiladas do "a" e do rabo final incham e perdem o ar de caneta. */
+  -webkit-text-stroke:.008em currentColor;
+  margin-top:-.42em;
   transform:rotate(-3.2deg);
   transform-origin:right bottom;
 }
@@ -354,7 +364,12 @@ body.travado{overflow:hidden;height:100svh}
   .hero__conteudo{justify-items:start;text-align:left}
   .hero__eyebrow,.hero__rodape{justify-content:flex-start}
   .hero__titulo{max-width:11ch}
-  .hero__titulo .ln--assinatura{transform-origin:left bottom;transform:rotate(-3.2deg)}
+  /* no celular a caixa do título é estreita e o script cai em cima do
+     "ARQUITETO" — aqui ele encosta no respiro, sem cruzar a tinta. */
+  .hero__titulo .ln--assinatura{
+    transform-origin:left bottom;transform:rotate(-3.2deg);
+    font-size:1.45em;margin-top:-.12em;
+  }
 }
 
 /* ================================================================= CONVITE */
