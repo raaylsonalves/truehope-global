@@ -19,21 +19,19 @@
   --linha:rgba(31,34,26,.14);
   --linha-clara:rgba(235,224,209,.16);
 
-  --display:"Bodoni Moda","Times New Roman",Georgia,serif;
-  /* o serif dos adesivos de piso é uma Didone (alto contraste de traço,
-     serifas retas e finas). A "Didot de verdade" só existe como fonte de
-     sistema (Mac/Adobe), quase ninguém tem instalada — então a Bodoni Moda
-     é a escolha: mesma família Didone, mesmo desenho, e todo mundo vê igual. */
-  --hero-serif:"Bodoni Moda","Times New Roman",Georgia,serif;
+  /* O serif dos adesivos de piso é uma Didone. A Libre Bodoni é um corte
+     de TEXTO: mesmo desenho, mesmo contraste, mas com os fios finos
+     encorpados o bastante para sobreviver sobre foto. A Bodoni Moda, que
+     usávamos antes, é um corte de display — a diagonal e a travessa do "A"
+     sumiam contra a parede clara do hero. Uma família só para todo o site:
+     não há segunda variável de serif, para não abrir espaço a conflito. */
+  --display:"Libre Bodoni","Times New Roman",Georgia,serif;
   --voz:"Cormorant Garamond",Georgia,serif;
   --sans:"Satoshi",-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
   /* o script dos adesivos de piso ("de Casa", "Geração") é uma assinatura
      manuscrita, paga e sem info de fonte no PDF (texto todo vetorizado).
-     A Ms Madi (Google Fonts) é a que mais se aproxima do desenho: mesma
-     inclinação forte e o rabo comprido varrendo o fim da palavra.
-     Ela é bem mais leve que a do adesivo — o contorno em .ln--assinatura
-     devolve esse corpo. (Sacramento e Beau Rivage, testadas antes, são
-     verticais demais: o lettering não bate com o "de Casa" do adesivo.) */
+     A Mrs Saint Delafield é a mais próxima do desenho: mesma inclinação
+     forte e o rabo comprido varrendo o fim da palavra. */
   --assinatura:"Mrs Saint Delafield",cursive;
 
   --ease:cubic-bezier(.22,1,.36,1);
@@ -320,14 +318,9 @@ body.travado{overflow:hidden;height:100svh}
 /* o hero agora só tem título e chamada: o rótulo do evento e os dados de
    data/hora/lugar foram para o convite, onde se lê com calma. */
 .hero__acao{margin-top:clamp(18px,3.4vh,42px)}
-/* 600 aqui, e só aqui: é o único display que cai sobre foto. A Bodoni é
-   Didone — a diagonal esquerda e a travessa do "A" são fios de cabelo, e
-   em 500 elas somem contra a parede clara do fundo (o "A" vira só a haste
-   grossa). Nas seções de fundo chapado o 500 do .display continua valendo,
-   que é o peso da arte impressa. */
+/* herda o peso 500 do .display: com a Libre Bodoni os fios do "A" aguentam
+   o fundo fotográfico sozinhos, sem precisar do 600 que a Bodoni Moda pedia. */
 .hero__titulo{
-  font-family:var(--hero-serif);
-  font-weight:600;
   font-size:clamp(37px,7.7vw,106px);
   max-width:13ch;
 }
@@ -352,18 +345,21 @@ body.travado{overflow:hidden;height:100svh}
   font-weight:400;
   text-transform:none;
   letter-spacing:0;
-  /* 1.58em: é o tamanho em que a mancha do script fica da largura de
+  /* 1.65em: é o tamanho em que a mancha do script fica da largura de
      "arquiteto". Acima disso ela sangra para a esquerda e desalinha. */
-  font-size:1.58em;
+  font-size:1.65em;
   line-height:1.42;
   color:var(--vinho);
-  /* a Mrs Saint Delafield é de traço fino; o contorno dá um corpo mínimo
-     sem fechar os olhos das letras nem achatar a alternância grosso/fino. */
-  -webkit-text-stroke:.008em currentColor;
+  /* sem contorno: a caligrafia fica no peso natural dela, e a alternância
+     grosso/fino sobrevive inteira. O contorno só era preciso enquanto o
+     título ao lado era mais pesado. */
   /* sobe com `top`, não com margin-top: margem negativa aqui encolhe a
-     máscara acima e ela passa a decepar a assinatura. */
+     máscara acima e ela passa a decepar a assinatura. -.52em é o limite
+     útil — a haste do "d" e a perna do "f" cruzam a base de "ARQUITETO"
+     pelos vãos das letras, como no adesivo; mais que isso elas embolam
+     no "QUITETO". */
   position:relative;
-  top:-.38em;
+  top:-.52em;
   transform:rotate(-3.2deg);
   transform-origin:right bottom;
 }
