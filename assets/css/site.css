@@ -317,10 +317,9 @@ body.travado{overflow:hidden;height:100svh}
   justify-items:end;
   text-align:right;
 }
-/* vinho no lugar do terracota: sobre a foto, o terracota cai a 3,6:1 nas
-   sombras da folhagem — abaixo do mínimo para texto pequeno */
-.hero__eyebrow{display:flex;flex-wrap:wrap;gap:.9em;align-items:center;justify-content:flex-end;color:var(--vinho)}
-.hero__eyebrow i{display:block;width:clamp(24px,4vw,54px);height:1px;background:var(--vinho);opacity:.55}
+/* o hero agora só tem título e chamada: o rótulo do evento e os dados de
+   data/hora/lugar foram para o convite, onde se lê com calma. */
+.hero__acao{margin-top:clamp(18px,3.4vh,42px)}
 /* 600 aqui, e só aqui: é o único display que cai sobre foto. A Bodoni é
    Didone — a diagonal esquerda e a travessa do "A" são fios de cabelo, e
    em 500 elas somem contra a parede clara do fundo (o "A" vira só a haste
@@ -368,19 +367,8 @@ body.travado{overflow:hidden;height:100svh}
   transform:rotate(-3.2deg);
   transform-origin:right bottom;
 }
-.hero__rodape{
-  display:flex;flex-wrap:wrap;gap:.7em clamp(14px,2.4vw,26px);
-  align-items:center;justify-content:flex-end;
-  font-size:clamp(10.5px,1.15vw,12.5px);
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--tinta);
-}
-.hero__rodape b{font-weight:500;color:var(--vinho)}
-.hero__rodape i{display:block;width:3px;height:3px;background:var(--taupe);border-radius:50%;opacity:.7}
 @media(max-width:760px){
   .hero__conteudo{justify-items:start;text-align:left}
-  .hero__eyebrow,.hero__rodape{justify-content:flex-start}
   .hero__titulo{max-width:11ch}
   /* no celular a caixa do título é estreita e o script cai em cima do
      "ARQUITETO" — aqui ele encosta no respiro, sem cruzar a tinta. */
@@ -444,6 +432,31 @@ body.travado{overflow:hidden;height:100svh}
   margin-top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe);
 }
 .convite__texto{display:grid;gap:clamp(22px,3vw,34px);padding-top:clamp(0px,2vw,26px)}
+/* o rótulo do evento que abria o hero — colado no "O convite", com o mesmo
+   filete que ele tinha lá em cima */
+.convite__kicker{
+  display:flex;flex-wrap:wrap;gap:.9em;align-items:center;
+  margin-top:-1.4em;
+  font-size:clamp(10.5px,1.15vw,12.5px);
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--vinho);
+}
+.convite__kicker i{display:block;width:clamp(24px,4vw,54px);height:1px;background:var(--vinho);opacity:.55}
+/* data, hora e endereço: saíram do hero e viraram uma ficha do evento */
+.convite__dados{
+  display:grid;gap:clamp(18px,2.2vw,26px);
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  padding-top:clamp(20px,3vw,30px);
+  border-top:1px solid var(--linha);
+}
+.convite__dados li{display:grid;gap:.6em;align-content:start}
+.convite__dados .rotulo{color:var(--taupe)}
+.convite__dados b{
+  font-family:var(--display);font-weight:500;
+  font-size:clamp(15px,1.45vw,18px);line-height:1.35;
+  letter-spacing:-.01em;color:var(--tinta);
+  text-wrap:balance;
+}
 .convite__chamada{
   font-family:var(--display);
   font-weight:400;

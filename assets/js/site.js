@@ -188,8 +188,7 @@
       gsap.set(linhas, { yPercent: 108 });
 
       gsap.timeline({ delay: .1 })
-        .from('[data-hero="1"]', { opacity: 0, y: 14, duration: .9, ease: 'power2.out' })
-        .to(linhas, { yPercent: 0, duration: 1.15, ease: 'expo.out', stagger: .075 }, '-=.62')
+        .to(linhas, { yPercent: 0, duration: 1.15, ease: 'expo.out', stagger: .075 })
         .from('[data-hero="3"]', { opacity: 0, y: 14, duration: .9, ease: 'power2.out' }, '-=.55')
         .from('.hero__fundo img', { scale: 1.09, duration: 2.2, ease: 'expo.out' }, 0);
     }
