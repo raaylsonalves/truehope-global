@@ -318,29 +318,29 @@ body.travado{overflow:hidden;height:100svh}
   }
 }
 /* duas colunas: o título ancora na direita, a chamada + botão ficam na
-   coluna da esquerda no MESMO nível do título (align-items:end alinha os
-   dois pela base) — lado a lado, não no pé da seção. */
+   coluna da esquerda centrados na vertical contra o título — na mesma
+   linha da frase, não no pé da seção. */
 .hero__conteudo{
   position:relative;z-index:2;
   width:100%;max-width:var(--max);
   padding-inline:var(--gut);
   display:grid;
   grid-template-columns:1fr auto;
-  align-items:end;
+  align-items:center;
   column-gap:clamp(24px,4vw,64px);
   text-align:right;
 }
-.hero__titulo{grid-column:2;justify-self:end}
+/* grid-row:1 explícito nos dois: sem isso o auto-placement joga a ação
+   para uma segunda linha (empacotamento "sparse") e o align-self:center
+   não tem contra o que centrar. */
+.hero__titulo{grid-column:2;grid-row:1;justify-self:end}
 .hero__acao{
-  grid-column:1;
+  grid-column:1;grid-row:1;
   justify-self:start;
-  align-self:end;
+  align-self:center;
   display:flex;align-items:center;flex-wrap:wrap;
   gap:clamp(14px,1.6vw,26px);
   text-align:left;
-  /* a assinatura "ainda edifica." desce abaixo da base de ARQUITETO; este
-     recuo põe o botão no nível dela, não no fio de baixo do título. */
-  padding-bottom:clamp(6px,1.4vw,18px);
 }
 .hero__convocacao{
   font-size:clamp(10.5px,1.15vw,12.5px);
@@ -396,8 +396,8 @@ body.travado{overflow:hidden;height:100svh}
    a lado; volta para uma coluna só, título e depois o CTA, tudo à esquerda. */
 @media(max-width:1080px){
   .hero__conteudo{grid-template-columns:1fr;justify-items:start;text-align:left}
-  .hero__titulo{grid-column:1;justify-self:start}
-  .hero__acao{grid-column:1;align-self:auto;padding-bottom:0;margin-top:clamp(16px,3vh,32px)}
+  .hero__titulo{grid-column:1;grid-row:auto;justify-self:start}
+  .hero__acao{grid-column:1;grid-row:auto;align-self:auto;margin-top:clamp(16px,3vh,32px)}
 }
 @media(max-width:760px){
   /* no celular a frase e o botão voltam a empilhar: lado a lado não cabem */
@@ -740,10 +740,6 @@ body.travado{overflow:hidden;height:100svh}
 .voz__nome::after{
   content:"";flex:1;width:1px;min-height:26px;
   background:var(--linha);
-}
-.voz__n{
-  font-family:var(--sans);
-  font-size:9.5px;letter-spacing:.2em;color:var(--taupe);
 }
 .voz__foto{
   flex:1;min-width:0;margin:0;
