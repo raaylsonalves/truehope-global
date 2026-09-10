@@ -49,7 +49,7 @@ button{font:inherit;color:inherit}
 html,body{overscroll-behavior-y:none}
 body{
   font-family:var(--sans);
-  font-size:16px;
+  font-size:17.6px;
   line-height:1.6;
   color:var(--tinta);
   background:var(--papel);
@@ -89,7 +89,7 @@ body.travado{overflow:hidden;height:100svh}
 .voz{font-family:var(--voz);font-style:italic;line-height:1.45}
 
 .rotulo{
-  font-size:clamp(9.5px,1.05vw,11px);
+  font-size:clamp(10.45px,1.16vw,12.1px);
   letter-spacing:.26em;
   text-transform:uppercase;
   font-weight:500;
@@ -123,7 +123,7 @@ body.travado{overflow:hidden;height:100svh}
   display:flex;
   font-family:var(--sans);
   font-weight:500;
-  font-size:clamp(10px,1.3vw,13px);
+  font-size:clamp(11px,1.43vw,14.3px);
   letter-spacing:.42em;
   padding-left:.42em;
   color:var(--vinho);
@@ -172,11 +172,11 @@ body.travado{overflow:hidden;height:100svh}
 .nav__mono{width:14px;height:auto}
 .nav__mono rect{fill:var(--vinho)}
 .nav__nome{
-  font-size:11px;font-weight:500;letter-spacing:.28em;padding-left:.28em;color:var(--vinho);
+  font-size:12.1px;font-weight:500;letter-spacing:.28em;padding-left:.28em;color:var(--vinho);
 }
 .nav__menu{display:flex;align-items:center;gap:clamp(14px,2vw,24px);padding-inline:clamp(6px,1.4vw,16px)}
 .nav__menu a{
-  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-suave);
+  font-size:12.1px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-suave);
   text-decoration:none;position:relative;padding-bottom:2px;
 }
 .nav__menu a::after{
@@ -226,7 +226,7 @@ body.travado{overflow:hidden;height:100svh}
 .nav__drawer.aberto{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
 .nav__drawer a{
   padding:12px 14px;border-radius:12px;
-  font-size:13px;letter-spacing:.04em;color:var(--tinta-suave);text-decoration:none;
+  font-size:14.3px;letter-spacing:.04em;color:var(--tinta-suave);text-decoration:none;
 }
 .nav__drawer a:hover,.nav__drawer a:focus-visible{background:var(--papel-2);color:var(--vinho)}
 
@@ -238,7 +238,7 @@ body.travado{overflow:hidden;height:100svh}
 @media(max-width:760px){
   .nav{left:var(--gut);right:var(--gut);width:auto;max-width:none;padding-left:14px}
   .nav__nome{display:none}
-  .nav .btn--fino{padding:9px 15px;font-size:11px}
+  .nav .btn--fino{padding:9px 15px;font-size:12.1px}
 }
 
 /* ==================================================================== BOTÃO */
@@ -250,7 +250,7 @@ body.travado{overflow:hidden;height:100svh}
   cursor:pointer;
   text-decoration:none;
   font-family:var(--sans);
-  font-size:clamp(10.5px,1.1vw,12px);
+  font-size:clamp(11.55px,1.21vw,13.2px);
   font-weight:500;
   letter-spacing:.16em;
   text-transform:uppercase;
@@ -343,7 +343,7 @@ body.travado{overflow:hidden;height:100svh}
   text-align:left;
 }
 .hero__convocacao{
-  font-size:clamp(10.5px,1.15vw,12.5px);
+  font-size:clamp(11.55px,1.26vw,13.75px);
   letter-spacing:.16em;text-transform:uppercase;
   color:var(--vinho);
 }
@@ -460,7 +460,7 @@ body.travado{overflow:hidden;height:100svh}
 .convite__figura img{width:100%;height:100%;object-fit:cover;transform:scale(1.16);will-change:transform}
 .convite__moldura{position:sticky;top:clamp(78px,12vh,120px);aspect-ratio:3/4;overflow:hidden;background:var(--papel-2)}
 .convite__legenda{
-  margin-top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe);
+  margin-top:14px;font-size:12.1px;letter-spacing:.14em;text-transform:uppercase;color:var(--taupe);
 }
 .convite__texto{display:grid;gap:clamp(22px,3vw,34px);padding-top:clamp(0px,2vw,26px)}
 /* o rótulo do evento que abria o hero — colado no "O convite", com o mesmo
@@ -468,7 +468,7 @@ body.travado{overflow:hidden;height:100svh}
 .convite__kicker{
   display:flex;flex-wrap:wrap;gap:.9em;align-items:center;
   margin-top:-1.4em;
-  font-size:clamp(10.5px,1.15vw,12.5px);
+  font-size:clamp(11.55px,1.26vw,13.75px);
   letter-spacing:.16em;text-transform:uppercase;
   color:var(--vinho);
 }
@@ -490,7 +490,7 @@ body.travado{overflow:hidden;height:100svh}
 .convite__dados .rotulo{color:var(--taupe)}
 .convite__dados b{
   font-family:var(--display);font-weight:400;
-  font-size:clamp(14.5px,1.35vw,17px);line-height:1.35;
+  font-size:clamp(15.95px,1.49vw,18.7px);line-height:1.35;
   letter-spacing:-.01em;color:var(--tinta);
 }
 .convite__chamada{
@@ -506,7 +506,7 @@ body.travado{overflow:hidden;height:100svh}
   content:"";position:absolute;left:0;top:.18em;bottom:.18em;width:1px;background:var(--terra);
 }
 .convite__corpo{
-  font-size:clamp(15px,1.5vw,17.5px);
+  font-size:clamp(16.5px,1.65vw,19.25px);
   line-height:1.72;
   color:var(--tinta-suave);
   max-width:52ch;
@@ -515,7 +515,7 @@ body.travado{overflow:hidden;height:100svh}
 .convite__corpo b{font-weight:500;color:var(--tinta)}
 .convite__assinatura{
   font-family:var(--voz);font-style:italic;
-  font-size:clamp(18px,2vw,23px);color:var(--terra);
+  font-size:clamp(19.8px,2.2vw,25.3px);color:var(--terra);
 }
 @media(max-width:860px){
   .convite__grade{grid-template-columns:1fr}
@@ -540,7 +540,7 @@ body.travado{overflow:hidden;height:100svh}
 .manifesto__frase em{font-family:var(--voz);font-style:italic;text-transform:none;letter-spacing:0;color:var(--terra)}
 .manifesto__nota{
   margin-top:clamp(12px,1.6vw,18px);
-  font-size:clamp(13px,1.35vw,15px);line-height:1.65;color:rgba(235,224,209,.6);max-width:34ch;
+  font-size:clamp(14.3px,1.49vw,16.5px);line-height:1.65;color:rgba(235,224,209,.6);max-width:34ch;
 }
 .manifesto__bloco:nth-child(even) .manifesto__nota{margin-left:auto}
 .manifesto__selo{
@@ -548,9 +548,9 @@ body.travado{overflow:hidden;height:100svh}
   padding-top:clamp(22px,3vw,34px);
   border-top:1px solid var(--linha-clara);
   display:flex;flex-wrap:wrap;gap:12px 28px;align-items:baseline;justify-content:space-between;
-  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe);
+  font-size:12.1px;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe);
 }
-.manifesto__selo b{font-family:var(--display);font-size:15px;letter-spacing:.3em;color:var(--creme);font-weight:400}
+.manifesto__selo b{font-family:var(--display);font-size:16.5px;letter-spacing:.3em;color:var(--creme);font-weight:400}
 
 /* ================================================================= SÍMBOLO */
 /* Cinco slides — cada um a própria cor de fundo, a foto inteira e sempre
@@ -568,7 +568,7 @@ body.travado{overflow:hidden;height:100svh}
    numerado, e o fundo colorido de cada um já assina a seção. */
 .simbolo__selo{
   padding-inline:var(--gut);margin-bottom:clamp(22px,4vh,40px);
-  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe);
+  font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--taupe);
 }
 .simbolo.horiz .simbolo__selo{display:none}
 
@@ -623,14 +623,14 @@ body.travado{overflow:hidden;height:100svh}
 
 .quadro__n{
   display:flex;align-items:center;gap:.9em;
-  font-size:11px;letter-spacing:.24em;text-transform:uppercase;opacity:.72;
+  font-size:12.1px;letter-spacing:.24em;text-transform:uppercase;opacity:.72;
 }
 .quadro__n i{display:block;width:clamp(20px,3vw,44px);height:1px;background:currentColor;opacity:.5}
 .quadro__titulo{
   font-family:var(--display);font-weight:400;text-transform:uppercase;
   font-size:clamp(26px,4vw,50px);line-height:1.04;letter-spacing:-.015em;
 }
-.quadro__corpo{font-size:clamp(14.5px,1.5vw,16.5px);line-height:1.7;opacity:.88}
+.quadro__corpo{font-size:clamp(15.95px,1.65vw,18.15px);line-height:1.7;opacity:.88}
 
 .simbolo__progresso{display:none}
 .simbolo.horiz .simbolo__progresso{
@@ -647,8 +647,8 @@ body.travado{overflow:hidden;height:100svh}
   .quadro__foto{max-height:56svh}
   .quadro__foto img{max-height:56svh}
   .quadro__titulo{font-size:clamp(18px,5.2vw,28px)}
-  .quadro__corpo{font-size:12.5px;line-height:1.55}
-  .quadro__n{font-size:9.5px;gap:.6em}
+  .quadro__corpo{font-size:13.75px;line-height:1.55}
+  .quadro__n{font-size:10.45px;gap:.6em}
   .quadro__n i{width:16px}
 }
 @media(max-width:560px){
@@ -661,7 +661,7 @@ body.travado{overflow:hidden;height:100svh}
 .colecao{background:var(--papel);position:relative}
 .colecao__intro{display:grid;gap:clamp(16px,2vw,26px);max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
 .colecao__titulo{font-size:clamp(32px,6.4vw,86px);max-width:12ch}
-.colecao__texto{font-size:clamp(15px,1.5vw,17.5px);line-height:1.7;color:var(--tinta-suave);max-width:46ch}
+.colecao__texto{font-size:clamp(16.5px,1.65vw,19.25px);line-height:1.7;color:var(--tinta-suave);max-width:46ch}
 
 /* Padrão (sem JS ou com movimento reduzido): as peças embrulham em grade.
    O modo horizontal é ligado pelo JS, que fixa o palco via ScrollTrigger. */
@@ -678,8 +678,8 @@ body.travado{overflow:hidden;height:100svh}
 .peca{flex:none;width:clamp(240px,30vw,400px);display:grid;gap:14px;align-content:start}
 .peca__moldura{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--papel-2)}
 .peca__moldura img{width:100%;height:100%;object-fit:cover;transform:scale(1.1);will-change:transform}
-.peca__nome{font-family:var(--display);font-weight:400;font-size:clamp(17px,1.8vw,22px);line-height:1.15}
-.peca__desc{font-size:13px;line-height:1.55;color:var(--taupe);max-width:30ch}
+.peca__nome{font-family:var(--display);font-weight:400;font-size:clamp(18.7px,1.98vw,24.2px);line-height:1.15}
+.peca__desc{font-size:14.3px;line-height:1.55;color:var(--taupe);max-width:30ch}
 .trilho__progresso{display:none}
 .trilho.horiz .trilho__progresso{
   display:block;
@@ -730,7 +730,7 @@ body.travado{overflow:hidden;height:100svh}
   writing-mode:vertical-rl;
   transform:rotate(180deg);
   font-family:var(--display);font-weight:400;
-  font-size:clamp(16px,1.7vw,22px);
+  font-size:clamp(17.6px,1.87vw,24.2px);
   line-height:1;letter-spacing:.02em;
   text-transform:uppercase;
   color:var(--tinta);
@@ -753,7 +753,7 @@ body.travado{overflow:hidden;height:100svh}
 }
 .vozes__nota{
   flex:1 1 26ch;
-  font-family:var(--voz);font-style:italic;font-size:clamp(17px,2vw,23px);color:var(--terra);
+  font-family:var(--voz);font-style:italic;font-size:clamp(18.7px,2.2vw,25.3px);color:var(--terra);
 }
 /* sem JS as setas não fariam nada, então só aparecem quando ele assume —
    o trilho continua rolando no dedo e no trackpad de qualquer forma. */
@@ -781,11 +781,11 @@ body.travado{overflow:hidden;height:100svh}
 .prog__titulo{font-size:clamp(32px,5.4vw,72px);max-width:9ch}
 .prog__sub{
   font-family:var(--voz);font-style:italic;
-  font-size:clamp(17px,1.9vw,22px);line-height:1.4;
+  font-size:clamp(18.7px,2.09vw,24.2px);line-height:1.4;
   color:var(--terra);max-width:24ch;
   margin-top:calc(clamp(14px,2vw,22px) * -.4);
 }
-.prog__local{font-size:14.5px;line-height:1.7;color:var(--tinta-suave)}
+.prog__local{font-size:15.95px;line-height:1.7;color:var(--tinta-suave)}
 .prog__local b{font-weight:500;color:var(--tinta);display:block}
 .prog__lista{display:grid}
 .prog__item{
@@ -795,9 +795,9 @@ body.travado{overflow:hidden;height:100svh}
   border-top:1px solid var(--linha);
 }
 .prog__item:last-child{border-bottom:1px solid var(--linha)}
-.prog__hora{font-family:var(--display);font-size:clamp(14px,1.5vw,17px);color:var(--terra)}
-.prog__oque{font-size:clamp(15px,1.6vw,18px);line-height:1.45}
-.prog__oque small{display:block;margin-top:5px;font-size:12.5px;letter-spacing:.02em;color:var(--taupe)}
+.prog__hora{font-family:var(--display);font-size:clamp(15.4px,1.65vw,18.7px);color:var(--terra)}
+.prog__oque{font-size:clamp(16.5px,1.76vw,19.8px);line-height:1.45}
+.prog__oque small{display:block;margin-top:5px;font-size:13.75px;letter-spacing:.02em;color:var(--taupe)}
 @media(max-width:860px){
   .prog__grade{grid-template-columns:1fr}
   .prog__aside{position:relative;top:0}
@@ -808,7 +808,7 @@ body.travado{overflow:hidden;height:100svh}
 .frentes .rotulo{color:rgba(235,224,209,.62)}
 .frentes__topo{display:grid;gap:clamp(14px,2vw,22px);padding-bottom:clamp(30px,4.6vw,56px);max-width:min(100%,34em)}
 .frentes__titulo{font-size:clamp(30px,5.4vw,72px)}
-.frentes__texto{font-size:clamp(15px,1.5vw,17px);line-height:1.7;color:rgba(235,224,209,.76)}
+.frentes__texto{font-size:clamp(16.5px,1.65vw,18.7px);line-height:1.7;color:rgba(235,224,209,.76)}
 .frentes__grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1px;background:var(--linha-clara)}
 .frente{
   position:relative;
@@ -821,16 +821,16 @@ body.travado{overflow:hidden;height:100svh}
   overflow:hidden;
 }
 .frente:hover,.frente:focus-visible{background:#3D412B}
-.frente__n{font-size:10px;letter-spacing:.24em;color:rgba(235,224,209,.5)}
+.frente__n{font-size:11px;letter-spacing:.24em;color:rgba(235,224,209,.5)}
 .frente__nome{
   font-family:var(--display);font-weight:400;text-transform:uppercase;
   font-size:clamp(20px,2.3vw,28px);line-height:1.14;letter-spacing:-.01em;
 }
-.frente__desc{font-size:13.5px;line-height:1.6;color:rgba(235,224,209,.72)}
+.frente__desc{font-size:14.85px;line-height:1.6;color:rgba(235,224,209,.72)}
 .frente__acao{
   position:absolute;left:clamp(20px,2.4vw,30px);bottom:clamp(22px,3vw,32px);
   display:flex;align-items:center;gap:.7em;
-  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--creme);
+  font-size:11.55px;letter-spacing:.18em;text-transform:uppercase;color:var(--creme);
 }
 .frente__acao svg{width:.9em;height:.9em;transition:transform .45s var(--ease)}
 .frente:hover .frente__acao svg{transform:translateX(4px)}
@@ -845,26 +845,26 @@ body.travado{overflow:hidden;height:100svh}
   padding-left:clamp(14px,2vw,22px);
   border-left:1px solid var(--terra);
   font-family:var(--voz);font-style:italic;
-  font-size:clamp(17px,2vw,24px);line-height:1.45;color:rgba(235,224,209,.82);max-width:30ch;
+  font-size:clamp(18.7px,2.2vw,26.4px);line-height:1.45;color:rgba(235,224,209,.82);max-width:30ch;
 }
 .mesa__contato{
-  margin-top:clamp(26px,4vw,44px);font-size:13px;line-height:1.75;color:var(--taupe);
+  margin-top:clamp(26px,4vw,44px);font-size:14.3px;line-height:1.75;color:var(--taupe);
 }
 .mesa__contato a{color:var(--creme);text-decoration:none;border-bottom:1px solid rgba(235,224,209,.3)}
 .mesa__contato a:hover{border-bottom-color:var(--terra)}
 
 .campo{display:grid;gap:7px;margin-bottom:clamp(18px,2.4vw,24px)}
-.campo>label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe)}
+.campo>label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe)}
 .campo input,.campo select{
   width:100%;background:transparent;border:0;border-bottom:1px solid rgba(235,224,209,.28);
-  padding:10px 0;font-family:var(--sans);font-size:16px;color:var(--creme);
+  padding:10px 0;font-family:var(--sans);font-size:17.6px;color:var(--creme);
   border-radius:0;appearance:none;
 }
 .campo select{background-image:none;cursor:pointer}
 .campo select option{background:var(--tinta);color:var(--creme)}
 .campo input::placeholder{color:rgba(235,224,209,.3)}
 .campo input:focus,.campo select:focus{outline:none;border-bottom-color:var(--terra)}
-.campo__erro{display:none;font-size:12.5px;color:#D98B6C}
+.campo__erro{display:none;font-size:13.75px;color:#D98B6C}
 .campo.invalido .campo__erro{display:block}
 .campo.invalido input,.campo.invalido select{border-bottom-color:#D98B6C}
 .campo--select{position:relative}
@@ -878,12 +878,12 @@ body.travado{overflow:hidden;height:100svh}
   flex:none;width:16px;height:16px;margin-top:2px;accent-color:var(--terra);
   background:transparent;border:1px solid var(--taupe);
 }
-.consent label{font-size:12.5px;line-height:1.6;color:rgba(235,224,209,.7)}
-.mesa__privacidade{margin-top:clamp(16px,2.4vw,22px);font-size:11.5px;line-height:1.65;color:rgba(235,224,209,.45);max-width:44ch}
+.consent label{font-size:13.75px;line-height:1.6;color:rgba(235,224,209,.7)}
+.mesa__privacidade{margin-top:clamp(16px,2.4vw,22px);font-size:12.65px;line-height:1.65;color:rgba(235,224,209,.45);max-width:44ch}
 .mesa__ok{display:none;margin-top:clamp(20px,3vw,30px)}
 .mesa__ok.on{display:grid;gap:14px}
 .mesa__ok p{font-family:var(--voz);font-style:italic;font-size:clamp(19px,2.2vw,26px);line-height:1.45}
-.mesa__ok small{font-size:12.5px;letter-spacing:.02em;color:var(--taupe);font-family:var(--sans);font-style:normal}
+.mesa__ok small{font-size:13.75px;letter-spacing:.02em;color:var(--taupe);font-family:var(--sans);font-style:normal}
 @media(max-width:860px){.mesa__grade{grid-template-columns:1fr}}
 
 /* =================================================================== RODAPÉ */
@@ -892,9 +892,9 @@ body.travado{overflow:hidden;height:100svh}
 .rodape__marca{display:grid;gap:14px}
 .rodape__mono{width:26px;height:auto}
 .rodape__mono rect{fill:var(--creme)}
-.rodape__nome{font-size:12px;letter-spacing:.34em;padding-left:.34em;color:var(--creme)}
-.rodape__linha{font-size:11px;letter-spacing:.18em;text-transform:uppercase;line-height:1.9}
-.rodape__tags{font-size:11px;letter-spacing:.14em;color:rgba(235,224,209,.4)}
+.rodape__nome{font-size:13.2px;letter-spacing:.34em;padding-left:.34em;color:var(--creme)}
+.rodape__linha{font-size:12.1px;letter-spacing:.18em;text-transform:uppercase;line-height:1.9}
+.rodape__tags{font-size:12.1px;letter-spacing:.14em;color:rgba(235,224,209,.4)}
 
 /* ========================================================= reduzir movimento */
 @media(prefers-reduced-motion:reduce){
