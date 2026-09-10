@@ -66,15 +66,26 @@ body.travado{overflow:hidden;height:100svh}
 /* --------------------------------------------------------- tipografia base */
 /* line-height 1.02: leading curto de revista, mas com folga para os acentos
    das caixas altas (Í, Ç, Ã) — abaixo disso a máscara de revelação corta. */
-/* 400: a Libre Bodoni é mais encorpada que a Bodoni Moda no mesmo número,
-   então o 500 que a antiga pedia aqui sai pesado demais. */
+/* A Prata só tem o peso 400. Para deixá-la ainda mais fina, mordemos a
+   borda das letras com um contorno da cor do fundo (papel) — é a única
+   forma de "afinar" abaixo do peso mínimo de uma fonte. 0.5px tira um fio
+   de cada lado sem quebrar as serifas. Vale onde o texto é escuro sobre
+   claro; nas seções de fundo escuro o contorno é cancelado logo abaixo. */
 .display{
   font-family:var(--display);
   font-weight:400;
   line-height:1.02;
   letter-spacing:-.02em;
   text-transform:uppercase;
+  -webkit-text-stroke:0.5px var(--papel);
 }
+/* fundo escuro: o contorno claro engordaria o texto creme em vez de afinar,
+   então volta a zero (a Prata 400 já lê fina o suficiente sobre escuro). */
+:where(.manifesto, .simbolo, .frentes, .mesa) .display{
+  -webkit-text-stroke-width:0;
+}
+/* a assinatura tem fonte e peso próprios — não herda o afinamento */
+.hero__titulo .ln--assinatura{-webkit-text-stroke-width:0}
 .voz{font-family:var(--voz);font-style:italic;line-height:1.45}
 
 .rotulo{
@@ -315,21 +326,16 @@ body.travado{overflow:hidden;height:100svh}
   justify-items:end;
   text-align:right;
 }
-/* o hero agora só tem título e chamada: o rótulo do evento e os dados de
-   data/hora/lugar foram para o convite, onde se lê com calma. */
-/* width:max-content faz o bloco medir exatamente o título (que já se limita
-   em 13ch) — é o que permite ancorar a chamada na esquerda dele. */
-.hero__bloco{
-  display:grid;
-  width:max-content;max-width:100%;
-  justify-items:end;
-}
+/* o hero só tem título e chamada agora; o rótulo do evento e os dados de
+   data/hora/lugar foram para o convite. O título ancora na direita
+   (justify-items:end do .hero__conteudo); a chamada + botão descem para a
+   borda ESQUERDA da coluna — assimetria editorial, como na referência. */
 .hero__acao{
   justify-self:start;
   display:flex;align-items:center;flex-wrap:wrap;
   gap:clamp(14px,1.6vw,26px);
   text-align:left;
-  margin-top:clamp(18px,3.4vh,42px);
+  margin-top:clamp(14px,2.6vh,30px);
 }
 .hero__convocacao{
   font-size:clamp(10.5px,1.15vw,12.5px);
@@ -383,9 +389,6 @@ body.travado{overflow:hidden;height:100svh}
 }
 @media(max-width:760px){
   .hero__conteudo{justify-items:start;text-align:left}
-  /* no celular tudo nasce na esquerda, então o título ancora ali junto com
-     a chamada e o botão — sem isso ele fica encostado na direita do bloco. */
-  .hero__bloco{justify-items:start}
   /* no celular a frase e o botão voltam a empilhar: lado a lado não cabem */
   .hero__acao{flex-direction:column;align-items:flex-start;gap:clamp(12px,1.8vh,18px)}
   .hero__titulo{max-width:11ch}
@@ -706,8 +709,8 @@ body.travado{overflow:hidden;height:100svh}
   flex:none;
   scroll-snap-align:start;
   display:flex;align-items:stretch;
-  gap:clamp(10px,1.4vw,18px);
-  width:clamp(210px,25vw,310px);
+  gap:clamp(12px,1.5vw,20px);
+  width:clamp(270px,32vw,420px);
 }
 /* o nome corre na vertical, de baixo para cima, rente à foto — como na
    referência. O filete por cima repete o traço fino do resto do site. */
@@ -718,7 +721,7 @@ body.travado{overflow:hidden;height:100svh}
   writing-mode:vertical-rl;
   transform:rotate(180deg);
   font-family:var(--display);font-weight:400;
-  font-size:clamp(15px,1.5vw,19px);
+  font-size:clamp(16px,1.7vw,22px);
   line-height:1;letter-spacing:.02em;
   text-transform:uppercase;
   color:var(--tinta);
