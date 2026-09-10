@@ -333,6 +333,15 @@ body.travado{overflow:hidden;height:100svh}
   max-width:13ch;
 }
 .hero__titulo .ln{display:block}
+/* A máscara de revelação (montada no JS) é overflow:hidden e tem folga só
+   no topo, para os acentos. O script da assinatura estoura essa caixa nos
+   dois eixos — laçadas para os lados, perna do "f" para baixo — então aqui
+   abrimos folga lateral e a devolvemos com margem negativa: a máscara
+   continua cortando, só que longe da tinta. */
+.hero__titulo .ln-mask{padding-inline:.4em;margin-inline:-.4em}
+/* e a última linha ganha folga embaixo pelo mesmo motivo, sem empurrar a
+   data: o que o line-height abre, a margem negativa da máscara devolve. */
+.hero__titulo .ln-mask:last-child{margin-bottom:-.62em}
 /* a linha de fecho vira assinatura — a mesma caligrafia dos adesivos de
    piso — puxada para cima e levemente rodada, como no adesivo: ela cruza
    o respiro acima de "arquiteto" em vez de nascer depois dele, mas sem
@@ -344,14 +353,18 @@ body.travado{overflow:hidden;height:100svh}
   font-weight:400;
   text-transform:none;
   letter-spacing:0;
-  font-size:1.95em;
-  line-height:1;
+  /* 1.58em: é o tamanho em que a mancha do script fica da largura de
+     "arquiteto". Acima disso ela sangra para a esquerda e desalinha. */
+  font-size:1.58em;
+  line-height:1.42;
   color:var(--vinho);
-  /* a Mrs Saint Delafield é de traço fino; o contorno engrossa sem deformar
-     a letra. .02em é o ponto: acima disso os fios finos incham e a
-     alternância grosso/fino da caligrafia se perde. */
-  -webkit-text-stroke:.02em currentColor;
-  margin-top:-.42em;
+  /* a Mrs Saint Delafield é de traço fino; o contorno dá um corpo mínimo
+     sem fechar os olhos das letras nem achatar a alternância grosso/fino. */
+  -webkit-text-stroke:.008em currentColor;
+  /* sobe com `top`, não com margin-top: margem negativa aqui encolhe a
+     máscara acima e ela passa a decepar a assinatura. */
+  position:relative;
+  top:-.38em;
   transform:rotate(-3.2deg);
   transform-origin:right bottom;
 }
@@ -373,7 +386,7 @@ body.travado{overflow:hidden;height:100svh}
      "ARQUITETO" — aqui ele encosta no respiro, sem cruzar a tinta. */
   .hero__titulo .ln--assinatura{
     transform-origin:left bottom;transform:rotate(-3.2deg);
-    font-size:1.7em;margin-top:-.16em;
+    font-size:1.5em;top:-.10em;
   }
 }
 
