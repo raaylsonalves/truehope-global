@@ -338,8 +338,8 @@ body.travado{overflow:hidden;height:100svh}
   grid-column:1;grid-row:1;
   justify-self:start;
   align-self:center;
-  display:flex;align-items:center;flex-wrap:wrap;
-  gap:clamp(14px,1.6vw,26px);
+  display:flex;flex-direction:column;align-items:flex-start;
+  gap:clamp(14px,1.8vh,22px);
   text-align:left;
 }
 .hero__convocacao{
@@ -392,16 +392,14 @@ body.travado{overflow:hidden;height:100svh}
   transform:rotate(-3.2deg);
   transform-origin:right bottom;
 }
-/* abaixo de ~1080px a coluna da esquerda não segura a frase + o botão lado
-   a lado; volta para uma coluna só, título e depois o CTA, tudo à esquerda. */
+/* abaixo de ~1080px a coluna da esquerda fica estreita demais ao lado do
+   título; o CTA volta para baixo dele, numa coluna só. */
 @media(max-width:1080px){
   .hero__conteudo{grid-template-columns:1fr;justify-items:start;text-align:left}
   .hero__titulo{grid-column:1;grid-row:auto;justify-self:start}
   .hero__acao{grid-column:1;grid-row:auto;align-self:auto;margin-top:clamp(16px,3vh,32px)}
 }
 @media(max-width:760px){
-  /* no celular a frase e o botão voltam a empilhar: lado a lado não cabem */
-  .hero__acao{flex-direction:column;align-items:flex-start;gap:clamp(12px,1.8vh,18px)}
   .hero__titulo{max-width:11ch}
   /* no celular a caixa do título é estreita e o script cai em cima do
      "ARQUITETO" — aqui ele encosta no respiro, sem cruzar a tinta. */
@@ -781,6 +779,12 @@ body.travado{overflow:hidden;height:100svh}
 }
 .prog__aside{display:grid;gap:clamp(14px,2vw,22px);position:sticky;top:clamp(84px,13vh,130px)}
 .prog__titulo{font-size:clamp(32px,5.4vw,72px);max-width:9ch}
+.prog__sub{
+  font-family:var(--voz);font-style:italic;
+  font-size:clamp(17px,1.9vw,22px);line-height:1.4;
+  color:var(--terra);max-width:24ch;
+  margin-top:calc(clamp(14px,2vw,22px) * -.4);
+}
 .prog__local{font-size:14.5px;line-height:1.7;color:var(--tinta-suave)}
 .prog__local b{font-weight:500;color:var(--tinta);display:block}
 .prog__lista{display:grid}
