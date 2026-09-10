@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero-arcos.webp">
-<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@300,400,500,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/site.css">
 <script>
@@ -153,7 +153,7 @@
       <ul class="convite__dados rv">
         <li><span class="rotulo">Data</span><b>08 de outubro de 2026</b></li>
         <li><span class="rotulo">Início</span><b>13h30</b></li>
-        <li><span class="rotulo">Onde</span><b>Av. Tamboré, 74<br>Alphaville — São Paulo</b></li>
+        <li><span class="rotulo">Onde</span><b>Av. Tamboré, 74 — Alphaville, São Paulo</b></li>
       </ul>
     </div>
 
@@ -171,18 +171,72 @@
       <p class="rotulo rotulo--claro rv">Com tradução simultânea</p>
     </div>
 
-    <ul class="vozes__lista">
-      <li class="voz-item rv"><span class="voz-item__n">01</span><span class="voz-item__nome">Randy Clark</span></li>
-      <li class="voz-item rv"><span class="voz-item__n">02</span><span class="voz-item__nome">Dani Rocha</span></li>
-      <li class="voz-item rv"><span class="voz-item__n">03</span><span class="voz-item__nome">Dirce Carvalho</span></li>
-      <li class="voz-item rv"><span class="voz-item__n">04</span><span class="voz-item__nome">Alinne Duarte</span></li>
-      <li class="voz-item rv"><span class="voz-item__n">05</span><span class="voz-item__nome">Katherine Ruonala</span></li>
-      <li class="voz-item rv"><span class="voz-item__n">06</span><span class="voz-item__nome">Charity Cook</span></li>
-      <li class="voz-item rv"><span class="voz-item__n">07</span><span class="voz-item__nome">Andrea Huber</span></li>
-      <li class="voz-item rv"><span class="voz-item__n">08</span><span class="voz-item__nome">Marci Vago</span></li>
-    </ul>
+    <div class="vozes__palco">
+      <ul class="vozes__trilho" id="vozesTrilho">
+      <li class="voz rv">
+        <p class="voz__nome"><span class="voz__n">01</span>Randy Clark</p>
+        <figure class="voz__foto">
+          <img src="assets/img/voz-01-randy-clark.webp" width="900" height="1200" alt="Randy Clark" loading="lazy" decoding="async">
+        </figure>
+      </li>
+      <li class="voz rv">
+        <p class="voz__nome"><span class="voz__n">02</span>Dani Rocha</p>
+        <figure class="voz__foto">
+          <img src="assets/img/voz-02-dani-rocha.webp" width="900" height="1200" alt="Dani Rocha" loading="lazy" decoding="async">
+        </figure>
+      </li>
+      <li class="voz rv">
+        <p class="voz__nome"><span class="voz__n">03</span>Dirce Carvalho</p>
+        <figure class="voz__foto">
+          <img src="assets/img/voz-03-dirce-carvalho.webp" width="900" height="1200" alt="Dirce Carvalho" loading="lazy" decoding="async">
+        </figure>
+      </li>
+      <li class="voz rv">
+        <p class="voz__nome"><span class="voz__n">04</span>Alinne Duarte</p>
+        <figure class="voz__foto">
+          <img src="assets/img/voz-04-alinne-duarte.webp" width="900" height="1200" alt="Alinne Duarte" loading="lazy" decoding="async">
+        </figure>
+      </li>
+      <li class="voz rv">
+        <p class="voz__nome"><span class="voz__n">05</span>Katherine Ruonala</p>
+        <figure class="voz__foto">
+          <img src="assets/img/voz-05-katherine-ruonala.webp" width="900" height="1200" alt="Katherine Ruonala" loading="lazy" decoding="async">
+        </figure>
+      </li>
+      <li class="voz rv">
+        <p class="voz__nome"><span class="voz__n">06</span>Charity Cook</p>
+        <figure class="voz__foto">
+          <img src="assets/img/voz-06-charity-cook.webp" width="900" height="1200" alt="Charity Cook" loading="lazy" decoding="async">
+        </figure>
+      </li>
+      <li class="voz rv">
+        <p class="voz__nome"><span class="voz__n">07</span>Andrea Huber</p>
+        <figure class="voz__foto">
+          <img src="assets/img/voz-07-andrea-huber.webp" width="900" height="1200" alt="Andrea Huber" loading="lazy" decoding="async">
+        </figure>
+      </li>
+      <li class="voz rv">
+        <p class="voz__nome"><span class="voz__n">08</span>Marci Vago</p>
+        <figure class="voz__foto">
+          <img src="assets/img/voz-08-marci-vago.webp" width="900" height="1200" alt="Marci Vago" loading="lazy" decoding="async">
+        </figure>
+      </li>
+      </ul>
+    </div>
 
-    <p class="vozes__nota rv">Um tempo de conexão, inspiração e ativação em torno daquilo que Deus deseja edificar através das famílias.</p>
+    <div class="vozes__pe">
+      <p class="vozes__nota rv">Um tempo de conexão, inspiração e ativação em torno daquilo que Deus deseja edificar através das famílias.</p>
+      <!-- as setas só existem como conforto: o trilho é uma régua com scroll
+           nativo, então arrastar no dedo ou no trackpad funciona sem JS. -->
+      <div class="vozes__setas" aria-hidden="true">
+        <button class="seta" type="button" data-vozes="ant" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
+        </button>
+        <button class="seta" type="button" data-vozes="prox" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
 

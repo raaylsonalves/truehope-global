@@ -696,12 +696,62 @@
     hero();
   });
 
+  /* ======================================================================
+     8. VOZES — setas do trilho de palestrantes
+     O trilho já rola sozinho (scroll nativo + scroll-snap). Isto aqui só
+     liga as setas e as apaga nas pontas; sem JS, o dedo e o trackpad
+     continuam funcionando e as setas ficam escondidas pelo CSS.
+     ====================================================================== */
+  function vozes() {
+    var trilho = $('#vozesTrilho');
+    if (!trilho) return;
+    var setas = $$('[data-vozes]');
+    if (!setas.length) return;
+
+    var caixa = trilho.parentNode.parentNode.querySelector('.vozes__setas');
+    if (caixa) caixa.removeAttribute('aria-hidden');
+
+    var ant = null, prox = null;
+    setas.forEach(function (b) {
+      b.removeAttribute('tabindex');
+      if (b.getAttribute('data-vozes') === 'ant') {
+        ant = b;
+        b.setAttribute('aria-label', 'Ver palestrantes anteriores');
+      } else {
+        prox = b;
+        b.setAttribute('aria-label', 'Ver próximos palestrantes');
+      }
+      b.addEventListener('click', function () {
+        var cartao = trilho.querySelector('.voz');
+        if (!cartao) return;
+        // um cartão + o vão entre eles
+        var passo = cartao.getBoundingClientRect().width +
+          parseFloat(getComputedStyle(trilho).columnGap || 0);
+        trilho.scrollBy({
+          left: b === ant ? -passo : passo,
+          behavior: reduz ? 'auto' : 'smooth'
+        });
+      });
+    });
+
+    function pontas() {
+      // 2px de folga: o scroll nativo raramente para no pixel exato
+      var fim = trilho.scrollWidth - trilho.clientWidth;
+      if (ant) ant.disabled = trilho.scrollLeft <= 2;
+      if (prox) prox.disabled = trilho.scrollLeft >= fim - 2;
+    }
+    trilho.addEventListener('scroll', pontas, { passive: true });
+    window.addEventListener('resize', pontas);
+    pontas();
+  }
+
   function montar() {
     nav();
     reveals();
     paralaxe();
     simbolo();
     trilho();
+    vozes();
     formulario();
     if (temGsap) ScrollTrigger.refresh();
   }

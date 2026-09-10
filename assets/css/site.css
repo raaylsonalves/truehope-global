@@ -19,13 +19,13 @@
   --linha:rgba(31,34,26,.14);
   --linha-clara:rgba(235,224,209,.16);
 
-  /* O serif dos adesivos de piso é uma Didone. A Libre Bodoni é um corte
-     de TEXTO: mesmo desenho, mesmo contraste, mas com os fios finos
-     encorpados o bastante para sobreviver sobre foto. A Bodoni Moda, que
-     usávamos antes, é um corte de display — a diagonal e a travessa do "A"
-     sumiam contra a parede clara do hero. Uma família só para todo o site:
-     não há segunda variável de serif, para não abrir espaço a conflito. */
-  --display:"Libre Bodoni","Times New Roman",Georgia,serif;
+  /* O serif dos adesivos de piso é uma Didone. A Prata é o meio-termo entre
+     as duas que testamos antes: mais leve que a Libre Bodoni (que saía
+     grossa demais) e com os fios do "A" bem mais sólidos que os da Bodoni
+     Moda (que sumiam contra a foto do hero). Peso único 400 — nenhum
+     elemento pode pedir 500+ daqui, ou o navegador sintetiza um falso
+     negrito. Uma família só para todo o site, sem segunda variável. */
+  --display:"Prata","Times New Roman",Georgia,serif;
   --voz:"Cormorant Garamond",Georgia,serif;
   --sans:"Satoshi",-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
   /* o script dos adesivos de piso ("de Casa", "Geração") é uma assinatura
@@ -326,7 +326,8 @@ body.travado{overflow:hidden;height:100svh}
 }
 .hero__acao{
   justify-self:start;
-  display:grid;gap:clamp(12px,1.8vh,20px);justify-items:start;
+  display:flex;align-items:center;flex-wrap:wrap;
+  gap:clamp(14px,1.6vw,26px);
   text-align:left;
   margin-top:clamp(18px,3.4vh,42px);
 }
@@ -385,6 +386,8 @@ body.travado{overflow:hidden;height:100svh}
   /* no celular tudo nasce na esquerda, então o título ancora ali junto com
      a chamada e o botão — sem isso ele fica encostado na direita do bloco. */
   .hero__bloco{justify-items:start}
+  /* no celular a frase e o botão voltam a empilhar: lado a lado não cabem */
+  .hero__acao{flex-direction:column;align-items:flex-start;gap:clamp(12px,1.8vh,18px)}
   .hero__titulo{max-width:11ch}
   /* no celular a caixa do título é estreita e o script cai em cima do
      "ARQUITETO" — aqui ele encosta no respiro, sem cruzar a tinta. */
@@ -460,18 +463,23 @@ body.travado{overflow:hidden;height:100svh}
 .convite__kicker i{display:block;width:clamp(24px,4vw,54px);height:1px;background:var(--vinho);opacity:.55}
 /* data, hora e endereço: saíram do hero e viraram uma ficha do evento */
 .convite__dados{
-  display:grid;gap:clamp(18px,2.2vw,26px);
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  display:grid;gap:clamp(16px,2.2vw,26px);
+  grid-template-columns:1fr;
   padding-top:clamp(20px,3vw,30px);
   border-top:1px solid var(--linha);
+}
+/* colunas do tamanho do próprio conteúdo, e o endereço fica com a sobra:
+   assim os três valores nascem na mesma linha de base, sem ninguém quebrar
+   em duas linhas e desalinhar a régua. */
+@media(min-width:700px){
+  .convite__dados{grid-template-columns:auto auto 1fr}
 }
 .convite__dados li{display:grid;gap:.6em;align-content:start}
 .convite__dados .rotulo{color:var(--taupe)}
 .convite__dados b{
   font-family:var(--display);font-weight:400;
-  font-size:clamp(15px,1.45vw,18px);line-height:1.35;
+  font-size:clamp(14.5px,1.35vw,17px);line-height:1.35;
   letter-spacing:-.01em;color:var(--tinta);
-  text-wrap:balance;
 }
 .convite__chamada{
   font-family:var(--display);
@@ -675,24 +683,85 @@ body.travado{overflow:hidden;height:100svh}
   padding-bottom:clamp(24px,3.4vw,40px);
 }
 .vozes__titulo{font-size:clamp(32px,6.4vw,86px)}
-/* Duas colunas fixas: o índice precisa correr 01→08 na leitura,
-   e o auto-fit embaralhava a ordem sempre que cabiam três colunas. */
-.vozes__lista{display:grid;grid-template-columns:1fr;column-gap:clamp(24px,5vw,80px)}
-@media(min-width:720px){.vozes__lista{grid-template-columns:1fr 1fr}}
-.voz-item{
-  display:flex;align-items:baseline;gap:clamp(12px,2vw,22px);
-  padding-block:clamp(15px,2vw,24px);
-  border-top:1px solid var(--linha);
+/* O trilho é uma régua de scroll NATIVO com scroll-snap: arrastar no dedo,
+   no trackpad ou com as setas do teclado funciona sem uma linha de JS — as
+   setas embaixo são só um atalho a mais. Sangra até a borda da tela e usa
+   scroll-padding para o primeiro cartão parar alinhado com o texto. */
+.vozes__palco{
+  margin-inline:calc(var(--gut) * -1);
 }
-.voz-item__n{font-size:10px;letter-spacing:.18em;color:var(--taupe);flex:none;width:2.2em}
-.voz-item__nome{
+.vozes__trilho{
+  display:flex;
+  gap:clamp(16px,2.6vw,34px);
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-padding-inline:var(--gut);
+  padding-inline:var(--gut);
+  padding-bottom:6px;
+  scrollbar-width:none;
+  overscroll-behavior-x:contain;
+}
+.vozes__trilho::-webkit-scrollbar{display:none}
+.voz{
+  flex:none;
+  scroll-snap-align:start;
+  display:flex;align-items:stretch;
+  gap:clamp(10px,1.4vw,18px);
+  width:clamp(210px,25vw,310px);
+}
+/* o nome corre na vertical, de baixo para cima, rente à foto — como na
+   referência. O filete por cima repete o traço fino do resto do site. */
+.voz__nome{
+  flex:none;
+  display:flex;align-items:flex-end;justify-content:flex-start;
+  gap:clamp(14px,2vw,26px);
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
   font-family:var(--display);font-weight:400;
-  font-size:clamp(19px,2.4vw,30px);line-height:1.1;letter-spacing:-.01em;
+  font-size:clamp(15px,1.5vw,19px);
+  line-height:1;letter-spacing:.02em;
+  text-transform:uppercase;
+  color:var(--tinta);
+}
+.voz__nome::after{
+  content:"";flex:1;width:1px;min-height:26px;
+  background:var(--linha);
+}
+.voz__n{
+  font-family:var(--sans);
+  font-size:9.5px;letter-spacing:.2em;color:var(--taupe);
+}
+.voz__foto{
+  flex:1;min-width:0;margin:0;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  background:var(--papel);
+}
+.voz__foto img{width:100%;height:100%;object-fit:cover;display:block}
+.vozes__pe{
+  display:flex;flex-wrap:wrap;gap:20px clamp(24px,4vw,50px);
+  align-items:flex-end;justify-content:space-between;
+  margin-top:clamp(24px,3.4vw,40px);
 }
 .vozes__nota{
-  margin-top:clamp(24px,3.4vw,40px);
+  flex:1 1 26ch;
   font-family:var(--voz);font-style:italic;font-size:clamp(17px,2vw,23px);color:var(--terra);
 }
+/* sem JS as setas não fariam nada, então só aparecem quando ele assume —
+   o trilho continua rolando no dedo e no trackpad de qualquer forma. */
+.vozes__setas{display:none;gap:10px;flex:none}
+.js .vozes__setas{display:flex}
+.seta{
+  width:46px;height:46px;flex:none;
+  display:grid;place-items:center;
+  border:1px solid var(--linha);border-radius:50%;
+  background:none;cursor:pointer;color:var(--tinta);
+  transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease);
+}
+.seta svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.4}
+.seta:hover,.seta:focus-visible{background:var(--vinho);border-color:var(--vinho);color:var(--papel)}
+.seta[disabled]{opacity:.32;cursor:default}
+.seta[disabled]:hover{background:none;border-color:var(--linha);color:var(--tinta)}
 
 /* =============================================================== PROGRAMAÇÃO */
 .prog{background:var(--papel)}
