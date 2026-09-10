@@ -19,19 +19,19 @@
   --linha:rgba(31,34,26,.14);
   --linha-clara:rgba(235,224,209,.16);
 
-  --display:"Bodoni Moda",Didot,"Times New Roman",Georgia,serif;
-  /* Didot "de verdade" só existe como fonte de sistema (Mac/Adobe) — quase
-     ninguém tem instalada, então pedir ela primeiro só troca a fonte pra
-     quem abre no Mac e deixa todo o resto (a maioria) sem controle sobre
-     o resultado. Bodoni Moda direto: é a mesma família Didone (mesmo
-     contraste de traço, mesmas serifas retas) e todo mundo vê igual. */
+  --display:"Bodoni Moda","Times New Roman",Georgia,serif;
+  /* o serif dos adesivos de piso é uma Didone (alto contraste de traço,
+     serifas retas e finas). A "Didot de verdade" só existe como fonte de
+     sistema (Mac/Adobe), quase ninguém tem instalada — então a Bodoni Moda
+     é a escolha: mesma família Didone, mesmo desenho, e todo mundo vê igual. */
   --hero-serif:"Bodoni Moda","Times New Roman",Georgia,serif;
   --voz:"Cormorant Garamond",Georgia,serif;
   --sans:"Satoshi",-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
-  /* Mistrully (a fonte real do adesivo) é uma fonte paga — sem o arquivo
-     licenciado, usamos a Beau Rivage (Google Fonts, grátis) como a dupla
-     mais próxima: mesmo traço de pincel monolinha, mesma inclinação solta. */
-  --assinatura:"Beau Rivage",cursive;
+  /* o script dos adesivos de piso ("de Casa", "Geração") é uma assinatura
+     monolinha manuscrita, provavelmente paga e sem info de fonte no PDF
+     (texto todo vetorizado). A Sacramento (Google Fonts, grátis) é a mais
+     próxima: mesmo traço de espessura única, mesma cursiva de caneta solta. */
+  --assinatura:"Sacramento",cursive;
 
   --ease:cubic-bezier(.22,1,.36,1);
   --gut:clamp(20px,5vw,64px);
