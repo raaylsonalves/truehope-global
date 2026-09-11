@@ -523,8 +523,8 @@
     var rodape = palco.closest('.rodape');
     var THREE = window.THREE;
 
-    var AJUSTE = { vento: 3.6, rajada: 40, direcao: -18, peso: 70,
-                   brilho: 42, inclina: 12, raio: 20, forca: 60, arrasto: 46 };
+    var AJUSTE = { vento: 4.0, rajada: 42, direcao: -18, peso: 70,
+                   brilho: 42, inclina: 12, raio: 34, forca: 74, arrasto: 46 };
     var LADO_CM = 90;
 
     var cena = new THREE.Scene();
@@ -624,8 +624,18 @@
     }));
     malha.rotation.x = -AJUSTE.inclina * Math.PI / 180 * 0.55;
     malha.rotation.y = AJUSTE.direcao * Math.PI / 180 * 0.16;
-    malha.scale.set(1.9, 1.5, 1);   // o carré sangra para as laterais do rodapé
     cena.add(malha);
+    var LADO = 1.44;
+    var fov = camera.fov * Math.PI / 180;
+
+    /* "cover": escala o carré para cobrir todo o quadro, seja qual for a
+       proporção do rodapé — nunca deixa faixa vazia nas laterais. */
+    function cobrir() {
+      var visH = 2 * camera.position.z * Math.tan(fov / 2);
+      var visW = visH * camera.aspect;
+      var s = Math.max(visW, visH) / LADO * 1.12;
+      malha.scale.set(s, s, 1);
+    }
 
     var carregador = new THREE.TextureLoader();
     carregador.load('assets/img/lenco-inteiro.webp', function (tex) {
@@ -635,9 +645,8 @@
       palco.classList.add('pronto');
     });
 
-    /* ponteiro: o rodapé inteiro é a área sensível; o <canvas> ocupa o
-       dobro da altura e fica ancorado embaixo, então só a metade de baixo
-       do lenço aparece. */
+    /* ponteiro: o rodapé inteiro é a área sensível — o mouse em qualquer
+       ponto do rodapé empurra o tecido, sem tirar o clique dos links. */
     var alvoUV = new THREE.Vector2(0.5, 0.5);
     var uvSuave = new THREE.Vector2(0.5, 0.5);
     var alvoAmt = 0, amtSuave = 0;
@@ -665,6 +674,7 @@
       camera.aspect = r.width / r.height;
       camera.updateProjectionMatrix();
       renderer.setSize(r.width, r.height, false);
+      cobrir();
     }
     window.addEventListener('resize', medir);
     medir();
