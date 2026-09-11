@@ -674,7 +674,7 @@
       okTexto.textContent = 'Recebemos sua confirmação. Um lugar à mesa é seu.';
 
       if (!destino) {
-        okNota.textContent = 'A Angélica entra em contato entre 1 e 3 de outubro.';
+        okNota.textContent = 'Em breve receberá um e-mail informativo.';
         okLink.parentNode.style.display = 'none';
       } else {
         okLink.href = destino;
