@@ -7,17 +7,28 @@
 <!--[if mso]>
 <style>table{border-collapse:collapse}</style>
 <![endif]-->
+<style>
+  /* Fontes do site (Prata para os títulos). Best-effort: Gmail e Outlook
+     desktop ignoram @font-face e caem no fallback serifado (Georgia) —
+     por isso todo font-family abaixo sempre lista o fallback primeiro
+     depois do nome real, nunca só a fonte custom. Apple Mail, Outlook.com
+     e a maioria dos webmails modernos honram o @font-face. */
+  @import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+  .fd { font-family:'Prata',Georgia,'Times New Roman',serif; }
+</style>
 </head>
 <!--
   TEMPLATE DE E-MAIL — envio automático ao preencher o formulário da masterclass.
 
   Como usar:
   1. Troque {{PRIMEIRO_NOME}}, {{CUPOM}}, {{LINK_COLECAO}}, {{LINK_COMUNIDADE}}
-     e {{SITE_URL}} pelos valores reais (a maioria dos ESPs faz isso
-     automaticamente com merge tags — ver nota no rodapé deste arquivo).
-  2. {{SITE_URL}} deve ser o domínio já publicado do site (ex.:
-     https://truehope-global.pages.dev) — e-mail não carrega imagens de
-     um caminho relativo, precisa ser uma URL completa e pública.
+     e {{LINK_DESCADASTRO}} pelos valores reais — api/lead.js já faz essa
+     substituição automaticamente a cada envio do formulário.
+  2. As imagens (logo-th.png, foto-camisa.jpg, foto-bordado.jpg, em
+     assets/email/img/) vão embutidas no e-mail como anexos inline
+     (cid:...) — api/lead.js já anexa os três arquivos. Isso é de
+     propósito: e-mail não deve depender de um domínio publicado nem de
+     "permitir imagens externas" para a peça aparecer.
   3. Este HTML usa tabelas + estilo inline de propósito: é o único jeito
      de um layout assim renderizar igual no Gmail, Outlook e Apple Mail.
 -->
@@ -33,7 +44,7 @@
 
   <!-- marca -->
   <tr><td style="padding:8px 8px 28px;text-align:center;">
-    <img src="{{SITE_URL}}/assets/img/logo-truehope.svg" width="64" height="89" alt="TRUEHOPE" style="display:inline-block;">
+    <img src="cid:logo-th" width="46" height="64" alt="TRUEHOPE" style="display:inline-block;">
   </td></tr>
 
   <!-- saudação + assinatura, lado a lado como no site -->
@@ -62,14 +73,14 @@
     <tr>
       <td width="220" style="padding:0;">
         <a href="{{LINK_COLECAO}}" style="display:block;">
-          <img src="{{SITE_URL}}/assets/img/pc-camisa.webp" width="220" height="229" alt="Peça da coleção Truehope + Marci, com a etiqueta MARCI e o manifesto escrito à mão no forro." style="display:block;width:220px;height:229px;object-fit:cover;">
+          <img src="cid:foto-camisa" width="220" height="229" alt="Peça da coleção Truehope + Marci, com a etiqueta MARCI e o manifesto escrito à mão no forro." style="display:block;width:220px;height:229px;object-fit:cover;">
         </a>
       </td>
       <td valign="middle" style="padding:22px 20px;font-family:Arial,Helvetica,sans-serif;">
         <p style="margin:0 0 8px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7B3620;line-height:1.6;">
           Conheça<br>nossa collab
         </p>
-        <p style="margin:0 0 6px;font-family:Georgia,'Times New Roman',serif;font-size:22px;letter-spacing:-.01em;text-transform:uppercase;color:#1F221A;">
+        <p class="fd" style="margin:0 0 6px;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:22px;letter-spacing:-.01em;text-transform:uppercase;color:#1F221A;">
           Truehope + Marci
         </p>
         <p style="margin:0 0 12px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#806453;">
@@ -96,7 +107,7 @@
         <p style="margin:0 0 6px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7B3620;">
           Um presente especial para você
         </p>
-        <p style="margin:0 0 8px;font-family:Georgia,'Times New Roman',serif;font-size:24px;letter-spacing:.02em;color:#1F221A;">
+        <p class="fd" style="margin:0 0 8px;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:24px;letter-spacing:.02em;color:#1F221A;">
           {{CUPOM}}
         </p>
         <p style="margin:0;font-size:13px;line-height:1.5;color:#4A4438;">
@@ -120,14 +131,14 @@
     <tr>
       <td width="120" style="padding:0;">
         <a href="{{LINK_COMUNIDADE}}" style="display:block;">
-          <img src="{{SITE_URL}}/assets/img/pc-bordado.webp" width="120" height="150" alt="Detalhe do bordado à mão nas costas: família design divino." style="display:block;width:120px;height:150px;object-fit:cover;">
+          <img src="cid:foto-bordado" width="120" height="150" alt="Detalhe do bordado à mão nas costas: família design divino." style="display:block;width:120px;height:150px;object-fit:cover;">
         </a>
       </td>
       <td valign="middle" style="padding:18px 20px;font-family:Arial,Helvetica,sans-serif;">
         <p style="margin:0 0 6px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7B3620;">
           Entre na nossa
         </p>
-        <p style="margin:0 0 10px;font-family:Georgia,'Times New Roman',serif;font-size:20px;text-transform:uppercase;color:#1F221A;">
+        <p class="fd" style="margin:0 0 10px;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:20px;text-transform:uppercase;color:#1F221A;">
           Comunidade no WhatsApp
         </p>
         <p style="margin:0 0 14px;font-size:13px;line-height:1.55;color:#4A4438;">
@@ -141,12 +152,33 @@
     </table>
   </td></tr>
 
-  <tr><td style="height:36px;line-height:36px;font-size:0;">&nbsp;</td></tr>
+  <tr><td style="height:34px;line-height:34px;font-size:0;">&nbsp;</td></tr>
 
-  <!-- rodapé -->
-  <tr><td style="border-top:1px solid rgba(31,34,26,.14);padding:22px 4px 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.7;color:#806453;text-align:center;">
-    TRUEHOPE — Movimento para família · Global Awakening<br>
-    Você recebeu este e-mail porque se cadastrou na Convocação pelo Resgate da Família.<br>
+  <!-- rodapé: marca | frase do movimento | "pessoas · famílias · uma geração" —
+       a mesma barra do rodapé do site, adaptada pro e-mail. -->
+  <tr><td style="border-top:1px solid rgba(31,34,26,.14);padding:22px 4px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td valign="middle" style="white-space:nowrap;">
+        <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+          <td valign="middle" style="padding-right:8px;"><img src="cid:logo-th" width="16" height="22" alt="" style="display:block;"></td>
+          <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.28em;color:#1F221A;">TRUEHOPE</td>
+        </tr></table>
+      </td>
+      <td width="1" style="background:rgba(31,34,26,.16);font-size:0;line-height:1;">&nbsp;</td>
+      <td valign="middle" align="center" style="padding:0 16px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.12em;line-height:1.7;text-transform:uppercase;color:#806453;white-space:nowrap;">
+        Movimento para família<br>Global Awakening
+      </td>
+      <td width="1" style="background:rgba(31,34,26,.16);font-size:0;line-height:1;">&nbsp;</td>
+      <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.1em;line-height:1.7;text-transform:uppercase;color:#1F221A;white-space:nowrap;">
+        Pessoas<br>Famílias<br>Uma geração
+      </td>
+    </tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:16px 4px 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.7;color:#806453;text-align:center;">
+    Você recebeu este e-mail porque se cadastrou na Convocação pelo Resgate da Família.
     <a href="{{LINK_DESCADASTRO}}" style="color:#806453;text-decoration:underline;">Cancelar inscrição</a>
   </td></tr>
 

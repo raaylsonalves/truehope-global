@@ -12,8 +12,6 @@
 //
 //   LEAD_SHEET_WEBHOOK   a URL /exec do Apps Script (apps-script/gravar-lead.gs)
 //
-//   SITE_URL             ex.: "https://truehope-masterclass.vercel.app"
-//                        (usado para montar as URLs das imagens no e-mail)
 //   CUPOM_CODE           opcional — padrão "TRUEHOPE15" (cupom único
 //                        compartilhado; ver nota no fim do arquivo)
 //   LINK_COLECAO         opcional — padrão usa o link da loja já embutido no site
@@ -90,26 +88,30 @@ async function enviarEmailConfirmacao(lead) {
   });
 
   var primeiroNome = (lead.nome || '').trim().split(/\s+/)[0] || '';
-  var siteUrl = (process.env.SITE_URL || '').replace(/\/$/, '');
 
-  var html = fs.readFileSync(
-    path.join(process.cwd(), 'assets', 'email', 'convocacao-recebida.html'),
-    'utf8'
-  );
+  var pastaEmail = path.join(process.cwd(), 'assets', 'email');
+  var html = fs.readFileSync(path.join(pastaEmail, 'convocacao-recebida.html'), 'utf8');
 
   html = html
     .split('{{PRIMEIRO_NOME}}').join(primeiroNome)
     .split('{{CUPOM}}').join(process.env.CUPOM_CODE || 'TRUEHOPE15')
     .split('{{LINK_COLECAO}}').join(process.env.LINK_COLECAO || LINK_COLECAO_PADRAO)
     .split('{{LINK_COMUNIDADE}}').join(process.env.LINK_COMUNIDADE || '#')
-    .split('{{LINK_DESCADASTRO}}').join(process.env.LINK_DESCADASTRO || '#')
-    .split('{{SITE_URL}}').join(siteUrl);
+    .split('{{LINK_DESCADASTRO}}').join(process.env.LINK_DESCADASTRO || '#');
 
   await transportador.sendMail({
     from: process.env.SMTP_FROM || process.env.SMTP_USER,
     to: lead.email,
     subject: 'Sua vaga na Convocação pelo Resgate da Família está confirmada',
-    html: html
+    html: html,
+    // imagens embutidas como anexo inline (cid:) — funcionam em qualquer
+    // caixa de entrada, sem depender de um domínio publicado nem de o
+    // destinatário clicar em "exibir imagens".
+    attachments: [
+      { filename: 'logo-th.png', path: path.join(pastaEmail, 'img', 'logo-th.png'), cid: 'logo-th' },
+      { filename: 'foto-camisa.jpg', path: path.join(pastaEmail, 'img', 'foto-camisa.jpg'), cid: 'foto-camisa' },
+      { filename: 'foto-bordado.jpg', path: path.join(pastaEmail, 'img', 'foto-bordado.jpg'), cid: 'foto-bordado' }
+    ]
   });
 }
 
