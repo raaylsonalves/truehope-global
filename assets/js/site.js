@@ -513,8 +513,195 @@
   }
 
   /* ======================================================================
-     9. O LENÇO — three.js quando dá, tecido plano com vento quando não dá
+     9. O LENÇO NO RODAPÉ — tecido de seda em three.js, do meio para baixo,
+        reagindo ao ponteiro. Sem three.js ou com movimento reduzido, o
+        rodapé simplesmente não ganha a camada (o <div> fica vazio).
      ====================================================================== */
+  function lenco() {
+    var palco = $('.rodape__lenco');
+    if (!palco || reduz || typeof window.THREE === 'undefined') return;
+    var rodape = palco.closest('.rodape');
+    var THREE = window.THREE;
+
+    var AJUSTE = { vento: 3.6, rajada: 40, direcao: -18, peso: 70,
+                   brilho: 42, inclina: 12, raio: 20, forca: 60, arrasto: 46 };
+    var LADO_CM = 90;
+
+    var cena = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+    camera.position.set(0, 0, 3.15);
+
+    var renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    } catch (e) { return; }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    palco.appendChild(renderer.domElement);
+
+    var SEG = 48;
+    var geo = new THREE.PlaneGeometry(1.44, 1.44, SEG, SEG);
+
+    var uniforms = {
+      uTime:   { value: 0 },
+      uVento:  { value: AJUSTE.vento / 14 },
+      uRajada: { value: AJUSTE.rajada / 100 },
+      uDir:    { value: AJUSTE.direcao * Math.PI / 180 },
+      uPeso:   { value: (AJUSTE.peso - 40) / 80 },
+      uBrilho: { value: AJUSTE.brilho / 100 * 0.95 },
+      uMouse:  { value: new THREE.Vector2(0.5, 0.5) },
+      uMouseAmt: { value: 0 },
+      uRaio:   { value: AJUSTE.raio / LADO_CM },
+      uForca:  { value: AJUSTE.forca / 100 * 0.16 },
+      uTex:    { value: null },
+      uQuente: { value: new THREE.Color(0xFFE9CF) },
+      uFrio:   { value: new THREE.Color(0x2A2E24) }
+    };
+
+    var vert = [
+      'uniform float uTime;uniform float uVento;uniform float uRajada;',
+      'uniform float uDir;uniform float uPeso;uniform vec2 uMouse;',
+      'uniform float uMouseAmt;uniform float uRaio;uniform float uForca;',
+      'varying vec2 vUv;varying vec3 vNormal;varying float vAltura;',
+      'float altura(vec2 p){',
+      '  float t = uTime;',
+      '  float c = cos(uDir), s = sin(uDir);',
+      '  vec2 q = vec2(p.x*c - p.y*s, p.x*s + p.y*c);',
+      '  float amp = uVento * (1.0 - 0.55 * uPeso);',
+      '  float vel = 1.0 - 0.35 * uPeso;',
+      '  float w = 0.0;',
+      '  w += sin( q.x*6.10 - t*1.85*vel + q.y*2.05 ) * 0.055;',
+      '  w += sin( q.x*11.4 - t*2.70*vel - q.y*3.45 ) * 0.026;',
+      '  w += sin( q.y*8.70 + t*1.15*vel ) * 0.017;',
+      '  w += sin( q.x*17.3 + t*3.40*vel + q.y*5.1 ) * 0.009;',
+      '  float rajada = 1.0 + uRajada * 0.95 * sin(t*0.37) * sin(t*0.19 + 1.3);',
+      '  w *= amp * rajada;',
+      '  float d = length(p - 0.5) * 2.0;',
+      '  w *= 0.42 + 0.58 * smoothstep(0.0, 1.15, d);',
+      '  if (uMouseAmt > 0.001) {',
+      '    float dm = distance(p, uMouse);',
+      '    float g  = exp(-(dm*dm) / max(uRaio*uRaio, 0.0004));',
+      '    w += uForca * uMouseAmt * (g - 0.42 * g * g);',
+      '  }',
+      '  return w;',
+      '}',
+      'void main(){',
+      '  vUv = uv;',
+      '  float e = 0.007;',
+      '  float z  = altura(uv);',
+      '  float zx = altura(uv + vec2(e, 0.0));',
+      '  float zy = altura(uv + vec2(0.0, e));',
+      '  vNormal = normalize(vec3(-(zx - z) / e, -(zy - z) / e, 1.0));',
+      '  vAltura = z;',
+      '  vec3 pos = position;',
+      '  pos.z += z;',
+      '  gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);',
+      '}'
+    ].join('\n');
+
+    var frag = [
+      'uniform sampler2D uTex;uniform float uBrilho;',
+      'uniform vec3 uQuente;uniform vec3 uFrio;',
+      'varying vec2 vUv;varying vec3 vNormal;varying float vAltura;',
+      'void main(){',
+      '  vec3 n = normalize(vNormal);',
+      '  vec3 L = normalize(vec3(-0.38, 0.52, 0.76));',
+      '  vec3 V = vec3(0.0, 0.0, 1.0);',
+      '  vec3 H = normalize(L + V);',
+      '  float lam  = clamp(dot(n, L), 0.0, 1.0);',
+      '  float spec = pow(clamp(dot(n, H), 0.0, 1.0), 46.0) * uBrilho;',
+      '  vec3 tela = texture2D(uTex, vUv).rgb;',
+      '  float luz = 0.58 + 0.52 * lam;',
+      '  vec3 cor = tela * luz;',
+      '  cor = mix(cor, uFrio, clamp(-vAltura * 3.4, 0.0, 1.0) * 0.34);',
+      '  cor += uQuente * spec;',
+      '  gl_FragColor = vec4(cor, 1.0);',
+      '}'
+    ].join('\n');
+
+    var malha = new THREE.Mesh(geo, new THREE.ShaderMaterial({
+      uniforms: uniforms, vertexShader: vert, fragmentShader: frag,
+      side: THREE.DoubleSide
+    }));
+    malha.rotation.x = -AJUSTE.inclina * Math.PI / 180 * 0.55;
+    malha.rotation.y = AJUSTE.direcao * Math.PI / 180 * 0.16;
+    malha.scale.set(1.9, 1.5, 1);   // o carré sangra para as laterais do rodapé
+    cena.add(malha);
+
+    var carregador = new THREE.TextureLoader();
+    carregador.load('assets/img/lenco-inteiro.webp', function (tex) {
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;
+      tex.minFilter = THREE.LinearFilter;
+      uniforms.uTex.value = tex;
+      palco.classList.add('pronto');
+    });
+
+    /* ponteiro: o rodapé inteiro é a área sensível; o <canvas> ocupa o
+       dobro da altura e fica ancorado embaixo, então só a metade de baixo
+       do lenço aparece. */
+    var alvoUV = new THREE.Vector2(0.5, 0.5);
+    var uvSuave = new THREE.Vector2(0.5, 0.5);
+    var alvoAmt = 0, amtSuave = 0;
+    var alvoTilt = new THREE.Vector2(0, 0), tiltSuave = new THREE.Vector2(0, 0);
+    var raycaster = new THREE.Raycaster();
+    var ndc = new THREE.Vector2();
+
+    function mover(ev) {
+      var r = palco.getBoundingClientRect();
+      var x = (ev.clientX - r.left) / r.width;
+      var y = (ev.clientY - r.top) / r.height;
+      ndc.set(x * 2 - 1, -(y * 2 - 1));
+      alvoTilt.set(x * 2 - 1, y * 2 - 1);
+      raycaster.setFromCamera(ndc, camera);
+      var hits = raycaster.intersectObject(malha, false);
+      if (hits.length && hits[0].uv) { alvoUV.copy(hits[0].uv); alvoAmt = 1; }
+      else { alvoAmt = 0; }
+    }
+    rodape.addEventListener('pointermove', mover);
+    rodape.addEventListener('pointerleave', function () { alvoAmt = 0; alvoTilt.set(0, 0); });
+
+    function medir() {
+      var r = palco.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      camera.aspect = r.width / r.height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(r.width, r.height, false);
+    }
+    window.addEventListener('resize', medir);
+    medir();
+
+    /* só anima enquanto o rodapé está à vista */
+    var visivel = false;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        visivel = es[0].isIntersecting;
+        if (visivel) requestAnimationFrame(quadro);
+      }, { threshold: 0 }).observe(rodape);
+    } else { visivel = true; requestAnimationFrame(quadro); }
+
+    var t = 0, ultimo = performance.now();
+    function quadro(agora) {
+      if (!visivel) return;
+      requestAnimationFrame(quadro);
+      var dt = Math.min((agora - ultimo) / 1000, 0.05);
+      ultimo = agora;
+      t += dt;
+      uniforms.uTime.value = t;
+
+      var passo = 0.30 - (AJUSTE.arrasto / 100) * 0.24;
+      uvSuave.lerp(alvoUV, passo);
+      amtSuave += (alvoAmt - amtSuave) * 0.10;
+      uniforms.uMouse.value.copy(uvSuave);
+      uniforms.uMouseAmt.value = amtSuave;
+
+      tiltSuave.lerp(alvoTilt, 0.05);
+      camera.position.x = tiltSuave.x * 0.14;
+      camera.position.y = -tiltSuave.y * 0.10;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(cena, camera);
+    }
+  }
+
   /* ======================================================================
      10. AS QUATRO PORTAS + FORMULÁRIO
      ====================================================================== */
@@ -752,6 +939,7 @@
     simbolo();
     trilho();
     vozes();
+    lenco();
     formulario();
     if (temGsap) ScrollTrigger.refresh();
   }

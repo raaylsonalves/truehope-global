@@ -887,8 +887,21 @@ body.travado{overflow:hidden;height:100svh}
 @media(max-width:860px){.mesa__grade{grid-template-columns:1fr}}
 
 /* =================================================================== RODAPÉ */
-.rodape{background:var(--tinta);color:var(--taupe);padding-block:clamp(40px,7vh,84px);border-top:1px solid var(--linha-clara)}
-.rodape__grade{display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,50px);align-items:flex-end;justify-content:space-between}
+.rodape{position:relative;overflow:hidden;background:var(--tinta);color:var(--taupe);padding-block:clamp(72px,14vh,150px) clamp(40px,7vh,84px);border-top:1px solid var(--linha-clara)}
+/* o lenço em three.js: o <canvas> ocupa o dobro da altura e fica preso
+   embaixo, então só a metade de baixo do tecido entra no quadro. Fica
+   atrás do conteúdo e some no topo com uma máscara. */
+.rodape__lenco{
+  position:absolute;left:0;right:0;bottom:0;height:220%;
+  z-index:0;pointer-events:none;
+  opacity:0;transition:opacity 1.4s ease;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 54%,#000 100%),linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%);
+          mask-image:linear-gradient(to bottom,transparent 0,#000 54%,#000 100%),linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+}
+.rodape__lenco.pronto{opacity:.36}
+.rodape__lenco canvas{width:100%!important;height:100%!important;display:block}
+.rodape__grade{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,50px);align-items:flex-end;justify-content:space-between}
 .rodape__marca{display:grid;gap:14px}
 .rodape__mono{width:26px;height:auto}
 .rodape__mono rect{fill:var(--creme)}
@@ -911,6 +924,8 @@ body.travado{overflow:hidden;height:100svh}
   .trilho__fita{flex-wrap:wrap;justify-content:center}
   .trilho__progresso{display:none}
   .convite__figura img,.peca__moldura img{transform:none}
+  .rodape{padding-block:clamp(40px,7vh,84px)}
+  .rodape__lenco{display:none}
   .js .rv{opacity:1}
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
