@@ -8,13 +8,11 @@
 <style>table{border-collapse:collapse}</style>
 <![endif]-->
 <style>
-  /* Fontes do site (Prata para os títulos). Best-effort: Gmail e Outlook
-     desktop ignoram @font-face e caem no fallback serifado (Georgia) —
-     por isso todo font-family abaixo sempre lista o fallback primeiro
-     depois do nome real, nunca só a fonte custom. Apple Mail, Outlook.com
-     e a maioria dos webmails modernos honram o @font-face. */
-  @import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
-  .fd { font-family:'Prata',Georgia,'Times New Roman',serif; }
+  /* Fontes do site. Best-effort: Gmail e Outlook desktop ignoram @font-face
+     e caem no fallback serifado — por isso todo font-family abaixo sempre
+     lista Georgia logo depois do nome real, nunca só a fonte custom.
+     O banner do topo é imagem, então ali a Prata aparece em qualquer cliente. */
+  @import url('https://fonts.googleapis.com/css2?family=Prata&family=Cormorant+Garamond:ital@1&display=swap');
 </style>
 </head>
 <!--
@@ -24,12 +22,14 @@
   1. Troque {{PRIMEIRO_NOME}}, {{CUPOM}}, {{LINK_COLECAO}}, {{LINK_COMUNIDADE}}
      e {{LINK_DESCADASTRO}} pelos valores reais — api/lead.js já faz essa
      substituição automaticamente a cada envio do formulário.
-  2. As imagens (logo-th.png, foto-camisa.jpg, foto-bordado.jpg, em
-     assets/email/img/) vão embutidas no e-mail como anexos inline
-     (cid:...) — api/lead.js já anexa os três arquivos. Isso é de
-     propósito: e-mail não deve depender de um domínio publicado nem de
-     "permitir imagens externas" para a peça aparecer.
-  3. Este HTML usa tabelas + estilo inline de propósito: é o único jeito
+  2. As imagens (assets/email/img/) vão embutidas como anexo inline (cid:) —
+     api/lead.js anexa os cinco arquivos. Isso é de propósito: e-mail não deve
+     depender de um domínio publicado nem de "permitir imagens externas".
+  3. Para regerar as imagens: python assets/email/fontes/gerar.py
+     O banner do topo e o ícone do cupom são renderizados no navegador a
+     partir de assets/email/fontes/*.html — assim o título do banner sai na
+     Prata de verdade em qualquer caixa de entrada, já que é imagem.
+  4. Este HTML usa tabelas + estilo inline de propósito: é o único jeito
      de um layout assim renderizar igual no Gmail, Outlook e Apple Mail.
 -->
 <body style="margin:0;padding:0;background:#EEE7DA;">
@@ -38,146 +38,159 @@
 </div>
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EEE7DA;">
-<tr><td align="center" style="padding:40px 16px;">
+<tr><td align="center" style="padding:32px 16px;">
 
 <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="width:560px;max-width:560px;background:#F4EFE6;">
 
-  <!-- marca -->
-  <tr><td style="padding:8px 8px 28px;text-align:center;">
-    <img src="cid:logo-th" width="46" height="64" alt="TRUEHOPE" style="display:inline-block;">
+  <!-- ─────────────────────────────────────────────── banner de topo -->
+  <tr><td style="padding:0;font-size:0;line-height:0;">
+    <img src="cid:hero" width="560" height="320" alt="Agora você faz parte desse exército! Você faz parte de um movimento pelo resgate da família. TRUEHOPE — família por propósito." style="display:block;width:100%;max-width:560px;height:auto;border:0;">
   </td></tr>
 
-  <!-- saudação + assinatura, lado a lado como no site -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-  <tr>
-    <td valign="top" style="width:68%;padding:0 20px 0 4px;font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.6;color:#1F221A;">
-      <p style="margin:0 0 16px;">
-        Estamos muito felizes em ter você conosco na <b>Convocação pelo Resgate da Família</b>, {{PRIMEIRO_NOME}}.
-      </p>
-      <p style="margin:0;">
-        Em breve você receberá mais informações sobre o evento, conteúdos exclusivos e próximos passos.
-        Prepare o seu coração para viver uma tarde de conexão, inspiração e propósito.
-      </p>
-    </td>
-    <td valign="top" align="right" style="width:32%;padding:0 4px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:11px;line-height:1.55;letter-spacing:.08em;text-transform:uppercase;color:#806453;white-space:nowrap;">
-      A FAMÍLIA<br>É DESIGN DIVINO<br>E O ARQUITETO<br>AINDA EDIFICA.
-    </td>
-  </tr>
-  </table>
+  <!-- ─────────────────────────────────────────────── saudação -->
+  <tr><td style="padding:30px 26px 26px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td valign="top" style="font-family:Georgia,'Times New Roman',serif;font-size:14px;line-height:1.62;color:#1F221A;">
+        <p style="margin:0 0 13px;">
+          Estamos muito felizes em ter você conosco na <b>Convocação pelo Resgate da Família</b>, {{PRIMEIRO_NOME}}.
+        </p>
+        <p style="margin:0 0 13px;">
+          Em breve você receberá mais informações sobre o evento, conteúdos exclusivos e próximos passos.
+        </p>
+        <p style="margin:0;">
+          Prepare seu coração para tudo o que Deus fará.
+        </p>
+      </td>
+      <td width="1" style="background:rgba(31,34,26,.16);font-size:0;line-height:1;">&nbsp;</td>
+      <td valign="top" align="right" width="142" style="padding-left:14px;font-family:Georgia,'Times New Roman',serif;font-size:10px;line-height:1.85;letter-spacing:.14em;text-transform:uppercase;color:#806453;white-space:nowrap;">
+        A família<br>é design divino<br>e o arquiteto<br>ainda edifica.
+      </td>
+    </tr>
+    </table>
+  </td></tr>
+
+  <!-- ─────────────────────────────────────────────── a collab -->
+  <tr><td style="padding:0 26px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid rgba(31,34,26,.14);">
+    <tr>
+      <td width="196" style="padding:0;font-size:0;line-height:0;">
+        <a href="{{LINK_COLECAO}}" style="display:block;">
+          <img src="cid:foto-camisa" width="196" height="252" alt="Peça da coleção Truehope + Marci, com a etiqueta MARCI e o manifesto escrito à mão no forro." style="display:block;width:196px;height:252px;border:0;">
+        </a>
+      </td>
+      <td valign="middle" style="padding:24px 22px;font-family:Arial,Helvetica,sans-serif;">
+        <p style="margin:0 0 10px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7B3620;line-height:1.8;">
+          Conheça<br>nossa collab
+        </p>
+        <p style="margin:0 0 7px;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:23px;letter-spacing:-.01em;text-transform:uppercase;color:#1F221A;line-height:1.1;">
+          Truehope&nbsp;+&nbsp;Marci
+        </p>
+        <p style="margin:0 0 14px;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#806453;">
+          Roupas por propósito
+        </p>
+        <p style="margin:0 0 18px;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:1.6;color:#4A4438;">
+          Mais que roupas, um lembrete diário do que realmente importa. Vista aquilo que você acredita.
+        </p>
+        <a href="{{LINK_COLECAO}}" style="display:inline-block;white-space:nowrap;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#1F221A;border:1px solid rgba(31,34,26,.42);text-decoration:none;padding:11px 16px;">
+          Conhecer a collab &nbsp;&rarr;
+        </a>
+      </td>
+    </tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="height:12px;line-height:12px;font-size:0;">&nbsp;</td></tr>
+
+  <!-- ─────────────────────────────────────────────── o cupom -->
+  <tr><td style="padding:0 26px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid rgba(31,34,26,.14);">
+    <tr>
+      <td valign="middle" width="196" style="padding:18px 0 18px 18px;font-family:Arial,Helvetica,sans-serif;">
+        <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+          <td valign="middle" style="padding-right:10px;">
+            <img src="cid:icone-cupom" width="30" height="30" alt="" style="display:block;border:0;">
+          </td>
+          <td valign="middle">
+            <p style="margin:0 0 4px;font-size:8px;letter-spacing:.12em;line-height:1.5;text-transform:uppercase;color:#7B3620;">
+              Um presente<br>especial para você
+            </p>
+            <p style="margin:0;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:21px;letter-spacing:.01em;color:#1F221A;line-height:1.1;">
+              {{CUPOM}}
+            </p>
+          </td>
+        </tr></table>
+      </td>
+      <td valign="middle" width="143" style="padding:18px 12px;font-family:Georgia,'Times New Roman',serif;font-size:11.5px;line-height:1.5;color:#4A4438;">
+        Use o cupom e ganhe 15% de desconto em toda a nossa collab com a Marci.
+      </td>
+      <td valign="middle" align="right" width="169" style="padding:18px 18px 18px 0;">
+        <a href="{{LINK_COLECAO}}" style="display:inline-block;white-space:nowrap;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#F4EFE6;background:#1F221A;text-decoration:none;padding:13px 15px;">
+          Aproveitar agora &nbsp;&rarr;
+        </a>
+      </td>
+    </tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="height:12px;line-height:12px;font-size:0;">&nbsp;</td></tr>
+
+  <!-- ─────────────────────────────────────────────── comunidade -->
+  <tr><td style="padding:0 26px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid rgba(31,34,26,.14);">
+    <tr>
+      <td width="120" style="padding:0;font-size:0;line-height:0;">
+        <a href="{{LINK_COMUNIDADE}}" style="display:block;">
+          <img src="cid:foto-comunidade" width="120" height="205" alt="Sombra de folhagem sobre parede clara." style="display:block;width:120px;height:205px;border:0;">
+        </a>
+      </td>
+      <td valign="middle" style="padding:18px 14px;font-family:Arial,Helvetica,sans-serif;">
+        <p style="margin:0 0 6px;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#7B3620;">
+          Entre na nossa
+        </p>
+        <p style="margin:0 0 9px;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:17px;color:#1F221A;line-height:1.15;white-space:nowrap;">
+          Comunidade no WhatsApp
+        </p>
+        <p style="margin:0 0 14px;font-family:Georgia,'Times New Roman',serif;font-size:11px;line-height:1.6;color:#4A4438;">
+          Receba avisos, conteúdos exclusivos, lembretes e acompanhe tudo sobre a Convocação pelo Resgate da Família em primeira mão.
+        </p>
+        <a href="{{LINK_COMUNIDADE}}" style="display:inline-block;white-space:nowrap;font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#1F221A;border:1px solid rgba(31,34,26,.42);text-decoration:none;padding:11px 14px;">
+          Entrar na comunidade &nbsp;&rarr;
+        </a>
+      </td>
+      <td width="1" style="background:rgba(31,34,26,.16);font-size:0;line-height:1;">&nbsp;</td>
+      <td valign="middle" width="104" style="padding:18px 12px;font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-style:italic;font-size:15px;line-height:1.4;color:#7B3620;">
+        Uma convocação para o resgate da família.
+      </td>
+    </tr>
+    </table>
+  </td></tr>
 
   <tr><td style="height:28px;line-height:28px;font-size:0;">&nbsp;</td></tr>
 
-  <!-- bloco 1 · a collab -->
-  <tr><td style="border:1px solid rgba(31,34,26,.14);">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-    <tr>
-      <td width="220" style="padding:0;">
-        <a href="{{LINK_COLECAO}}" style="display:block;">
-          <img src="cid:foto-camisa" width="220" height="229" alt="Peça da coleção Truehope + Marci, com a etiqueta MARCI e o manifesto escrito à mão no forro." style="display:block;width:220px;height:229px;object-fit:cover;">
-        </a>
-      </td>
-      <td valign="middle" style="padding:22px 20px;font-family:Arial,Helvetica,sans-serif;">
-        <p style="margin:0 0 8px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7B3620;line-height:1.6;">
-          Conheça<br>nossa collab
-        </p>
-        <p class="fd" style="margin:0 0 6px;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:22px;letter-spacing:-.01em;text-transform:uppercase;color:#1F221A;">
-          Truehope + Marci
-        </p>
-        <p style="margin:0 0 12px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#806453;">
-          Roupas por propósito
-        </p>
-        <p style="margin:0 0 16px;font-size:13.5px;line-height:1.55;color:#4A4438;">
-          Mais que roupas, um lembrete diário do que realmente importa. Vista aquilo que você acredita.
-        </p>
-        <a href="{{LINK_COLECAO}}" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:.06em;color:#F4EFE6;background:#4F1C0A;text-decoration:none;padding:11px 18px;">
-          Conhecer a collab &rarr;
-        </a>
-      </td>
-    </tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="height:14px;line-height:14px;font-size:0;">&nbsp;</td></tr>
-
-  <!-- bloco 2 · o cupom -->
-  <tr><td style="border:1px solid rgba(31,34,26,.14);padding:20px 20px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-    <tr>
-      <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;">
-        <p style="margin:0 0 6px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7B3620;">
-          Um presente especial para você
-        </p>
-        <p class="fd" style="margin:0 0 8px;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:24px;letter-spacing:.02em;color:#1F221A;">
-          {{CUPOM}}
-        </p>
-        <p style="margin:0;font-size:13px;line-height:1.5;color:#4A4438;">
-          Use o cupom e ganhe 15% de desconto em toda a nossa collab com a Marci.
-        </p>
-      </td>
-      <td valign="middle" align="right" style="width:190px;padding-left:16px;">
-        <a href="{{LINK_COLECAO}}" style="display:inline-block;white-space:nowrap;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:.06em;color:#F4EFE6;background:#1F221A;text-decoration:none;padding:14px 18px;">
-          Aproveitar agora &rarr;
-        </a>
-      </td>
-    </tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="height:14px;line-height:14px;font-size:0;">&nbsp;</td></tr>
-
-  <!-- bloco 3 · comunidade no whatsapp -->
-  <tr><td style="border:1px solid rgba(31,34,26,.14);">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-    <tr>
-      <td width="120" style="padding:0;">
-        <a href="{{LINK_COMUNIDADE}}" style="display:block;">
-          <img src="cid:foto-bordado" width="120" height="150" alt="Detalhe do bordado à mão nas costas: família design divino." style="display:block;width:120px;height:150px;object-fit:cover;">
-        </a>
-      </td>
-      <td valign="middle" style="padding:18px 20px;font-family:Arial,Helvetica,sans-serif;">
-        <p style="margin:0 0 6px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7B3620;">
-          Entre na nossa
-        </p>
-        <p class="fd" style="margin:0 0 10px;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:20px;text-transform:uppercase;color:#1F221A;">
-          Comunidade no WhatsApp
-        </p>
-        <p style="margin:0 0 14px;font-size:13px;line-height:1.55;color:#4A4438;">
-          Receba avisos, conteúdos exclusivos, lembretes e acompanhe tudo sobre a Convocação pelo Resgate da Família em primeira mão.
-        </p>
-        <a href="{{LINK_COMUNIDADE}}" style="display:inline-block;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:.06em;color:#1F221A;background:transparent;border:1px solid #1F221A;text-decoration:none;padding:10px 16px;">
-          Entrar na comunidade &rarr;
-        </a>
-      </td>
-    </tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="height:34px;line-height:34px;font-size:0;">&nbsp;</td></tr>
-
-  <!-- rodapé: marca | frase do movimento | "pessoas · famílias · uma geração" —
-       a mesma barra do rodapé do site, adaptada pro e-mail. -->
-  <tr><td style="border-top:1px solid rgba(31,34,26,.14);padding:22px 4px 0;">
+  <!-- ─────────────────────────────────────────────── rodapé -->
+  <tr><td style="border-top:1px solid rgba(31,34,26,.14);padding:20px 26px 0;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
     <tr>
       <td valign="middle" style="white-space:nowrap;">
         <table role="presentation" cellpadding="0" cellspacing="0"><tr>
-          <td valign="middle" style="padding-right:8px;"><img src="cid:logo-th" width="16" height="22" alt="" style="display:block;"></td>
-          <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.28em;color:#1F221A;">TRUEHOPE</td>
+          <td valign="middle" style="padding-right:8px;"><img src="cid:logo-th" width="16" height="22" alt="" style="display:block;border:0;"></td>
+          <td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:.26em;color:#1F221A;">TRUEHOPE</td>
         </tr></table>
       </td>
       <td width="1" style="background:rgba(31,34,26,.16);font-size:0;line-height:1;">&nbsp;</td>
-      <td valign="middle" align="center" style="padding:0 16px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.12em;line-height:1.7;text-transform:uppercase;color:#806453;white-space:nowrap;">
+      <td valign="middle" align="center" style="padding:0 14px;font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:.14em;line-height:1.75;text-transform:uppercase;color:#806453;white-space:nowrap;">
         Movimento para família<br>Global Awakening
       </td>
       <td width="1" style="background:rgba(31,34,26,.16);font-size:0;line-height:1;">&nbsp;</td>
-      <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.1em;line-height:1.7;text-transform:uppercase;color:#1F221A;white-space:nowrap;">
+      <td valign="middle" align="right" style="font-family:Arial,Helvetica,sans-serif;font-size:9.5px;letter-spacing:.12em;line-height:1.75;text-transform:uppercase;color:#1F221A;white-space:nowrap;">
         Pessoas<br>Famílias<br>Uma geração
       </td>
     </tr>
     </table>
   </td></tr>
 
-  <tr><td style="padding:16px 4px 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:1.7;color:#806453;text-align:center;">
+  <tr><td style="padding:16px 26px 22px;font-family:Arial,Helvetica,sans-serif;font-size:10.5px;line-height:1.7;color:#806453;text-align:center;">
     Você recebeu este e-mail porque se cadastrou na Convocação pelo Resgate da Família.
     <a href="{{LINK_DESCADASTRO}}" style="color:#806453;text-decoration:underline;">Cancelar inscrição</a>
   </td></tr>

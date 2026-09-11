@@ -1,0 +1,70 @@
+<!doctype html>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:560px;height:320px;overflow:hidden}
+  .hero{
+    position:relative;width:560px;height:320px;overflow:hidden;background:#1F221A;
+  }
+  .hero img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    object-position:44% 34%;
+    filter:saturate(.72) contrast(1.06);
+  }
+  /* três camadas: um banho quente pra tirar o cinza da foto, o degradê que
+     abre espaço pro título à esquerda, e um pé escuro pra linha de baixo */
+  .veu{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(100deg, rgba(24,25,19,.94) 0%, rgba(24,25,19,.86) 32%, rgba(24,25,19,.52) 64%, rgba(24,25,19,.34) 100%),
+      linear-gradient(to bottom, rgba(24,25,19,.62) 0%, rgba(24,25,19,0) 34%, rgba(24,25,19,0) 62%, rgba(24,25,19,.45) 100%),
+      linear-gradient(0deg, rgba(79,28,10,.22), rgba(79,28,10,.22));
+  }
+  .conteudo{position:relative;height:100%;padding:22px 26px 26px;display:flex;flex-direction:column}
+  .topo{display:flex;align-items:flex-start;justify-content:space-between}
+  .marca{display:flex;align-items:center;gap:9px}
+  .mono{width:17px;height:auto;display:block}
+  .mono rect{fill:#EBE0D1}
+  .nome{font:400 12.5px/1 Arial,Helvetica,sans-serif;letter-spacing:.3em;color:#EBE0D1}
+  .sub{
+    font:400 7.5px/1 Arial,Helvetica,sans-serif;letter-spacing:.26em;
+    color:rgba(235,224,209,.62);margin-top:6px;padding-left:26px;
+  }
+  .selo{
+    text-align:right;font:400 7.5px/1.85 Arial,Helvetica,sans-serif;
+    letter-spacing:.22em;text-transform:uppercase;color:rgba(235,224,209,.62);
+  }
+  .meio{margin-top:auto}
+  .titulo{
+    font-family:'Prata',Georgia,serif;font-weight:400;
+    font-size:38px;line-height:1.08;letter-spacing:-.015em;
+    color:#F4EFE6;max-width:9.6em;
+    text-shadow:0 2px 24px rgba(0,0,0,.45);
+  }
+  .linha{
+    margin-top:16px;font:400 8.5px/1.85 Arial,Helvetica,sans-serif;
+    letter-spacing:.26em;text-transform:uppercase;color:rgba(235,224,209,.80);
+  }
+</style>
+<div class="hero">
+  <img src="../../img/hero-costas.webp" alt="">
+  <div class="veu"></div>
+  <div class="conteudo">
+    <div class="topo">
+      <div>
+        <div class="marca">
+          <svg class="mono" viewBox="0 0 211 294"><rect x="0" y="0" width="211" height="33"/><rect x="90" y="0" width="33" height="294"/><rect x="155" y="65" width="33" height="207"/><rect x="123" y="151" width="32" height="33"/></svg>
+          <span class="nome">TRUEHOPE</span>
+        </div>
+        <div class="sub">FAMÍLIA POR PROPÓSITO</div>
+      </div>
+      <div class="selo">Pessoas<br>Famílias<br>Uma geração</div>
+    </div>
+
+    <div class="meio">
+      <div class="titulo">Agora você faz parte desse exército!</div>
+      <div class="linha">Você faz parte de um movimento<br>pelo resgate da família.</div>
+    </div>
+  </div>
+</div>

@@ -107,11 +107,14 @@ async function enviarEmailConfirmacao(lead) {
     // imagens embutidas como anexo inline (cid:) — funcionam em qualquer
     // caixa de entrada, sem depender de um domínio publicado nem de o
     // destinatário clicar em "exibir imagens".
-    attachments: [
-      { filename: 'logo-th.png', path: path.join(pastaEmail, 'img', 'logo-th.png'), cid: 'logo-th' },
-      { filename: 'foto-camisa.jpg', path: path.join(pastaEmail, 'img', 'foto-camisa.jpg'), cid: 'foto-camisa' },
-      { filename: 'foto-bordado.jpg', path: path.join(pastaEmail, 'img', 'foto-bordado.jpg'), cid: 'foto-bordado' }
-    ]
+    attachments: ['hero.jpg', 'foto-camisa.jpg', 'foto-comunidade.jpg', 'icone-cupom.png', 'logo-th.png']
+      .map(function (arquivo) {
+        return {
+          filename: arquivo,
+          path: path.join(pastaEmail, 'img', arquivo),
+          cid: arquivo.replace(/\.(jpg|png)$/, '')   // cid:hero, cid:foto-camisa, ...
+        };
+      })
   });
 }
 
