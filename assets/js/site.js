@@ -15,10 +15,10 @@
       inscricao:  '',   // site oficial de inscrição da masterclass
       loja:       'https://www.marcioficial.com.br/',   // loja da collab Truehope + Marci  (abre em nova aba)
       convocacao: '',   // grupo / convocação de resgate da família
-      comunidade: ''    // comunidade Truehope
+      comunidade: 'https://chat.whatsapp.com/BLclvT8iGUS2nqq93Kbe3e'   // comunidade Truehope no WhatsApp
     },
     // Abas novas: destinos que NÃO devem substituir esta página.
-    novaAba: ['loja'],
+    novaAba: ['loja', 'comunidade'],
     // Endpoint que recebe o lead (POST JSON). Vazio = nada é enviado.
     // /api/lead é a função serverless da Vercel (api/lead.js) que grava
     // o lead na planilha e dispara o e-mail de confirmação pelo SMTP.
