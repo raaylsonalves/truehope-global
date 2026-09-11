@@ -887,26 +887,8 @@ body.travado{overflow:hidden;height:100svh}
 @media(max-width:860px){.mesa__grade{grid-template-columns:1fr}}
 
 /* =================================================================== RODAPÉ */
-.rodape{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:clamp(460px,60vh,640px);background:var(--tinta);color:var(--taupe);padding-block:clamp(64px,12vh,120px) clamp(44px,8vh,80px);border-top:1px solid var(--linha-clara)}
-/* o lenço em three.js: o <canvas> cobre o rodapé inteiro, sangrando de
-   ponta a ponta. Fica atrás do conteúdo, com uma leve máscara nas bordas
-   para o texto respirar. */
-.rodape__lenco{
-  position:absolute;inset:0;
-  z-index:0;pointer-events:none;
-  opacity:0;transition:opacity 1.4s ease;
-  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0,#000 18%,#000 88%,rgba(0,0,0,.7) 100%),linear-gradient(to right,rgba(0,0,0,.5) 0,#000 3%,#000 97%,rgba(0,0,0,.5) 100%);
-          mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0,#000 18%,#000 88%,rgba(0,0,0,.7) 100%),linear-gradient(to right,rgba(0,0,0,.5) 0,#000 3%,#000 97%,rgba(0,0,0,.5) 100%);
-  -webkit-mask-composite:source-in;mask-composite:intersect;
-}
-.rodape__lenco.pronto{opacity:.24}
-.rodape__lenco canvas{width:100%!important;height:100%!important;display:block}
-/* véu que afunda o tecido perto do texto, para a assinatura respirar */
-.rodape::after{
-  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(to bottom,transparent 0,transparent 38%,rgba(31,34,26,.62) 82%,rgba(31,34,26,.9) 100%);
-}
-.rodape__grade{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,50px);align-items:flex-end;justify-content:space-between}
+.rodape{background:var(--tinta);color:var(--taupe);padding-block:clamp(40px,7vh,84px);border-top:1px solid var(--linha-clara)}
+.rodape__grade{display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,50px);align-items:flex-end;justify-content:space-between}
 .rodape__marca{display:grid;gap:14px}
 .rodape__mono{width:26px;height:auto}
 .rodape__mono rect{fill:var(--creme)}
@@ -929,8 +911,6 @@ body.travado{overflow:hidden;height:100svh}
   .trilho__fita{flex-wrap:wrap;justify-content:center}
   .trilho__progresso{display:none}
   .convite__figura img,.peca__moldura img{transform:none}
-  .rodape{padding-block:clamp(40px,7vh,84px)}
-  .rodape__lenco{display:none}
   .js .rv{opacity:1}
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
