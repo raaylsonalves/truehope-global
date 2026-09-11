@@ -887,7 +887,7 @@ body.travado{overflow:hidden;height:100svh}
 @media(max-width:860px){.mesa__grade{grid-template-columns:1fr}}
 
 /* =================================================================== RODAPÉ */
-.rodape{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:clamp(360px,48vh,540px);background:var(--tinta);color:var(--taupe);padding-block:clamp(64px,12vh,120px) clamp(44px,8vh,80px);border-top:1px solid var(--linha-clara)}
+.rodape{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:clamp(460px,60vh,640px);background:var(--tinta);color:var(--taupe);padding-block:clamp(64px,12vh,120px) clamp(44px,8vh,80px);border-top:1px solid var(--linha-clara)}
 /* o lenço em three.js: o <canvas> cobre o rodapé inteiro, sangrando de
    ponta a ponta. Fica atrás do conteúdo, com uma leve máscara nas bordas
    para o texto respirar. */
@@ -895,11 +895,11 @@ body.travado{overflow:hidden;height:100svh}
   position:absolute;inset:0;
   z-index:0;pointer-events:none;
   opacity:0;transition:opacity 1.4s ease;
-  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.35) 0,#000 24%,#000 82%,rgba(0,0,0,.5) 100%),linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%);
-          mask-image:linear-gradient(to bottom,rgba(0,0,0,.35) 0,#000 24%,#000 82%,rgba(0,0,0,.5) 100%),linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0,#000 18%,#000 88%,rgba(0,0,0,.7) 100%),linear-gradient(to right,rgba(0,0,0,.5) 0,#000 3%,#000 97%,rgba(0,0,0,.5) 100%);
+          mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0,#000 18%,#000 88%,rgba(0,0,0,.7) 100%),linear-gradient(to right,rgba(0,0,0,.5) 0,#000 3%,#000 97%,rgba(0,0,0,.5) 100%);
   -webkit-mask-composite:source-in;mask-composite:intersect;
 }
-.rodape__lenco.pronto{opacity:.2}
+.rodape__lenco.pronto{opacity:.24}
 .rodape__lenco canvas{width:100%!important;height:100%!important;display:block}
 /* véu que afunda o tecido perto do texto, para a assinatura respirar */
 .rodape::after{

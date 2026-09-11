@@ -523,8 +523,8 @@
     var rodape = palco.closest('.rodape');
     var THREE = window.THREE;
 
-    var AJUSTE = { vento: 4.0, rajada: 42, direcao: -18, peso: 70,
-                   brilho: 42, inclina: 12, raio: 34, forca: 74, arrasto: 46 };
+    var AJUSTE = { vento: 6.5, rajada: 54, direcao: -16, peso: 50,
+                   brilho: 40, inclina: 10, raio: 34, forca: 80, arrasto: 44 };
     var LADO_CM = 90;
 
     var cena = new THREE.Scene();
@@ -569,10 +569,10 @@
       '  float amp = uVento * (1.0 - 0.55 * uPeso);',
       '  float vel = 1.0 - 0.35 * uPeso;',
       '  float w = 0.0;',
-      '  w += sin( q.x*6.10 - t*1.85*vel + q.y*2.05 ) * 0.055;',
-      '  w += sin( q.x*11.4 - t*2.70*vel - q.y*3.45 ) * 0.026;',
-      '  w += sin( q.y*8.70 + t*1.15*vel ) * 0.017;',
-      '  w += sin( q.x*17.3 + t*3.40*vel + q.y*5.1 ) * 0.009;',
+      '  w += sin( q.x*4.30 - t*1.65*vel + q.y*1.55 ) * 0.086;',
+      '  w += sin( q.x*8.10 - t*2.35*vel - q.y*2.70 ) * 0.040;',
+      '  w += sin( q.y*6.40 + t*1.05*vel ) * 0.026;',
+      '  w += sin( q.x*13.1 + t*3.05*vel + q.y*4.2 ) * 0.012;',
       '  float rajada = 1.0 + uRajada * 0.95 * sin(t*0.37) * sin(t*0.19 + 1.3);',
       '  w *= amp * rajada;',
       '  float d = length(p - 0.5) * 2.0;',
@@ -628,13 +628,19 @@
     var LADO = 1.44;
     var fov = camera.fov * Math.PI / 180;
 
-    /* "cover": escala o carré para cobrir todo o quadro, seja qual for a
-       proporção do rodapé — nunca deixa faixa vazia nas laterais. */
+    /* preenche todo o rodapé, mas com folga mínima: assim a largura inteira
+       do carré aparece — as frases das bordas e a faixa que cruza de um
+       lado ao outro ficam visíveis. Em rodapé retrato, cobre pela altura. */
     function cobrir() {
       var visH = 2 * camera.position.z * Math.tan(fov / 2);
       var visW = visH * camera.aspect;
-      var s = Math.max(visW, visH) / LADO * 1.12;
+      var s = visW / LADO;
+      if (LADO * s < visH) s = visH / LADO;
       malha.scale.set(s, s, 1);
+      /* desce o enquadramento para pegar a faixa de texto que cruza o lenço
+         (fica a ~75% da altura da estampa), sem perder a parte de cima */
+      var sobra = (LADO * s - visH) / 2;
+      malha.position.y = -Math.min(sobra, LADO * s * 0.26);
     }
 
     var carregador = new THREE.TextureLoader();
