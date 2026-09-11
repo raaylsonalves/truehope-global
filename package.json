@@ -1,0 +1,14 @@
+{
+  "name": "truehope-masterclass",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Landing page da TRUEHOPE Masterclass — site estático + função serverless (Vercel) que recebe o formulário: envia o e-mail de confirmação por SMTP e grava o lead numa planilha Google.",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "google-spreadsheet": "^4.1.4",
+    "google-auth-library": "^9.14.1",
+    "nodemailer": "^6.9.15"
+  }
+}

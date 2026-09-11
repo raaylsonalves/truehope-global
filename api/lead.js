@@ -1,0 +1,137 @@
+// ============================================================================
+// POST /api/lead
+// Recebe o lead do formulário da masterclass, envia o e-mail de confirmação
+// pelo SMTP do domínio TRUEHOPE e grava a linha numa planilha Google.
+//
+// Variáveis de ambiente (configurar no painel da Vercel → Settings → Environment
+// Variables — nunca commitar valores reais):
+//
+//   SMTP_HOST, SMTP_PORT, SMTP_SECURE ("true"/"false"), SMTP_USER, SMTP_PASS
+//   SMTP_FROM           ex.: "TRUEHOPE <contato@truehope.com.br>"
+//
+//   GOOGLE_SERVICE_ACCOUNT_EMAIL
+//   GOOGLE_PRIVATE_KEY            (cole com as quebras de linha como \n)
+//   GOOGLE_SHEET_ID               (o ID na URL da planilha)
+//
+//   SITE_URL             ex.: "https://truehope-masterclass.vercel.app"
+//                        (usado para montar as URLs das imagens no e-mail)
+//   CUPOM_CODE           opcional — padrão "TRUEHOPE15" (cupom único
+//                        compartilhado; ver nota no fim do arquivo)
+//   LINK_COLECAO         opcional — padrão usa o link da loja já embutido no site
+//   LINK_COMUNIDADE      link do grupo/comunidade no WhatsApp
+//   LINK_DESCADASTRO     opcional
+// ============================================================================
+
+const fs = require('fs');
+const path = require('path');
+const nodemailer = require('nodemailer');
+const { JWT } = require('google-auth-library');
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+
+const LINK_COLECAO_PADRAO =
+  'https://www.marcioficial.com.br/?ltclid=81ee7a1d-83a6-41f4-abc6-8d9ce375c7a1&utm_source=ig&utm_medium=social&utm_content=link_in_bio';
+
+module.exports = async function handler(req, res) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ ok: false, erro: 'Método não permitido.' });
+  }
+
+  var lead = req.body || {};
+  var nome = String(lead.nome || '').trim();
+  var email = String(lead.email || '').trim();
+
+  if (!nome || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+    return res.status(400).json({ ok: false, erro: 'Nome e e-mail válidos são obrigatórios.' });
+  }
+
+  var resultado = { ok: true, planilha: false, email: false };
+
+  // -------------------------------------------------------------- planilha
+  try {
+    await gravarNaPlanilha(lead);
+    resultado.planilha = true;
+  } catch (erro) {
+    console.error('[lead] falha ao gravar na planilha:', erro);
+  }
+
+  // ------------------------------------------------------------- e-mail
+  try {
+    await enviarEmailConfirmacao(lead);
+    resultado.email = true;
+  } catch (erro) {
+    console.error('[lead] falha ao enviar e-mail:', erro);
+  }
+
+  // O formulário já mostra a confirmação na tela mesmo se algo aqui falhar
+  // (o lead não pode se perder por causa de uma planilha ou SMTP fora do ar) —
+  // por isso sempre 200, com o detalhe do que funcionou em `resultado`.
+  return res.status(200).json(resultado);
+};
+
+async function gravarNaPlanilha(lead) {
+  if (!process.env.GOOGLE_SHEET_ID) throw new Error('GOOGLE_SHEET_ID não configurado.');
+
+  var auth = new JWT({
+    email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    key: (process.env.GOOGLE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
+    scopes: ['https://www.googleapis.com/auth/spreadsheets']
+  });
+
+  var doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID, auth);
+  await doc.loadInfo();
+  var aba = doc.sheetsByIndex[0];
+
+  await aba.addRow({
+    'Data/hora': lead.enviado_em || new Date().toISOString(),
+    'Nome': lead.nome || '',
+    'WhatsApp': lead.whatsapp || '',
+    'E-mail': lead.email || '',
+    'Cidade': lead.cidade || '',
+    'Porta escolhida': lead.frente || '',
+    'Aceite comunicação': lead.aceite_comunicacao ? 'sim' : 'não',
+    'Origem': lead.origem || ''
+  });
+}
+
+async function enviarEmailConfirmacao(lead) {
+  if (!process.env.SMTP_HOST) throw new Error('SMTP_HOST não configurado.');
+
+  var transportador = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT || 587),
+    secure: String(process.env.SMTP_SECURE || 'false') === 'true',
+    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+  });
+
+  var primeiroNome = (lead.nome || '').trim().split(/\s+/)[0] || '';
+  var siteUrl = (process.env.SITE_URL || '').replace(/\/$/, '');
+
+  var html = fs.readFileSync(
+    path.join(process.cwd(), 'assets', 'email', 'convocacao-recebida.html'),
+    'utf8'
+  );
+
+  html = html
+    .split('{{PRIMEIRO_NOME}}').join(primeiroNome)
+    .split('{{CUPOM}}').join(process.env.CUPOM_CODE || 'TRUEHOPE15')
+    .split('{{LINK_COLECAO}}').join(process.env.LINK_COLECAO || LINK_COLECAO_PADRAO)
+    .split('{{LINK_COMUNIDADE}}').join(process.env.LINK_COMUNIDADE || '#')
+    .split('{{LINK_DESCADASTRO}}').join(process.env.LINK_DESCADASTRO || '#')
+    .split('{{SITE_URL}}').join(siteUrl);
+
+  await transportador.sendMail({
+    from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    to: lead.email,
+    subject: 'Sua vaga na Convocação pelo Resgate da Família está confirmada',
+    html: html
+  });
+}
+
+// ----------------------------------------------------------------------------
+// Nota sobre o cupom: CUPOM_CODE hoje é um único código compartilhado por
+// todo mundo que preenche o formulário (o mesmo que já está no rodapé da
+// coleção do site). Se a Marci quiser rastrear resgates por pessoa, cada
+// e-mail precisaria de um código único gerado aqui e gravado na planilha —
+// é uma mudança pequena, mas depende da ferramenta de cupom que a loja usa.
+// ----------------------------------------------------------------------------

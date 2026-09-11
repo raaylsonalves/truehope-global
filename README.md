@@ -291,3 +291,37 @@ Tudo vem de `references/`:
   confirmadas, dá para reforçar a escassez ("Trezentos lugares. Depois disso,
   fecha."), que era um bom gancho da versão anterior.
 - **O embargo das 15h** está na página, como pede o briefing da Marci.
+
+---
+
+## 7. O formulário — para onde vai o lead
+
+O site continua estático (sem build), mas o formulário agora tem para onde
+enviar: `TH_CONFIG.leadEndpoint` (em `assets/js/site.js`) aponta para
+`/api/lead`, uma função serverless em `api/lead.js` (Node, deploy na Vercel).
+A cada envio ela:
+
+1. grava a linha (nome, WhatsApp, e-mail, cidade, porta escolhida, aceite de
+   comunicação, origem) numa planilha do Google, via Service Account;
+2. dispara o e-mail de confirmação — `assets/email/convocacao-recebida.html` —
+   pelo SMTP do próprio domínio TRUEHOPE, com nodemailer.
+
+Se a planilha ou o SMTP falharem, o formulário mesmo assim confirma na tela
+(o lead não pode se perder por causa de uma integração fora do ar) — o erro
+só fica registrado no log da função.
+
+**Para publicar:**
+
+1. Importe o repositório na Vercel (ele detecta `api/lead.js` sozinho, não
+   precisa de build).
+2. Preencha as variáveis de `.env.example` em Project Settings → Environment
+   Variables — nunca comitar esse arquivo com valores reais.
+3. Para a planilha: crie uma Service Account no Google Cloud, ative a Google
+   Sheets API, compartilhe a planilha com o e-mail da Service Account (edição)
+   e cole o ID (o trecho entre `/d/` e `/edit` da URL) em `GOOGLE_SHEET_ID`.
+4. Para o SMTP: use as credenciais do provedor de e-mail do domínio
+   `truehope.com.br` (host, porta, usuário, senha).
+
+**Pendente:** o link da comunidade no WhatsApp (`LINK_COMUNIDADE`) e se o
+cupom (`CUPOM_CODE`, hoje um código único e compartilhado — `TRUEHOPE15`)
+deve virar um código por pessoa.

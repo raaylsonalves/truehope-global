@@ -4,3 +4,9 @@ references/
 
 # artefatos dos testes de regressão (rodam da raiz)
 deg-*.png
+
+# dependências e segredos da função serverless (api/lead.js)
+node_modules/
+.env
+.env.local
+.vercel

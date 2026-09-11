@@ -13,14 +13,16 @@
   var TH = window.TH_CONFIG = {
     destinos: {
       inscricao:  '',   // site oficial de inscrição da masterclass
-      loja:       'https://www.marcioficial.com.br/?ltclid=81ee7a1d-83a6-41f4-abc6-8d9ce375c7a1&utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAdGRleAUQKU5wZG9mAmZkaWQWUOPhc-Dyb5RHHFlpICArDR8yyrlpW2V4dG4DYWVtAjExAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp38ov5DECj6wObYesAzLtueNvIjffPK_rMkhVCMZLmSMVoBUl0xP_gHy40X7_aem_JBWpHkaJQ8KqvIBx-ayREg',   // loja da collab Truehope + Marci  (abre em nova aba)
+      loja:       'https://www.marcioficial.com.br/',   // loja da collab Truehope + Marci  (abre em nova aba)
       convocacao: '',   // grupo / convocação de resgate da família
       comunidade: ''    // comunidade Truehope
     },
     // Abas novas: destinos que NÃO devem substituir esta página.
     novaAba: ['loja'],
     // Endpoint que recebe o lead (POST JSON). Vazio = nada é enviado.
-    leadEndpoint: '',
+    // /api/lead é a função serverless da Vercel (api/lead.js) que grava
+    // o lead na planilha e dispara o e-mail de confirmação pelo SMTP.
+    leadEndpoint: '/api/lead',
     // Segundos antes do redirecionamento automático.
     esperaRedirect: 1.4
   };
