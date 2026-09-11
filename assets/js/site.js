@@ -208,6 +208,25 @@
       .to('.hero__conteudo',  { opacity: 0, y: -22, ease: 'power1.in', duration: .3 }, .68);
   }
 
+  /* ------------------------------------------------------------------------
+     Botões que apontam direto para fora (loja, comunidade): em vez de passar
+     pelo formulário, [data-link] resolve para TH.destinos na hora — o href
+     estático (#mesa) no HTML é só um fallback caso o destino ainda esteja
+     vazio, e continua levando ao formulário normalmente.
+     ------------------------------------------------------------------------ */
+  function linksDiretos() {
+    $$('[data-link]').forEach(function (el) {
+      var chave = el.getAttribute('data-link');
+      var destino = TH.destinos[chave];
+      if (!destino) return;
+      el.href = destino;
+      if (TH.novaAba.indexOf(chave) !== -1) {
+        el.target = '_blank';
+        el.rel = 'noopener';
+      }
+    });
+  }
+
   /* ======================================================================
      4. NAV
      ====================================================================== */
@@ -745,6 +764,7 @@
   }
 
   function montar() {
+    linksDiretos();
     nav();
     reveals();
     paralaxe();
