@@ -1,7 +1,8 @@
 // ============================================================================
 // POST /api/lead
 // Recebe o lead do formulário da masterclass, envia o e-mail de confirmação
-// pelo SMTP do domínio TRUEHOPE e grava a linha numa planilha Google.
+// pelo SMTP do domínio TRUEHOPE e grava a linha numa planilha Google (via
+// Apps Script — ver apps-script/gravar-lead.gs — sem service account/chave).
 //
 // Variáveis de ambiente (configurar no painel da Vercel → Settings → Environment
 // Variables — nunca commitar valores reais):
@@ -9,9 +10,7 @@
 //   SMTP_HOST, SMTP_PORT, SMTP_SECURE ("true"/"false"), SMTP_USER, SMTP_PASS
 //   SMTP_FROM           ex.: "TRUEHOPE <contato@truehope.com.br>"
 //
-//   GOOGLE_SERVICE_ACCOUNT_EMAIL
-//   GOOGLE_PRIVATE_KEY            (cole com as quebras de linha como \n)
-//   GOOGLE_SHEET_ID               (o ID na URL da planilha)
+//   LEAD_SHEET_WEBHOOK   a URL /exec do Apps Script (apps-script/gravar-lead.gs)
 //
 //   SITE_URL             ex.: "https://truehope-masterclass.vercel.app"
 //                        (usado para montar as URLs das imagens no e-mail)
@@ -25,8 +24,6 @@
 const fs = require('fs');
 const path = require('path');
 const nodemailer = require('nodemailer');
-const { JWT } = require('google-auth-library');
-const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const LINK_COLECAO_PADRAO =
   'https://www.marcioficial.com.br/?ltclid=81ee7a1d-83a6-41f4-abc6-8d9ce375c7a1&utm_source=ig&utm_medium=social&utm_content=link_in_bio';
@@ -70,28 +67,16 @@ module.exports = async function handler(req, res) {
 };
 
 async function gravarNaPlanilha(lead) {
-  if (!process.env.GOOGLE_SHEET_ID) throw new Error('GOOGLE_SHEET_ID não configurado.');
+  if (!process.env.LEAD_SHEET_WEBHOOK) throw new Error('LEAD_SHEET_WEBHOOK não configurado.');
 
-  var auth = new JWT({
-    email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    key: (process.env.GOOGLE_PRIVATE_KEY || '').replace(/\\n/g, '\n'),
-    scopes: ['https://www.googleapis.com/auth/spreadsheets']
+  var r = await fetch(process.env.LEAD_SHEET_WEBHOOK, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(lead)
   });
-
-  var doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID, auth);
-  await doc.loadInfo();
-  var aba = doc.sheetsByIndex[0];
-
-  await aba.addRow({
-    'Data/hora': lead.enviado_em || new Date().toISOString(),
-    'Nome': lead.nome || '',
-    'WhatsApp': lead.whatsapp || '',
-    'E-mail': lead.email || '',
-    'Cidade': lead.cidade || '',
-    'Porta escolhida': lead.frente || '',
-    'Aceite comunicação': lead.aceite_comunicacao ? 'sim' : 'não',
-    'Origem': lead.origem || ''
-  });
+  // o Apps Script às vezes responde com um redirect 302 para o resultado —
+  // fetch segue redirects por padrão, então só o !ok importa de fato.
+  if (!r.ok) throw new Error('Apps Script respondeu ' + r.status);
 }
 
 async function enviarEmailConfirmacao(lead) {

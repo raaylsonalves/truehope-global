@@ -7,8 +7,6 @@
     "dev": "vercel dev"
   },
   "dependencies": {
-    "google-spreadsheet": "^4.1.4",
-    "google-auth-library": "^9.14.1",
     "nodemailer": "^6.9.15"
   }
 }

@@ -302,7 +302,9 @@ enviar: `TH_CONFIG.leadEndpoint` (em `assets/js/site.js`) aponta para
 A cada envio ela:
 
 1. grava a linha (nome, WhatsApp, e-mail, cidade, porta escolhida, aceite de
-   comunicação, origem) numa planilha do Google, via Service Account;
+   comunicação, origem) numa planilha do Google, via um Apps Script publicado
+   como Web App (`apps-script/gravar-lead.gs`) — sem service account, sem
+   chave, sem depender de política de organização do Google Cloud;
 2. dispara o e-mail de confirmação — `assets/email/convocacao-recebida.html` —
    pelo SMTP do próprio domínio TRUEHOPE, com nodemailer.
 
@@ -316,9 +318,10 @@ só fica registrado no log da função.
    precisa de build).
 2. Preencha as variáveis de `.env.example` em Project Settings → Environment
    Variables — nunca comitar esse arquivo com valores reais.
-3. Para a planilha: crie uma Service Account no Google Cloud, ative a Google
-   Sheets API, compartilhe a planilha com o e-mail da Service Account (edição)
-   e cole o ID (o trecho entre `/d/` e `/edit` da URL) em `GOOGLE_SHEET_ID`.
+3. Para a planilha: abra `apps-script/gravar-lead.gs`, copie o código para
+   dentro da planilha de leads (Extensões → Apps Script), implante como
+   "App da Web" (executar como você, acesso "qualquer pessoa") e cole a URL
+   `/exec` em `LEAD_SHEET_WEBHOOK`.
 4. Para o SMTP: use as credenciais do provedor de e-mail do domínio
    `truehope.com.br` (host, porta, usuário, senha).
 
