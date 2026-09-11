@@ -5,17 +5,22 @@
   html,body{width:38px;height:38px;background:transparent}
   svg{display:block}
 </style>
-<svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- etiqueta inclinada -->
-  <g transform="rotate(-28 19 19)">
-    <path d="M6.5 12.2a2.6 2.6 0 0 1 2.6-2.6h13.1c.7 0 1.35.28 1.84.77l7.1 7.1a2.6 2.6 0 0 1 0 3.67l-9.4 9.4a2.6 2.6 0 0 1-3.67 0l-7.1-7.1a2.6 2.6 0 0 1-.77-1.84V12.2z"
-          stroke="#4F1C0A" stroke-width="1.6" fill="none"/>
-    <circle cx="12.6" cy="15.4" r="1.9" fill="#4F1C0A"/>
+<!-- Etiqueta de desconto: traço grosso, cantos arredondados e o % alinhado
+     à diagonal da etiqueta — mesmo desenho do PNG de referência. -->
+<svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#1F221A" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+    <!-- corpo da etiqueta -->
+    <path d="M20.6 3.7 L31.9 2.8 a3 3 0 0 1 3.2 3.2 L34.3 17.4
+             a3.4 3.4 0 0 1 -0.98 2.2 L19.9 33.3 a3.4 3.4 0 0 1 -4.8 0
+             L4.7 22.9 a3.4 3.4 0 0 1 0 -4.8 L18.4 4.7
+             a3.4 3.4 0 0 1 2.2 -1 z"/>
+    <!-- cordão -->
+    <path d="M31.6 1.4 L29.9 9.2"/>
+    <!-- porcento -->
+    <circle cx="15.6" cy="17.4" r="2.5"/>
+    <circle cx="22.6" cy="24.4" r="2.5"/>
+    <path d="M13.6 27.2 L24.6 14.6"/>
   </g>
-  <!-- porcento -->
-  <g stroke="#4F1C0A" stroke-width="1.5">
-    <circle cx="16.4" cy="17.4" r="1.9" fill="none"/>
-    <circle cx="23.2" cy="24.2" r="1.9" fill="none"/>
-    <line x1="24.4" y1="15.9" x2="15.2" y2="25.5" stroke-linecap="round"/>
-  </g>
+  <!-- ilhós -->
+  <circle cx="29.4" cy="10.6" r="2.4" fill="#1F221A"/>
 </svg>

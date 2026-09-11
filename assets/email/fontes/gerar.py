@@ -68,7 +68,9 @@ mono.save(os.path.join(SAIDA, 'logo-th.png'))
 
 # ------------------------------------------------------------- foto da collab
 # JPEG e não WEBP: o Outlook para Windows não abre WEBP.
-cobrir(os.path.join(IMG, 'pc-camisa.webp'), os.path.join(SAIDA, 'foto-camisa.jpg'), 392, 504)
+# Alta o bastante para encher o card inteiro — se ficar menor que a coluna de
+# texto ao lado, sobra um vazio embaixo da foto.
+cobrir(os.path.join(IMG, 'pc-camisa.webp'), os.path.join(SAIDA, 'foto-camisa.jpg'), 392, 600, vies=0.34)
 
 # --------------------------------------------- foto da comunidade (folhagem escurecida)
 arcos = Image.open(os.path.join(IMG, 'hero-arcos.webp')).convert('RGB')
