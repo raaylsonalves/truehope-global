@@ -453,10 +453,10 @@ body.travado{overflow:hidden;height:100svh}
   display:grid;
   grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
   gap:clamp(28px,6vw,96px);
-  align-items:start;
+  align-items:stretch;
 }
 /* sem fundo próprio: a moldura é sticky e deixaria uma faixa visível acima */
-.convite__figura{position:relative}
+.convite__figura{position:relative;height:100%}
 .convite__figura img{width:100%;height:100%;object-fit:cover;transform:scale(1.16);will-change:transform}
 .convite__moldura{position:sticky;top:clamp(78px,12vh,120px);aspect-ratio:3/4;overflow:hidden;background:var(--papel-2)}
 .convite__legenda{
@@ -490,7 +490,7 @@ body.travado{overflow:hidden;height:100svh}
 .convite__dados .rotulo{color:var(--taupe)}
 .convite__dados b{
   font-family:var(--display);font-weight:400;
-  font-size:clamp(15.95px,1.49vw,18.7px);line-height:1.35;
+  font-size:clamp(14.3px,1.3vw,16.5px);line-height:1.35;
   letter-spacing:-.01em;color:var(--tinta);
 }
 .convite__chamada{
@@ -894,7 +894,10 @@ body.travado{overflow:hidden;height:100svh}
 .rodape__mono rect{fill:var(--creme)}
 .rodape__nome{font-size:13.2px;letter-spacing:.34em;padding-left:.34em;color:var(--creme)}
 .rodape__linha{font-size:12.1px;letter-spacing:.18em;text-transform:uppercase;line-height:1.9}
-.rodape__tags{font-size:12.1px;letter-spacing:.14em;color:rgba(235,224,209,.4)}
+.rodape__tags{font-size:12.1px;letter-spacing:.14em;color:rgba(235,224,209,.4);line-height:2}
+.rodape__ig{display:inline-flex;align-items:center;gap:.5em;color:rgba(235,224,209,.62);text-decoration:none}
+.rodape__ig:hover{color:var(--creme)}
+.rodape__ig svg{flex:none}
 
 /* ========================================================= reduzir movimento */
 @media(prefers-reduced-motion:reduce){
