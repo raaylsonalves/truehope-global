@@ -23,8 +23,11 @@ function doPost(e) {
     ]);
   }
 
+  var quando = dados.enviado_em ? new Date(dados.enviado_em) : new Date();
+  var dataHora = Utilities.formatDate(quando, 'America/Sao_Paulo', 'dd/MM/yyyy HH:mm');
+
   aba.appendRow([
-    dados.enviado_em || new Date().toISOString(),
+    dataHora,
     dados.nome || '',
     dados.whatsapp || '',
     dados.email || '',

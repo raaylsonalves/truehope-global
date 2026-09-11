@@ -115,7 +115,7 @@ async function avisarEquipe(lead, foiParaPlanilha) {
     ['Porta escolhida', lead.frente],
     ['Aceite de comunicação', lead.aceite_comunicacao ? 'sim' : 'não'],
     ['Origem', lead.origem],
-    ['Enviado em', lead.enviado_em]
+    ['Enviado em', formatarDataHora(lead.enviado_em)]
   ];
 
   var linhas = campos.map(function (c) {
@@ -135,6 +135,16 @@ async function avisarEquipe(lead, foiParaPlanilha) {
         : '<p style="margin:0 0 12px;padding:8px 10px;background:#F6E9E2;color:#7B3620;"><b>Atenção:</b> a gravação na planilha falhou. Este e-mail é a única cópia deste lead — registre à mão.</p>') +
       '<table cellpadding="0" cellspacing="0">' + linhas + '</table></div>'
   });
+}
+
+function formatarDataHora(iso) {
+  var d = iso ? new Date(iso) : new Date();
+  if (isNaN(d.getTime())) return String(iso || '');
+  var partes = new Intl.DateTimeFormat('pt-BR', {
+    timeZone: 'America/Sao_Paulo',
+    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+  }).formatToParts(d).reduce(function (acc, p) { acc[p.type] = p.value; return acc; }, {});
+  return partes.day + '/' + partes.month + '/' + partes.year + ' ' + partes.hour + ':' + partes.minute;
 }
 
 function escapar(v) {
