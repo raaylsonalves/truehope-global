@@ -899,6 +899,15 @@ body.travado{overflow:hidden;height:100svh}
 .rodape__ig:hover{color:var(--creme)}
 .rodape__ig svg{flex:none}
 
+.rodape__credito{margin-top:clamp(28px,4vh,44px);padding-top:clamp(18px,2.6vh,26px);border-top:1px solid var(--linha-clara);text-align:center}
+.rodape__credito a{
+  display:inline-flex;align-items:center;gap:.55em;
+  font-size:11.55px;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(235,224,209,.4);text-decoration:none;
+}
+.rodape__credito a:hover{color:var(--creme)}
+.rodape__credito img{display:block;border-radius:3px}
+
 /* ========================================================= reduzir movimento */
 @media(prefers-reduced-motion:reduce){
   /* precisa do prefixo .js para vencer as regras `.js .hero{height:...}` —
