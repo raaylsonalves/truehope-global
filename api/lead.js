@@ -19,8 +19,6 @@
 //                        segurança: mesmo se a planilha falhar, o lead chega
 //                        na caixa de entrada). Padrão: o próprio SMTP_USER.
 //
-//   CUPOM_CODE           opcional — padrão "TRUEHOPE15" (cupom único
-//                        compartilhado; ver nota no fim do arquivo)
 //   LINK_COLECAO         opcional — padrão usa o link da loja já embutido no site
 //   LINK_COMUNIDADE      link do grupo/comunidade no WhatsApp
 //   LINK_DESCADASTRO     opcional
@@ -163,7 +161,6 @@ async function enviarEmailConfirmacao(lead) {
 
   html = html
     .split('{{PRIMEIRO_NOME}}').join(primeiroNome)
-    .split('{{CUPOM}}').join(process.env.CUPOM_CODE || 'TRUEHOPE15')
     .split('{{LINK_COLECAO}}').join(process.env.LINK_COLECAO || LINK_COLECAO_PADRAO)
     .split('{{LINK_COMUNIDADE}}').join(process.env.LINK_COMUNIDADE || '#')
     .split('{{LINK_DESCADASTRO}}').join(process.env.LINK_DESCADASTRO || '#');
@@ -176,7 +173,7 @@ async function enviarEmailConfirmacao(lead) {
     // imagens embutidas como anexo inline (cid:) — funcionam em qualquer
     // caixa de entrada, sem depender de um domínio publicado nem de o
     // destinatário clicar em "exibir imagens".
-    attachments: ['hero.jpg', 'foto-camisa.jpg', 'foto-comunidade.jpg', 'icone-cupom.png', 'logo-th.png']
+    attachments: ['hero.jpg', 'foto-camisa.jpg', 'foto-comunidade.jpg', 'logo-th.png']
       .map(function (arquivo) {
         return {
           filename: arquivo,
@@ -186,11 +183,3 @@ async function enviarEmailConfirmacao(lead) {
       })
   });
 }
-
-// ----------------------------------------------------------------------------
-// Nota sobre o cupom: CUPOM_CODE hoje é um único código compartilhado por
-// todo mundo que preenche o formulário (o mesmo que já está no rodapé da
-// coleção do site). Se a Marci quiser rastrear resgates por pessoa, cada
-// e-mail precisaria de um código único gerado aqui e gravado na planilha —
-// é uma mudança pequena, mas depende da ferramenta de cupom que a loja usa.
-// ----------------------------------------------------------------------------

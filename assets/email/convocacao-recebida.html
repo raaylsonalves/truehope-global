@@ -19,12 +19,13 @@
   TEMPLATE DE E-MAIL — envio automático ao preencher o formulário da masterclass.
 
   Como usar:
-  1. Troque {{PRIMEIRO_NOME}}, {{CUPOM}}, {{LINK_COLECAO}}, {{LINK_COMUNIDADE}}
-     e {{LINK_DESCADASTRO}} pelos valores reais — api/lead.js já faz essa
+  1. Troque {{PRIMEIRO_NOME}}, {{LINK_COLECAO}}, {{LINK_COMUNIDADE}} e
+     {{LINK_DESCADASTRO}} pelos valores reais — api/lead.js já faz essa
      substituição automaticamente a cada envio do formulário.
   2. As imagens (assets/email/img/) vão embutidas como anexo inline (cid:) —
-     api/lead.js anexa os cinco arquivos. Isso é de propósito: e-mail não deve
-     depender de um domínio publicado nem de "permitir imagens externas".
+     api/lead.js anexa os arquivos usados aqui. Isso é de propósito: e-mail
+     não deve depender de um domínio publicado nem de "permitir imagens
+     externas".
   3. Para regerar as imagens: python assets/email/fontes/gerar.py
      O banner do topo e o ícone do cupom são renderizados no navegador a
      partir de assets/email/fontes/*.html — assim o título do banner sai na
@@ -94,39 +95,6 @@
         </p>
         <a href="{{LINK_COLECAO}}" style="display:inline-block;white-space:nowrap;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#1F221A;border:1px solid rgba(31,34,26,.42);text-decoration:none;padding:11px 16px;">
           Conhecer a collab &nbsp;&rarr;
-        </a>
-      </td>
-    </tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="height:12px;line-height:12px;font-size:0;">&nbsp;</td></tr>
-
-  <!-- ─────────────────────────────────────────────── o cupom -->
-  <tr><td style="padding:0 26px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid rgba(31,34,26,.14);">
-    <tr>
-      <td valign="middle" width="240" style="padding:20px 0 20px 18px;font-family:Arial,Helvetica,sans-serif;">
-        <table role="presentation" cellpadding="0" cellspacing="0"><tr>
-          <td valign="middle" style="padding-right:11px;">
-            <img src="cid:icone-cupom" width="32" height="32" alt="" style="display:block;border:0;">
-          </td>
-          <td valign="middle">
-            <p style="margin:0 0 4px;font-size:8px;letter-spacing:.12em;line-height:1.5;text-transform:uppercase;color:#7B3620;white-space:nowrap;">
-              Um presente especial para você
-            </p>
-            <p style="margin:0;font-family:'Prata',Georgia,'Times New Roman',serif;font-size:22px;letter-spacing:.01em;color:#1F221A;line-height:1.1;">
-              {{CUPOM}}
-            </p>
-          </td>
-        </tr></table>
-      </td>
-      <td valign="middle" align="right" width="268" style="padding:20px 18px 20px 14px;">
-        <p style="margin:0 0 11px;font-family:Georgia,'Times New Roman',serif;font-size:11.5px;line-height:1.5;color:#4A4438;text-align:right;">
-          Use o cupom e ganhe 15% de desconto<br>em toda a nossa collab com a Marci.
-        </p>
-        <a href="{{LINK_COLECAO}}" style="display:inline-block;white-space:nowrap;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#F4EFE6;background:#1F221A;text-decoration:none;padding:13px 16px;">
-          Aproveitar agora &nbsp;&rarr;
         </a>
       </td>
     </tr>

@@ -325,6 +325,3 @@ só fica registrado no log da função.
 4. Para o SMTP: use as credenciais do provedor de e-mail do domínio
    `truehope.com.br` (host, porta, usuário, senha).
 
-**Pendente:** o link da comunidade no WhatsApp (`LINK_COMUNIDADE`) e se o
-cupom (`CUPOM_CODE`, hoje um código único e compartilhado — `TRUEHOPE15`)
-deve virar um código por pessoa.
