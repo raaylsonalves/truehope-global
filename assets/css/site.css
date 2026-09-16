@@ -873,6 +873,40 @@ body.travado{overflow:hidden;height:100svh}
   border-right:1px solid var(--taupe);border-bottom:1px solid var(--taupe);
   transform:rotate(45deg);pointer-events:none;
 }
+.campo__tel{position:relative;display:flex;align-items:stretch;gap:12px}
+.ddi{
+  flex:none;display:flex;align-items:center;gap:6px;background:transparent;border:0;
+  border-bottom:1px solid rgba(235,224,209,.28);padding:10px 4px 10px 0;cursor:pointer;
+  font-family:var(--sans);font-size:17.6px;color:var(--creme);white-space:nowrap;
+}
+.ddi:focus-visible{outline:none;border-bottom-color:var(--terra)}
+.ddi__bandeira{font-size:17px;line-height:1}
+.ddi__codigo{font-variant-numeric:tabular-nums}
+.ddi__seta{width:7px;height:7px;border-right:1px solid var(--taupe);border-bottom:1px solid var(--taupe);transform:rotate(45deg);margin-left:1px}
+.campo__tel input#zap{flex:1;min-width:0}
+.ddi__painel{
+  position:absolute;top:calc(100% + 8px);left:0;z-index:20;width:min(320px,90vw);
+  background:var(--tinta);border:1px solid var(--linha-clara);
+  box-shadow:0 18px 40px rgba(0,0,0,.35);
+}
+.ddi__busca{
+  width:100%;background:transparent;border:0;border-bottom:1px solid var(--linha-clara);
+  padding:12px 14px;font-family:var(--sans);font-size:14.5px;color:var(--creme);
+}
+.ddi__busca::placeholder{color:rgba(235,224,209,.35)}
+.ddi__busca:focus{outline:none}
+.ddi__lista{list-style:none;margin:0;padding:6px;max-height:240px;overflow-y:auto}
+.ddi__lista li{
+  display:flex;align-items:center;gap:10px;padding:9px 10px;font-family:var(--sans);
+  font-size:14.5px;color:var(--creme);cursor:pointer;border-radius:2px;
+}
+.ddi__lista li .ddi__bandeira{font-size:16px}
+.ddi__lista li .ddi__pais{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ddi__lista li .ddi__codigo{color:var(--taupe);font-variant-numeric:tabular-nums}
+.ddi__lista li:hover,.ddi__lista li.ativo{background:rgba(235,224,209,.08)}
+.ddi__lista li[aria-selected="true"] .ddi__codigo{color:var(--creme)}
+.ddi__vazio{padding:14px 12px;font-size:13.5px;color:var(--taupe)}
+
 .consent{display:flex;gap:11px;align-items:flex-start;margin:clamp(6px,1.4vw,14px) 0 clamp(20px,3vw,28px)}
 .consent input{
   flex:none;width:16px;height:16px;margin-top:2px;accent-color:var(--terra);

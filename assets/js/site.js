@@ -571,9 +571,11 @@
     }
 
     /* --- validação */
+    // nome e sobrenome, só letras (com acentos), sem números.
+    var RE_NOME = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['-][A-Za-zÀ-ÖØ-öø-ÿ]+)*(?:\s+[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['-][A-Za-zÀ-ÖØ-öø-ÿ]+)*)+$/;
     var testes = {
-      nome:   function (v) { return v.trim().length > 2; },
-      zap:    function (v) { return v.replace(/\D/g, '').length >= 10; },
+      nome:   function (v) { return RE_NOME.test(v.trim()); },
+      zap:    function (v) { var n = v.replace(/\D/g, '').length; return n >= 8 && n <= 12; },
       mail:   function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); },
       cidade: function (v) { return v.trim().length > 1; },
       frente: function (v) { return !!v; }
@@ -589,6 +591,15 @@
       el.addEventListener('change', function () { limparErro(campoDe(id)); });
     });
 
+    // nome: impede dígitos enquanto digita (não só na validação final)
+    var nomeInput = $('#nome');
+    if (nomeInput) {
+      nomeInput.addEventListener('input', function () {
+        var limpo = nomeInput.value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ'\-\s]/g, '');
+        if (limpo !== nomeInput.value) nomeInput.value = limpo;
+      });
+    }
+
     // máscara leve de WhatsApp
     var zap = $('#zap');
     if (zap) {
@@ -603,6 +614,9 @@
         zap.value = s;
       });
     }
+
+    /* --- DDI: seletor interativo do país de origem --- */
+    var ddiAtual = seletorDdi();
 
     /* --- envio */
     form.addEventListener('submit', function (ev) {
@@ -622,7 +636,7 @@
       var frente = select ? select.value : 'inscricao';
       var lead = {
         nome: $('#nome').value.trim(),
-        whatsapp: $('#zap').value.trim(),
+        whatsapp: '+' + ddiAtual.ddi + ' ' + $('#zap').value.trim(),
         email: $('#mail').value.trim().toLowerCase(),
         cidade: $('#cidade').value.trim(),
         frente: frente,
@@ -694,6 +708,140 @@
       }
       irPara('#mesa');
       if (temGsap) ScrollTrigger.refresh();
+    }
+
+    function seletorDdi() {
+      var paises = [
+        { iso: 'BR', nome: 'Brasil', ddi: '55' },
+        { iso: 'PT', nome: 'Portugal', ddi: '351' },
+        { iso: 'US', nome: 'Estados Unidos', ddi: '1' },
+        { iso: 'CA', nome: 'Canadá', ddi: '1' },
+        { iso: 'AR', nome: 'Argentina', ddi: '54' },
+        { iso: 'CL', nome: 'Chile', ddi: '56' },
+        { iso: 'UY', nome: 'Uruguai', ddi: '598' },
+        { iso: 'PY', nome: 'Paraguai', ddi: '595' },
+        { iso: 'BO', nome: 'Bolívia', ddi: '591' },
+        { iso: 'PE', nome: 'Peru', ddi: '51' },
+        { iso: 'CO', nome: 'Colômbia', ddi: '57' },
+        { iso: 'VE', nome: 'Venezuela', ddi: '58' },
+        { iso: 'EC', nome: 'Equador', ddi: '593' },
+        { iso: 'MX', nome: 'México', ddi: '52' },
+        { iso: 'ES', nome: 'Espanha', ddi: '34' },
+        { iso: 'FR', nome: 'França', ddi: '33' },
+        { iso: 'DE', nome: 'Alemanha', ddi: '49' },
+        { iso: 'IT', nome: 'Itália', ddi: '39' },
+        { iso: 'GB', nome: 'Reino Unido', ddi: '44' },
+        { iso: 'IE', nome: 'Irlanda', ddi: '353' },
+        { iso: 'NL', nome: 'Países Baixos', ddi: '31' },
+        { iso: 'BE', nome: 'Bélgica', ddi: '32' },
+        { iso: 'CH', nome: 'Suíça', ddi: '41' },
+        { iso: 'SE', nome: 'Suécia', ddi: '46' },
+        { iso: 'NO', nome: 'Noruega', ddi: '47' },
+        { iso: 'DK', nome: 'Dinamarca', ddi: '45' },
+        { iso: 'JP', nome: 'Japão', ddi: '81' },
+        { iso: 'CN', nome: 'China', ddi: '86' },
+        { iso: 'AU', nome: 'Austrália', ddi: '61' },
+        { iso: 'ZA', nome: 'África do Sul', ddi: '27' },
+        { iso: 'AO', nome: 'Angola', ddi: '244' },
+        { iso: 'MZ', nome: 'Moçambique', ddi: '258' }
+      ];
+
+      var estado = paises[0];
+      var botao = $('#ddiBotao'), bandeiraEl = $('#ddiBandeira'), codigoEl = $('#ddiCodigo');
+      var painel = $('#ddiPainel'), busca = $('#ddiBusca'), lista = $('#ddiLista');
+      if (!botao || !painel) return estado;
+
+      function bandeira(iso) {
+        return String.fromCodePoint.apply(null, iso.split('').map(function (c) {
+          return 0x1F1E6 + (c.toUpperCase().charCodeAt(0) - 65);
+        }));
+      }
+
+      function desenhar(filtro) {
+        var termo = (filtro || '').trim().toLowerCase();
+        var digitos = termo.replace(/\D/g, '');
+        var itens = !termo ? paises : paises.filter(function (p) {
+          return p.nome.toLowerCase().indexOf(termo) !== -1 || (!!digitos && p.ddi.indexOf(digitos) === 0);
+        });
+
+        lista.innerHTML = '';
+        if (!itens.length) {
+          var vazio = document.createElement('li');
+          vazio.className = 'ddi__vazio';
+          vazio.textContent = 'Nenhum país encontrado.';
+          lista.appendChild(vazio);
+          return;
+        }
+
+        itens.forEach(function (p, i) {
+          var li = document.createElement('li');
+          li.setAttribute('role', 'option');
+          li.setAttribute('aria-selected', String(p.iso === estado.iso));
+          if (i === 0) li.classList.add('ativo');
+          li.innerHTML =
+            '<span class="ddi__bandeira">' + bandeira(p.iso) + '</span>' +
+            '<span class="ddi__pais">' + p.nome + '</span>' +
+            '<span class="ddi__codigo">+' + p.ddi + '</span>';
+          li.addEventListener('click', function () { escolher(p); });
+          lista.appendChild(li);
+        });
+      }
+
+      function escolher(p) {
+        estado.iso = p.iso; estado.ddi = p.ddi; estado.nome = p.nome;
+        bandeiraEl.textContent = bandeira(p.iso);
+        codigoEl.textContent = '+' + p.ddi;
+        fechar();
+        $('#zap').focus({ preventScroll: true });
+      }
+
+      function abrir() {
+        painel.hidden = false;
+        botao.setAttribute('aria-expanded', 'true');
+        busca.value = '';
+        desenhar('');
+        busca.focus({ preventScroll: true });
+        document.addEventListener('click', foraDoClique, true);
+        document.addEventListener('keydown', teclado, true);
+      }
+
+      function fechar() {
+        painel.hidden = true;
+        botao.setAttribute('aria-expanded', 'false');
+        document.removeEventListener('click', foraDoClique, true);
+        document.removeEventListener('keydown', teclado, true);
+      }
+
+      function foraDoClique(ev) {
+        if (!painel.contains(ev.target) && ev.target !== botao) fechar();
+      }
+
+      function teclado(ev) {
+        if (ev.key === 'Escape') { fechar(); botao.focus(); return; }
+        if (ev.key === 'Enter') {
+          var ativo = lista.querySelector('li.ativo');
+          if (ativo) ativo.click();
+          ev.preventDefault();
+          return;
+        }
+        if (ev.key === 'ArrowDown' || ev.key === 'ArrowUp') {
+          ev.preventDefault();
+          var itens = Array.prototype.slice.call(lista.querySelectorAll('li[role="option"]'));
+          if (!itens.length) return;
+          var atual = itens.findIndex(function (li) { return li.classList.contains('ativo'); });
+          itens.forEach(function (li) { li.classList.remove('ativo'); });
+          var prox = ev.key === 'ArrowDown' ? Math.min(atual + 1, itens.length - 1) : Math.max(atual - 1, 0);
+          itens[prox].classList.add('ativo');
+          itens[prox].scrollIntoView({ block: 'nearest' });
+        }
+      }
+
+      botao.addEventListener('click', function () {
+        if (painel.hidden) abrir(); else fechar();
+      });
+      busca.addEventListener('input', function () { desenhar(busca.value); });
+
+      return estado;
     }
   }
 

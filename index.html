@@ -29,7 +29,7 @@
 <link rel="preload" as="image" href="assets/img/hero-arcos.webp">
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@300,400,500,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20260914b">
+<link rel="stylesheet" href="assets/css/site.css?v=20260916a">
 <script>
 /* Liga o modo animado antes da primeira pintura (evita o "flash" dos blocos
    que entram com opacidade 0) e deixa uma rede de segurança: se o site.js não
@@ -534,13 +534,25 @@ src="https://www.facebook.com/tr?id=1595115695988141&ev=PageView&noscript=1"
       <form id="form" novalidate>
         <div class="campo" data-campo="nome">
           <label for="nome">Nome completo</label>
-          <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Como você quer ser chamada" required>
-          <span class="campo__erro">Escreva seu nome para continuar.</span>
+          <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Nome e sobrenome" required>
+          <span class="campo__erro">Escreva seu nome e sobrenome, sem números.</span>
         </div>
 
         <div class="campo" data-campo="zap">
-          <label for="zap">WhatsApp com DDD</label>
-          <input id="zap" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 90000-0000" required>
+          <label for="zap">WhatsApp</label>
+          <div class="campo__tel">
+            <button type="button" class="ddi" id="ddiBotao" aria-haspopup="listbox" aria-expanded="false" aria-controls="ddiLista">
+              <span class="ddi__bandeira" id="ddiBandeira">🇧🇷</span>
+              <span class="ddi__codigo" id="ddiCodigo">+55</span>
+              <span class="ddi__seta" aria-hidden="true"></span>
+            </button>
+            <input id="zap" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 90000-0000" required>
+
+            <div class="ddi__painel" id="ddiPainel" hidden>
+              <input type="text" class="ddi__busca" id="ddiBusca" placeholder="Buscar país ou código" aria-label="Buscar país ou código" autocomplete="off">
+              <ul class="ddi__lista" id="ddiLista" role="listbox" aria-label="DDI do país" tabindex="-1"></ul>
+            </div>
+          </div>
           <span class="campo__erro">Informe um WhatsApp válido, com DDD.</span>
         </div>
 
@@ -630,6 +642,6 @@ src="https://www.facebook.com/tr?id=1595115695988141&ev=PageView&noscript=1"
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
-<script src="assets/js/site.js?v=20260914b"></script>
+<script src="assets/js/site.js?v=20260916a"></script>
 </body>
 </html>
