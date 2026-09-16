@@ -37,6 +37,13 @@ function doPost(e) {
     dados.origem || ''
   ]);
 
+  // O WhatsApp vem como "+55 11987654321" — sem isso, a planilha lê o "+"
+  // como começo de fórmula/número e quebra o valor (por isso era preciso
+  // digitar um "'" na frente pra corrigir manualmente). Forçando a coluna
+  // como texto puro, toda linha nova já entra certa.
+  var linha = aba.getLastRow();
+  aba.getRange(linha, 3).setNumberFormat('@').setValue(dados.whatsapp || '');
+
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);

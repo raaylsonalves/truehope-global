@@ -575,7 +575,9 @@
     var RE_NOME = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['-][A-Za-zÀ-ÖØ-öø-ÿ]+)*(?:\s+[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['-][A-Za-zÀ-ÖØ-öø-ÿ]+)*)+$/;
     var testes = {
       nome:   function (v) { return RE_NOME.test(v.trim()); },
-      zap:    function (v) { var n = v.replace(/\D/g, '').length; return n >= 8 && n <= 12; },
+      // faixa larga de propósito: o DDD de 2 dígitos é só o padrão do Brasil —
+      // outros países têm números locais de tamanhos bem diferentes.
+      zap:    function (v) { var n = v.replace(/\D/g, '').length; return n >= 6 && n <= 14; },
       mail:   function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); },
       cidade: function (v) { return v.trim().length > 1; },
       frente: function (v) { return !!v; }
@@ -600,23 +602,28 @@
       });
     }
 
-    // máscara leve de WhatsApp
+    /* --- DDI: seletor interativo do país de origem --- */
+    var ddiAtual = seletorDdi();
+
+    // máscara do WhatsApp: o padrão "(DDD) 90000-0000" só faz sentido para o
+    // Brasil — para os demais países mostra só os dígitos, sem forçar um
+    // formato de DDD que não existe fora daqui.
     var zap = $('#zap');
     if (zap) {
       zap.addEventListener('input', function () {
-        var n = zap.value.replace(/\D/g, '').slice(0, 11);
+        var n = zap.value.replace(/\D/g, '').slice(0, 14);
         var s = n;
-        if (n.length > 2) s = '(' + n.slice(0, 2) + ') ' + n.slice(2);
-        if (n.length > 7) {
-          var corte = n.length > 10 ? 7 : 6;
-          s = '(' + n.slice(0, 2) + ') ' + n.slice(2, corte) + '-' + n.slice(corte);
+        if (ddiAtual.iso === 'BR') {
+          n = n.slice(0, 11);
+          if (n.length > 2) s = '(' + n.slice(0, 2) + ') ' + n.slice(2);
+          if (n.length > 7) {
+            var corte = n.length > 10 ? 7 : 6;
+            s = '(' + n.slice(0, 2) + ') ' + n.slice(2, corte) + '-' + n.slice(corte);
+          }
         }
         zap.value = s;
       });
     }
-
-    /* --- DDI: seletor interativo do país de origem --- */
-    var ddiAtual = seletorDdi();
 
     /* --- envio */
     form.addEventListener('submit', function (ev) {
@@ -636,7 +643,7 @@
       var frente = select ? select.value : 'inscricao';
       var lead = {
         nome: $('#nome').value.trim(),
-        whatsapp: '+' + ddiAtual.ddi + ' ' + $('#zap').value.trim(),
+        whatsapp: '+' + ddiAtual.ddi + ' ' + $('#zap').value.replace(/\D/g, ''),
         email: $('#mail').value.trim().toLowerCase(),
         cidade: $('#cidade').value.trim(),
         frente: frente,
@@ -791,8 +798,17 @@
         estado.iso = p.iso; estado.ddi = p.ddi; estado.nome = p.nome;
         bandeiraEl.innerHTML = bandeira(p.iso);
         codigoEl.textContent = '+' + p.ddi;
+
+        var zapEl = $('#zap');
+        if (zapEl) {
+          zapEl.placeholder = p.iso === 'BR' ? '(11) 90000-0000' : 'Número com código de área';
+          // ao trocar de país, o número digitado perde a máscara de DDD
+          // brasileira (não existe fora daqui) e volta a ser só dígitos.
+          if (zapEl.value) zapEl.value = zapEl.value.replace(/\D/g, '').slice(0, 14);
+        }
+
         fechar();
-        $('#zap').focus({ preventScroll: true });
+        zapEl && zapEl.focus({ preventScroll: true });
       }
 
       function abrir() {
