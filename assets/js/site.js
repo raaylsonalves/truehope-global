@@ -751,10 +751,10 @@
       var painel = $('#ddiPainel'), busca = $('#ddiBusca'), lista = $('#ddiLista');
       if (!botao || !painel) return estado;
 
+      // SVG (flag-icons), não emoji: o Windows não tem os glifos de bandeira
+      // do Unicode e mostra as letras do código do país em vez da bandeira.
       function bandeira(iso) {
-        return String.fromCodePoint.apply(null, iso.split('').map(function (c) {
-          return 0x1F1E6 + (c.toUpperCase().charCodeAt(0) - 65);
-        }));
+        return '<span class="fi fi-' + iso.toLowerCase() + '"></span>';
       }
 
       function desenhar(filtro) {
@@ -789,7 +789,7 @@
 
       function escolher(p) {
         estado.iso = p.iso; estado.ddi = p.ddi; estado.nome = p.nome;
-        bandeiraEl.textContent = bandeira(p.iso);
+        bandeiraEl.innerHTML = bandeira(p.iso);
         codigoEl.textContent = '+' + p.ddi;
         fechar();
         $('#zap').focus({ preventScroll: true });
@@ -840,6 +840,16 @@
         if (painel.hidden) abrir(); else fechar();
       });
       busca.addEventListener('input', function () { desenhar(busca.value); });
+
+      // o Lenis intercepta a roda do mouse na página inteira; sem isso o
+      // scroll dentro da lista (que já tem overflow-y próprio) não rola —
+      // ele rola a página de fundo por trás do painel.
+      lista.addEventListener('wheel', function (ev) {
+        ev.stopPropagation();
+        var noTopo = lista.scrollTop <= 0 && ev.deltaY < 0;
+        var noFim = lista.scrollTop + lista.clientHeight >= lista.scrollHeight && ev.deltaY > 0;
+        if (noTopo || noFim) ev.preventDefault();
+      }, { passive: false });
 
       return estado;
     }

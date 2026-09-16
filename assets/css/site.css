@@ -880,7 +880,8 @@ body.travado{overflow:hidden;height:100svh}
   font-family:var(--sans);font-size:17.6px;color:var(--creme);white-space:nowrap;
 }
 .ddi:focus-visible{outline:none;border-bottom-color:var(--terra)}
-.ddi__bandeira{font-size:17px;line-height:1}
+.ddi__bandeira{display:inline-flex;line-height:1}
+.ddi__bandeira .fi{border-radius:2px;box-shadow:0 0 0 1px rgba(235,224,209,.18)}
 .ddi__codigo{font-variant-numeric:tabular-nums}
 .ddi__seta{width:7px;height:7px;border-right:1px solid var(--taupe);border-bottom:1px solid var(--taupe);transform:rotate(45deg);margin-left:1px}
 .campo__tel input#zap{flex:1;min-width:0}
@@ -895,12 +896,12 @@ body.travado{overflow:hidden;height:100svh}
 }
 .ddi__busca::placeholder{color:rgba(235,224,209,.35)}
 .ddi__busca:focus{outline:none}
-.ddi__lista{list-style:none;margin:0;padding:6px;max-height:240px;overflow-y:auto}
+.ddi__lista{list-style:none;margin:0;padding:6px;max-height:240px;overflow-y:auto;overscroll-behavior:contain}
 .ddi__lista li{
   display:flex;align-items:center;gap:10px;padding:9px 10px;font-family:var(--sans);
   font-size:14.5px;color:var(--creme);cursor:pointer;border-radius:2px;
 }
-.ddi__lista li .ddi__bandeira{font-size:16px}
+.ddi__lista li .ddi__bandeira .fi{box-shadow:0 0 0 1px rgba(235,224,209,.14)}
 .ddi__lista li .ddi__pais{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ddi__lista li .ddi__codigo{color:var(--taupe);font-variant-numeric:tabular-nums}
 .ddi__lista li:hover,.ddi__lista li.ativo{background:rgba(235,224,209,.08)}
