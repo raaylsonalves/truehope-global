@@ -753,7 +753,11 @@
         { iso: 'MZ', nome: 'Moçambique', ddi: '258' }
       ];
 
-      var estado = paises[0];
+      // cópia, não referência: se `estado` apontasse pro mesmo objeto de
+      // paises[0], escolher outro país sobrescrevia o Brasil dentro da
+      // própria lista (o item virava uma cópia do país escolhido e
+      // desaparecia da lista para sempre).
+      var estado = { iso: paises[0].iso, ddi: paises[0].ddi, nome: paises[0].nome };
       var botao = $('#ddiBotao'), bandeiraEl = $('#ddiBandeira'), codigoEl = $('#ddiCodigo');
       var painel = $('#ddiPainel'), busca = $('#ddiBusca'), lista = $('#ddiLista');
       if (!botao || !painel) return estado;
