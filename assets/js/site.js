@@ -12,13 +12,13 @@
      ------------------------------------------------------------------------ */
   var TH = window.TH_CONFIG = {
     destinos: {
-      inscricao:  '',   // site oficial de inscrição da masterclass
+      inscricao:  'https://www.e-inscricao.com/global-awakening-brazil/truehope',   // inscrição oficial da masterclass (abre em nova aba)
       loja:       'https://www.marcioficial.com.br/',   // loja da collab Truehope + Marci  (abre em nova aba)
       convocacao: '',   // grupo / convocação de resgate da família
       comunidade: 'https://chat.whatsapp.com/BLclvT8iGUS2nqq93Kbe3e'   // comunidade Truehope no WhatsApp
     },
     // Abas novas: destinos que NÃO devem substituir esta página.
-    novaAba: ['loja', 'comunidade'],
+    novaAba: ['loja', 'comunidade', 'inscricao'],
     // Endpoint que recebe o lead (POST JSON). Vazio = nada é enviado.
     // /api/lead é a função serverless da Vercel (api/lead.js) que grava
     // o lead na planilha e dispara o e-mail de confirmação pelo SMTP.
